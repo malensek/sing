@@ -40,17 +40,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
+import io.sigpipe.sing.dataset.MetaArray;
 import io.sigpipe.sing.dataset.Metadata;
 import io.sigpipe.sing.dataset.Pair;
 import io.sigpipe.sing.dataset.SpatialProperties;
-import io.sigpipe.sing.dataset.SpatialRange;
 import io.sigpipe.sing.dataset.TemporalProperties;
 import io.sigpipe.sing.dataset.feature.Feature;
-import io.sigpipe.sing.dataset.feature.FeatureSet;
+import io.sigpipe.sing.serialization.Serializer;
 import io.sigpipe.sing.util.FileNames;
 import io.sigpipe.sing.util.GeoHash;
 
@@ -64,30 +63,22 @@ public class NetcdfToMetaBundle {
         String ext = nameParts.b;
 
         if (ext.equals("grb") || ext.equals("bz2") || ext.equals("gz")) {
+            System.out.println("Reading netcdf...");
             Map<String, Metadata> metaMap
                 = NetcdfToMetaBundle.readFile(f.getAbsolutePath());
 
             /* Don't cache more than 4 GB: */
             DiskCache.cleanCache(4 * 1000 * 1000 * 1000, null);
 
+            System.out.println("Creating bundle...");
+            MetaArray metaBundle = new MetaArray();
             for (String s : metaMap.keySet()) {
                 Metadata m = metaMap.get(s);
-                SpatialRange sr = GeoHash.decodeHash(s);
-                System.out.print(sr.getCenterPoint().getLongitude() + "    "
-                        + sr.getCenterPoint().getLatitude() + "    ");
-                        //+ m.getTemporalProperties().getStart());
-                FeatureSet fs = m.getAttributes();
-                System.out.print(fs.get("total_cloud_cover_entire_atmosphere").getString() + "    ");
-                System.out.print(fs.get("total_precipitation_surface_1_hour_accumulation").getString() + "    ");
-                System.out.print(fs.get("visibility_surface").getString() + "    ");
-
-//                Iterator<Feature> it = fs.iterator();
-//                while (it.hasNext()) {
-//                    System.out.print(it.next().getName() + "=");
-//                    System.out.print(it.next().getString() + "    ");
-//                }
-                System.out.println();
+                metaBundle.add(m);
             }
+
+            System.out.println("Writing bundle...");
+            Serializer.persist(metaBundle, nameParts.a + ".mbundle");
         }
     }
 
