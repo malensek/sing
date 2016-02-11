@@ -23,22 +23,7 @@ any theory of liability, whether in contract, strict liability, or tort
 software, even if advised of the possibility of such damage.
 */
 
-package slice.load;
-
-import galileo.dataset.Metadata;
-import galileo.dataset.SpatialProperties;
-import galileo.dataset.SpatialRange;
-import galileo.dataset.TemporalProperties;
-import galileo.dataset.feature.Feature;
-import galileo.dataset.feature.FeatureSet;
-import galileo.graph.FeaturePath;
-import galileo.graph.MetadataGraph;
-import galileo.graph.Path;
-import galileo.util.FileNames;
-import galileo.util.GeoHash;
-import galileo.util.Pair;
-
-import galileo.serialization.Serializer;
+package io.sigpipe.sing.adapters;
 
 import ucar.ma2.Array;
 import ucar.nc2.NetcdfFile;
@@ -59,7 +44,17 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
-public class DumpNetCDF {
+import io.sigpipe.sing.dataset.Metadata;
+import io.sigpipe.sing.dataset.Pair;
+import io.sigpipe.sing.dataset.SpatialProperties;
+import io.sigpipe.sing.dataset.SpatialRange;
+import io.sigpipe.sing.dataset.TemporalProperties;
+import io.sigpipe.sing.dataset.feature.Feature;
+import io.sigpipe.sing.dataset.feature.FeatureSet;
+import io.sigpipe.sing.util.FileNames;
+import io.sigpipe.sing.util.GeoHash;
+
+public class NetcdfToMetaBundle {
     public static void main(String[] args)
     throws Exception {
         DiskCache.setCachePolicy(true);
@@ -67,12 +62,13 @@ public class DumpNetCDF {
         File f = new File(args[0]);
         Pair<String, String> nameParts = FileNames.splitExtension(f);
         String ext = nameParts.b;
+
         if (ext.equals("grb") || ext.equals("bz2") || ext.equals("gz")) {
             Map<String, Metadata> metaMap
-                = DumpNetCDF.readFile(f.getAbsolutePath());
+                = NetcdfToMetaBundle.readFile(f.getAbsolutePath());
 
-            /* Don't cache more than 1 GB: */
-            DiskCache.cleanCache(1073741824, null);
+            /* Don't cache more than 4 GB: */
+            DiskCache.cleanCache(4 * 1000 * 1000 * 1000, null);
 
             for (String s : metaMap.keySet()) {
                 Metadata m = metaMap.get(s);
@@ -139,6 +135,7 @@ public class DumpNetCDF {
                     convert3DVariable(g, calendar.getTime(), metaMap);
                 }
             }
+            gridData.close();
             return metaMap;
     }
 
