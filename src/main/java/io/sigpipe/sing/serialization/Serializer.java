@@ -34,6 +34,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.util.zip.Deflater;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * This class provides convenience functions to make the Serialization and
@@ -166,6 +168,22 @@ public class Serializer {
     public static void persist(ByteSerializable obj, String fileName)
     throws IOException {
         persist(obj, new File(fileName));
+    }
+
+    public static void persistCompressed(ByteSerializable obj, File file)
+    throws IOException {
+        persistCompressed(obj, file, Deflater.DEFAULT_COMPRESSION);
+    }
+
+    public static void persistCompressed(ByteSerializable obj, String fileName)
+    throws IOException {
+        persistCompressed(obj, new File(fileName));
+    }
+
+    public static void persistCompressed(
+            ByteSerializable obj, String fileName, int compressionLevel)
+    throws IOException {
+        persistCompressed(obj, new File(fileName), compressionLevel);
     }
 
     public static void persistCompressed(
