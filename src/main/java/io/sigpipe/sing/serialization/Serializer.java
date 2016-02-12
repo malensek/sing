@@ -224,14 +224,17 @@ public class Serializer {
             ByteSerializable obj, File file, int compressionLevel)
     throws IOException {
         FileOutputStream fOs = new FileOutputStream(file);
-        BufferedOutputStream bOs = new BufferedOutputStream(fOs);
-        GZIPOutputStream gOs = new GZIPOutputStream(bOs) {
+        /* Note: the GZIPOutputStream appears here in our stream pipeline
+         * because it was tested to provide the best performance, likely due to
+         * the placement of the BufferedOutputStream. */
+        GZIPOutputStream gOs = new GZIPOutputStream(fOs) {
             {
                 /* 1-9, where 9 = best compression */
                 def.setLevel(compressionLevel);
             }
         };
-        SerializationOutputStream sOs = new SerializationOutputStream(gOs);
+        BufferedOutputStream bOs = new BufferedOutputStream(gOs);
+        SerializationOutputStream sOs = new SerializationOutputStream(bOs);
         sOs.writeSerializable(obj);
         sOs.close();
     }
@@ -291,9 +294,9 @@ public class Serializer {
             Class<T> type, File inFile)
     throws IOException, SerializationException {
         FileInputStream fIn = new FileInputStream(inFile);
-        BufferedInputStream bIn = new BufferedInputStream(fIn);
-        GZIPInputStream gIn = new GZIPInputStream(bIn);
-        SerializationInputStream sIn = new SerializationInputStream(gIn);
+        GZIPInputStream gIn = new GZIPInputStream(fIn);
+        BufferedInputStream bIn = new BufferedInputStream(gIn);
+        SerializationInputStream sIn = new SerializationInputStream(bIn);
         T obj = deserializeFromStream(type, sIn);
         sIn.close();
 
