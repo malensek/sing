@@ -50,8 +50,7 @@ public class SerializationOutputStream extends DataOutputStream {
      */
     public void writeString(String field)
     throws IOException {
-        byte[] strBytes = field.getBytes();
-        writeField(strBytes);
+        writeUTF(field);
     }
 
     /**

@@ -40,8 +40,7 @@ public class SerializationInputStream extends DataInputStream {
 
     public String readString()
     throws IOException {
-        byte[] strBytes = readField();
-        return new String(strBytes);
+        return readUTF();
     }
 
     public byte[] readField()
