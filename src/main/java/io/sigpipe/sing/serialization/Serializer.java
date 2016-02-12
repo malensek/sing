@@ -170,22 +170,55 @@ public class Serializer {
         persist(obj, new File(fileName));
     }
 
+    /**
+     * Persists a ByteSerializable object to a portable byte array and stores it
+     * on disk using a gzip compressed output stream with the default
+     * compression level.
+     *
+     * @param obj The ByteSerializable object to serialize.
+     * @param file {@link File} the object should be written to.
+     */
     public static void persistCompressed(ByteSerializable obj, File file)
     throws IOException {
         persistCompressed(obj, file, Deflater.DEFAULT_COMPRESSION);
     }
 
+    /**
+     * Persists a ByteSerializable object to a portable byte array and stores it
+     * on disk using a gzip compressed output stream with the default
+     * compression level.
+     *
+     * @param obj The ByteSerializable object to serialize.
+     * @param fileName file name to write the object to.
+     */
     public static void persistCompressed(ByteSerializable obj, String fileName)
     throws IOException {
-        persistCompressed(obj, new File(fileName));
+        persistCompressed(
+                obj, new File(fileName), Deflater.DEFAULT_COMPRESSION);
     }
 
+    /**
+     * Persists a ByteSerializable object to a portable byte array and stores it
+     * on disk using a gzip compressed output stream.
+     *
+     * @param obj The ByteSerializable object to serialize.
+     * @param fileName file name to write the object to.
+     * @param compressionLevel gzip compression level (1 - 9)
+     */
     public static void persistCompressed(
             ByteSerializable obj, String fileName, int compressionLevel)
     throws IOException {
         persistCompressed(obj, new File(fileName), compressionLevel);
     }
 
+    /**
+     * Persists a ByteSerializable object to a portable byte array and stores it
+     * on disk using a gzip compressed output stream.
+     *
+     * @param obj The ByteSerializable object to serialize.
+     * @param file {@link File} the object should be written to.
+     * @param compressionLevel gzip compression level (1 - 9)
+     */
     public static void persistCompressed(
             ByteSerializable obj, File file, int compressionLevel)
     throws IOException {
