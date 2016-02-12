@@ -169,8 +169,10 @@ public class NetcdfToMetaBundle {
 
                 String featureName = v.getFullName().toLowerCase();
                 float featureValue = values.getFloat(i * w + j);
-                Feature feature = new Feature(featureName, featureValue);
-                meta.putAttribute(feature);
+                if (Float.isNaN(featureValue) == false) {
+                    Feature feature = new Feature(featureName, featureValue);
+                    meta.putAttribute(feature);
+                }
             }
         }
     }
