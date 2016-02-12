@@ -171,9 +171,19 @@ public class Serializer {
     public static void persistCompressed(
             ByteSerializable obj, File file, int compressionLevel)
     throws IOException {
+        if (compressionLevel < 1 || compressionLevel > 9) {
+            throw new IllegalArgumentException("gzip compression level must be "
+                    + "between 1 and 9.");
+        }
+
         FileOutputStream fOs = new FileOutputStream(file);
         BufferedOutputStream bOs = new BufferedOutputStream(fOs);
-        GZIPOutputStream gOs = new GZIPOutputStream(bOs);
+        GZIPOutputStream gOs = new GZIPOutputStream(bOs) {
+            {
+                /* 1-9, where 9 = best compression */
+                def.setLevel(compressionLevel);
+            }
+        };
         SerializationOutputStream sOs = new SerializationOutputStream(gOs);
         sOs.writeSerializable(obj);
         sOs.close();
