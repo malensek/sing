@@ -35,6 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.zip.Deflater;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -273,5 +274,46 @@ public class Serializer {
     throws IOException, SerializationException {
         File inFile = new File(fileName);
         return restore(type, inFile);
+    }
+
+    /**
+     * Loads a compressed ByteSerializable object's binary form from disk and
+     * then instantiates a new object using the SerializationInputStream
+     * constructor.
+     *
+     * @param type The type of object to create (deserialize).
+     *             For example, Something.class.
+     *
+     * @param inFile File containing a compressed, serialized instance of the
+     *               object being loaded.
+     */
+    public static <T extends ByteSerializable> T restoreCompressed(
+            Class<T> type, File inFile)
+    throws IOException, SerializationException {
+        FileInputStream fIn = new FileInputStream(inFile);
+        BufferedInputStream bIn = new BufferedInputStream(fIn);
+        GZIPInputStream gIn = new GZIPInputStream(bIn);
+        SerializationInputStream sIn = new SerializationInputStream(gIn);
+        T obj = deserializeFromStream(type, sIn);
+        sIn.close();
+
+        return obj;
+    }
+
+    /**
+     * Loads a compressed ByteSerializable object's binary form from disk and
+     * then instantiates a new object using the SerializationInputStream
+     * constructor.
+     *
+     * @param type The type of object to create (deserialize).
+     *             For example, Something.class.
+     *
+     * @param fileName file path the object should be read from.
+     */
+    public static <T extends ByteSerializable> T restoreCompressed(
+            Class<T> type, String fileName)
+    throws IOException, SerializationException {
+        File inFile = new File(fileName);
+        return restoreCompressed(type, inFile);
     }
 }
