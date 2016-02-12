@@ -78,7 +78,7 @@ public class NetcdfToMetaBundle {
             }
 
             System.out.println("Writing bundle...");
-            Serializer.persist(metaBundle, nameParts.a + ".mbundle");
+            Serializer.persistCompressed(metaBundle, nameParts.a + ".mbundle");
         }
     }
 
