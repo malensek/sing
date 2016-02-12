@@ -168,6 +168,17 @@ public class Serializer {
         persist(obj, new File(fileName));
     }
 
+    public static void persistCompressed(
+            ByteSerializable obj, File file, int compressionLevel)
+    throws IOException {
+        FileOutputStream fOs = new FileOutputStream(file);
+        BufferedOutputStream bOs = new BufferedOutputStream(fOs);
+        GZIPOutputStream gOs = new GZIPOutputStream(bOs);
+        SerializationOutputStream sOs = new SerializationOutputStream(gOs);
+        sOs.writeSerializable(obj);
+        sOs.close();
+    }
+
     /**
      * Loads a ByteSerializable object's binary form from disk and
      * then instantiates a new object using the SerializationInputStream
