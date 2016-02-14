@@ -70,6 +70,8 @@ public class NetcdfToMetaBundle {
                 = NetcdfToMetaBundle.readFile(f.getAbsolutePath());
 
             /* Don't cache more than 4 GB: */
+            /* (This should be disabled when multiple processes are using the
+             * cache concurrently) */
             DiskCache.cleanCache(4 * 1000 * 1000 * 1000, null);
 
             System.out.println("Creating bundle...");
