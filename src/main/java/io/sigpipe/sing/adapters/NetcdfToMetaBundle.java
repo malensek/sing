@@ -56,6 +56,8 @@ import io.sigpipe.sing.util.GeoHash;
 public class NetcdfToMetaBundle {
     public static void main(String[] args)
     throws Exception {
+        /* This should be enabled in situations where the user account does not
+         * have write permissions to the parent directory of the file arg. */
         DiskCache.setCachePolicy(true);
 
         File f = new File(args[0]);
