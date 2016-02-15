@@ -44,7 +44,7 @@ import java.util.logging.Logger;
  */
 public class FeatureSet implements ByteSerializable, Iterable<Feature> {
 
-    private static final Logger logger = Logger.getLogger("galileo");
+    private static final Logger logger = Logger.getLogger("io.sigpipe.sing");
 
     private Map<String, Feature> features = new HashMap<String, Feature>();
 

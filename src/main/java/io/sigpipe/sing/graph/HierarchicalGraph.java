@@ -55,7 +55,7 @@ import io.sigpipe.sing.query.Query;
  */
 public class HierarchicalGraph<T> {
 
-    private static final Logger logger = Logger.getLogger("galileo");
+    private static final Logger logger = Logger.getLogger("io.sigpipe.sing");
 
     /** The root vertex. */
     private Vertex<Feature, T> root = new Vertex<>();

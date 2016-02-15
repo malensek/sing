@@ -40,7 +40,7 @@ import io.sigpipe.sing.serialization.ByteSerializable;
 abstract class FeatureData<T extends Comparable<T>>
 implements ByteSerializable, Comparable<FeatureData<?>> {
 
-    private static final Logger logger = Logger.getLogger("galileo");
+    private static final Logger logger = Logger.getLogger("io.sigpipe.sing");
 
     protected T data;
     protected FeatureType type = FeatureType.NULL;
