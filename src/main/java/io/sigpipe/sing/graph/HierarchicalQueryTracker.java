@@ -34,7 +34,7 @@ import java.util.List;
 import io.sigpipe.sing.dataset.feature.Feature;
 
 /**
- * Tracks a {@link galileo.query.Query} as it traverses through a graph
+ * Tracks a {@link io.sigpipe.sing.query.Query} as it traverses through a graph
  * hierarchy.
  *
  * @author malensek
