@@ -58,7 +58,7 @@ public class NetcdfToMetaBundle {
     throws Exception {
         /* This should be enabled in situations where the user account does not
          * have write permissions to the parent directory of the file arg. */
-        DiskCache.setCachePolicy(true);
+        //DiskCache.setCachePolicy(true);
 
         File f = new File(args[0]);
         Pair<String, String> nameParts = FileNames.splitExtension(f);
@@ -72,7 +72,7 @@ public class NetcdfToMetaBundle {
             /* Don't cache more than 4 GB: */
             /* (This should be disabled when multiple processes are using the
              * cache concurrently) */
-            DiskCache.cleanCache(4 * 1000 * 1000 * 1000, null);
+            //DiskCache.cleanCache(4 * 1000 * 1000 * 1000, null);
 
             System.out.println("Creating bundle...");
             MetaArray metaBundle = new MetaArray();
@@ -82,7 +82,7 @@ public class NetcdfToMetaBundle {
             }
 
             System.out.println("Writing bundle...");
-            Serializer.persistCompressed(metaBundle, nameParts.a + ".mbundle");
+            Serializer.persist(metaBundle, nameParts.a + ".mbundle");
         }
     }
 
