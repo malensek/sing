@@ -102,7 +102,16 @@ public class Vertex<L extends Comparable<L>, V> {
         return edges.headMap(label, inclusive);
     }
 
-    public NavigableMap<L, Vertex<L, V>> getNeighborsGreaterThan(
+    /**
+     * Retrieves the {@link NavigableMap} of neighboring vertices greater than
+     * the specified value.
+     *
+     * @param label label value to compare against
+     * @param inclusive whether or not to include the label's value while doing
+     *     comparisons
+     * @return {@link NavigableMap} of neighboring vertices
+     */
+    public NavigableMap<L, Vertex<L>> getNeighborsGreaterThan(
             L label, boolean inclusive) {
         return edges.tailMap(label, inclusive);
     }
