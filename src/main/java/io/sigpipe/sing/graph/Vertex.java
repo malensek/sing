@@ -68,8 +68,9 @@ public class Vertex<L extends Comparable<L>, V> {
     }
 
     /**
-     * Determines if two vertices are connected.
+     * Determines whether two vertices are connected.
      *
+     * @param label the label of the vertex to search for
      * @return true if the Vertex label is found on a connecting edge.
      */
     public boolean connectedTo(L label) {
