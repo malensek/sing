@@ -25,11 +25,8 @@ software, even if advised of the possibility of such damage.
 
 package io.sigpipe.sing.graph;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NavigableMap;
 import java.util.Set;
 import java.util.TreeMap;
@@ -37,15 +34,15 @@ import java.util.TreeMap;
 /**
  * Provides a lightweight generic implementation of a graph vertex backed by a
  * TreeMap for extensibility.  This provides the basis of the hybrid
- * trees/graphs used in the system.
+ * trees/graphs used in the system. Vertices store labels that extend the
+ * Comparable interface to ensure they can be ordered properly in the TreeMap.
  *
  * @author malensek
  */
-public class Vertex<L extends Comparable<L>, V> {
+public class Vertex<L extends Comparable<L>> {
 
     protected L label;
-    protected Set<V> values = new HashSet<V>();
-    protected TreeMap<L, Vertex<L, V>> edges = new TreeMap<>();
+    protected TreeMap<L, Vertex<L>> edges = new TreeMap<>();
 
     public Vertex() { }
 
@@ -53,17 +50,7 @@ public class Vertex<L extends Comparable<L>, V> {
         this.label = label;
     }
 
-    public Vertex(L label, V value) {
-        this.label = label;
-        this.addValue(value);
-    }
-
-    public Vertex(L label, Collection<V> values) {
-        this.label = label;
-        this.addValues(values);
-    }
-
-    public Vertex(Vertex<L, V> v) {
+    public Vertex(Vertex<L> v) {
         this.label = v.label;
     }
 
@@ -81,10 +68,9 @@ public class Vertex<L extends Comparable<L>, V> {
      * Retrieve a neighboring Vertex.
      *
      * @param label Neighbor's label.
-     *
      * @return Neighbor Vertex.
      */
-    public Vertex<L, V> getNeighbor(L label) {
+    public Vertex<L> getNeighbor(L label) {
         return edges.get(label);
     }
 
@@ -162,105 +148,52 @@ public class Vertex<L extends Comparable<L>, V> {
      *
      * @return collection of all neighboring vertices.
      */
-    public Collection<Vertex<L, V>> getAllNeighbors() {
+    public Collection<Vertex<L>> getAllNeighbors() {
         return edges.values();
     }
 
     /**
      * Connnects two vertices.  If this vertex is already connected to the
-     * provided vertex label, then the already-connected vertex is returned, and
-     * its value is updated.
+     * provided vertex label, then the already-connected vertex is returned.
      *
      * @param vertex The vertex to connect to.
-     *
      * @return Connected vertex.
      */
-    public Vertex<L, V> connect(Vertex<L, V> vertex) {
+    public Vertex<L> connect(Vertex<L> vertex) {
         L label = vertex.getLabel();
-        Vertex<L, V> edge = getNeighbor(label);
-        if (edge == null) {
+        Vertex<L> neighbor = getNeighbor(label);
+        if (neighbor == null) {
             edges.put(label, vertex);
             return vertex;
         } else {
-            edge.addValues(vertex.getValues());
-            return edge;
+            return neighbor;
         }
     }
 
     /**
-     * Add and connect a collection of vertices in the form of a traversal path.
+     * Removes all the edges from this Vertex, severing any connections with
+     * neighboring vertices.
      */
-    public void addPath(Iterator<Vertex<L, V>> path) {
-        if (path.hasNext()) {
-            Vertex<L, V> vertex = path.next();
-            Vertex<L, V> edge = connect(vertex);
-            edge.addPath(path);
-        }
-    }
-
-    public L getLabel() {
-        return label;
-    }
-
-    public void setLabel(L label) {
-        this.label = label;
-    }
-
-    public Set<V> getValues() {
-        return values;
-    }
-
-    public void addValue(V value) {
-        this.values.add(value);
-    }
-
-    public void addValues(Collection<V> values) {
-        this.values.addAll(values);
     public void disconnectAll() {
         edges.clear();
     }
 
     /**
-     * Retrieves all {@link Path} instances represented by the children of this
-     * Vertex.
-     *
-     * @return List of Paths that are descendants of this Vertex
+     * Add and connect a collection of vertices in the form of a traversal path.
      */
-    public List<Path<L, V>> descendantPaths() {
-        Path<L, V> p = new Path<L, V>();
-        List<Path<L, V>> paths = new ArrayList<>();
-        for (Vertex<L, V> child : this.getAllNeighbors()) {
-            traverseDescendants(child, paths, p);
+    public void addPath(Iterator<Vertex<L>> path) {
+        if (path.hasNext()) {
+            Vertex<L> vertex = path.next();
+            Vertex<L> edge = connect(vertex);
+            edge.addPath(path);
         }
-
-        return paths;
     }
 
     /**
-     * Traverses through descendant Vertices, finding Path instances.  A Path
-     * leads to one or more payloads stored as Vertex values.  This method is
-     * designed to be used recursively.
-     *
-     * @param vertex Vertex to query descendants
-     * @param paths List of Paths discovered thus far during traversal.  This is
-     * updated as new Path instances are found.
-     * @param currentPath The current Path being inspected by the traversal
+     * Retrieves the label associated with this vertex.
      */
-    protected void traverseDescendants(Vertex<L, V> vertex,
-            List<Path<L, V>> paths, Path<L, V> currentPath) {
-
-        Path<L, V> p = new Path<>(currentPath);
-        p.add(new Vertex<>(vertex));
-
-        if (vertex.getValues().size() > 0) {
-            /* If the vertex has values, we've found a path endpoint. */
-            p.setPayload(vertex.getValues());
-            paths.add(p);
-        }
-
-        for (Vertex<L, V> child : vertex.getAllNeighbors()) {
-            traverseDescendants(child, paths, p);
-        }
+    public L getLabel() {
+        return label;
     }
 
     /**
@@ -270,7 +203,7 @@ public class Vertex<L extends Comparable<L>, V> {
      */
     public long numDescendants() {
         long total = this.getAllNeighbors().size();
-        for (Vertex<L, V> child : this.getAllNeighbors()) {
+        for (Vertex<L> child : this.getAllNeighbors()) {
             total += child.numDescendants();
         }
 
@@ -278,32 +211,17 @@ public class Vertex<L extends Comparable<L>, V> {
     }
 
     /**
-     * Retrieves the number of descendant edges for this {@link Vertex}.  This
-     * count includes the links between descendants for scan operations.
+     * Retrieves the number of descendant edges for this {@link Vertex}.
      *
      * @return number of descendant edges.
      */
     public long numDescendantEdges() {
-        long total = 0;
-        int numNeighbors = this.getAllNeighbors().size();
-
-        if (numNeighbors > 0) {
-            total = numNeighbors + numNeighbors - 1;
-        }
-
-        for (Vertex<L, V> child : this.getAllNeighbors()) {
+        long total = this.getAllNeighbors().size();
+        for (Vertex<L> child : this.getAllNeighbors()) {
             total += child.numDescendantEdges();
         }
 
         return total;
-    }
-
-
-    /**
-     * Clears all values associated with this Vertex.
-     */
-    public void clearValues() {
-        values.clear();
     }
 
     @Override
