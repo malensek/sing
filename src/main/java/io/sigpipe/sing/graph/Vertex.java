@@ -31,6 +31,8 @@ import java.util.NavigableMap;
 import java.util.Set;
 import java.util.TreeMap;
 
+import io.sigpipe.sing.dataset.feature.Feature;
+
 /**
  * Provides a lightweight generic implementation of a graph vertex backed by a
  * TreeMap for extensibility.  This provides the basis of the hybrid
@@ -39,19 +41,26 @@ import java.util.TreeMap;
  *
  * @author malensek
  */
-public class Vertex<L extends Comparable<L>> {
+public class Vertex {
 
-    protected L label;
-    protected TreeMap<L, Vertex<L>> edges = new TreeMap<>();
+    protected Feature label;
+    protected DataContainer data;
+    protected TreeMap<Feature, Vertex> edges = new TreeMap<>();
 
     public Vertex() { }
 
-    public Vertex(L label) {
+    public Vertex(Feature label) {
         this.label = label;
     }
 
-    public Vertex(Vertex<L> v) {
+    public Vertex(Feature label, DataContainer data) {
+        this.label = label;
+        this.data = data;
+    }
+
+    public Vertex(Vertex v) {
         this.label = v.label;
+        this.data = v.data;
     }
 
     /**
@@ -60,7 +69,7 @@ public class Vertex<L extends Comparable<L>> {
      * @param label the label of the vertex to search for
      * @return true if the Vertex label is found on a connecting edge.
      */
-    public boolean connectedTo(L label) {
+    public boolean connectedTo(Feature label) {
         return edges.containsKey(label);
     }
 
@@ -70,7 +79,7 @@ public class Vertex<L extends Comparable<L>> {
      * @param v the vertex to search for
      * @return true if the Vertex is found on a connecting edge.
      */
-    public boolean connectedTo(Vertex<L> v) {
+    public boolean connectedTo(Vertex v) {
         return edges.containsValue(v);
     }
 
@@ -80,7 +89,7 @@ public class Vertex<L extends Comparable<L>> {
      * @param label Neighbor's label.
      * @return Neighbor Vertex.
      */
-    public Vertex<L> getNeighbor(L label) {
+    public Vertex getNeighbor(Feature label) {
         return edges.get(label);
     }
 
@@ -93,8 +102,8 @@ public class Vertex<L extends Comparable<L>> {
      *     comparisons
      * @return {@link NavigableMap} of neighboring vertices
      */
-    public NavigableMap<L, Vertex<L>> getNeighborsLessThan(
-            L label, boolean inclusive) {
+    public NavigableMap<Feature, Vertex> getNeighborsLessThan(
+            Feature label, boolean inclusive) {
         return edges.headMap(label, inclusive);
     }
 
@@ -107,8 +116,8 @@ public class Vertex<L extends Comparable<L>> {
      *     comparisons
      * @return {@link NavigableMap} of neighboring vertices
      */
-    public NavigableMap<L, Vertex<L>> getNeighborsGreaterThan(
-            L label, boolean inclusive) {
+    public NavigableMap<Feature, Vertex> getNeighborsGreaterThan(
+            Feature label, boolean inclusive) {
         return edges.tailMap(label, inclusive);
     }
 
@@ -121,8 +130,8 @@ public class Vertex<L extends Comparable<L>> {
      * @return {@link NavigableMap} of neighboring vertices in the specified
      *     range
      */
-    public NavigableMap<L, Vertex<L>> getNeighborsInRange(
-            L from, L to) {
+    public NavigableMap<Feature, Vertex> getNeighborsInRange(
+            Feature from, Feature to) {
 
         return getNeighborsInRange(from, true, to, false);
     }
@@ -138,8 +147,8 @@ public class Vertex<L extends Comparable<L>> {
      * @return {@link NavigableMap} of neighboring vertices in the specified
      *     range
      */
-    public NavigableMap<L, Vertex<L>> getNeighborsInRange(
-            L from, boolean fromInclusive, L to, boolean toInclusive) {
+    public NavigableMap<Feature, Vertex> getNeighborsInRange(
+            Feature from, boolean fromInclusive, Feature to, boolean toInclusive) {
 
         return edges.subMap(from, fromInclusive, to, toInclusive);
     }
@@ -149,7 +158,7 @@ public class Vertex<L extends Comparable<L>> {
      *
      * @return Neighbor Vertex labels.
      */
-    public Set<L> getNeighborLabels() {
+    public Set<Feature> getNeighborLabels() {
         return edges.keySet();
     }
 
@@ -158,7 +167,7 @@ public class Vertex<L extends Comparable<L>> {
      *
      * @return collection of all neighboring vertices.
      */
-    public Collection<Vertex<L>> getAllNeighbors() {
+    public Collection<Vertex> getAllNeighbors() {
         return edges.values();
     }
 
@@ -169,13 +178,14 @@ public class Vertex<L extends Comparable<L>> {
      * @param vertex The vertex to connect to.
      * @return Connected vertex.
      */
-    public Vertex<L> connect(Vertex<L> vertex) {
-        L label = vertex.getLabel();
-        Vertex<L> neighbor = getNeighbor(label);
+    public Vertex connect(Vertex v) {
+        Feature label = v.getLabel();
+        Vertex neighbor = getNeighbor(label);
         if (neighbor == null) {
-            edges.put(label, vertex);
-            return vertex;
+            edges.put(label, v);
+            return v;
         } else {
+            neighbor.getData().merge(v.getData());
             return neighbor;
         }
     }
@@ -191,10 +201,10 @@ public class Vertex<L extends Comparable<L>> {
     /**
      * Add and connect a collection of vertices in the form of a traversal path.
      */
-    public void addPath(Iterator<Vertex<L>> path) {
+    public void addPath(Iterator<Vertex> path) {
         if (path.hasNext()) {
-            Vertex<L> vertex = path.next();
-            Vertex<L> edge = connect(vertex);
+            Vertex vertex = path.next();
+            Vertex edge = connect(vertex);
             edge.addPath(path);
         }
     }
@@ -202,8 +212,20 @@ public class Vertex<L extends Comparable<L>> {
     /**
      * Retrieves the label associated with this vertex.
      */
-    public L getLabel() {
+    public Feature getLabel() {
         return label;
+    }
+
+    public void setLabel(Feature label) {
+        this.label = label;
+    }
+
+    public DataContainer getData() {
+        return data;
+    }
+
+    public void setData(DataContainer container) {
+        this.data = container;
     }
 
     /**
@@ -213,7 +235,7 @@ public class Vertex<L extends Comparable<L>> {
      */
     public long numDescendants() {
         long total = this.getAllNeighbors().size();
-        for (Vertex<L> child : this.getAllNeighbors()) {
+        for (Vertex child : this.getAllNeighbors()) {
             total += child.numDescendants();
         }
 
@@ -227,7 +249,7 @@ public class Vertex<L extends Comparable<L>> {
      */
     public long numDescendantEdges() {
         long total = this.getAllNeighbors().size();
-        for (Vertex<L> child : this.getAllNeighbors()) {
+        for (Vertex child : this.getAllNeighbors()) {
             total += child.numDescendantEdges();
         }
 
