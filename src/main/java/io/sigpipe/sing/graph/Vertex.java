@@ -87,7 +87,16 @@ public class Vertex<L extends Comparable<L>, V> {
         return edges.get(label);
     }
 
-    public NavigableMap<L, Vertex<L, V>> getNeighborsLessThan(
+    /**
+     * Retrieves the {@link NavigableMap} of neighboring vertices less than the
+     * specified value.
+     *
+     * @param label label value to compare against
+     * @param inclusive whether or not to include the label's value while doing
+     *     comparisons
+     * @return {@link NavigableMap} of neighboring vertices
+     */
+    public NavigableMap<L, Vertex<L>> getNeighborsLessThan(
             L label, boolean inclusive) {
         return edges.headMap(label, inclusive);
     }
