@@ -216,6 +216,8 @@ public class Vertex<L extends Comparable<L>, V> {
 
     public void addValues(Collection<V> values) {
         this.values.addAll(values);
+    public void disconnectAll() {
+        edges.clear();
     }
 
     /**
@@ -296,13 +298,6 @@ public class Vertex<L extends Comparable<L>, V> {
         return total;
     }
 
-    /**
-     * Removes all the edges from this Vertex, severing any connections with
-     * neighboring vertices.
-     */
-    public void clearEdges() {
-        edges.clear();
-    }
 
     /**
      * Clears all values associated with this Vertex.
