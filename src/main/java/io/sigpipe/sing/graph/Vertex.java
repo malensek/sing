@@ -117,6 +117,38 @@ public class Vertex<L extends Comparable<L>, V> {
     }
 
     /**
+     * Retrieves the {@link NavigableMap} of neighboring vertices within the
+     * range specified.
+     *
+     * @param from the beginning of the range (inclusive)
+     * @param to the end of the range (exclusive)
+     * @return {@link NavigableMap} of neighboring vertices in the specified
+     *     range
+     */
+    public NavigableMap<L, Vertex<L>> getNeighborsInRange(
+            L from, L to) {
+
+        return getNeighborsInRange(from, true, to, false);
+    }
+
+    /**
+     * Retrieves the {@link NavigableMap} of neighboring vertices within the
+     * range specified.
+     *
+     * @param from the beginning of the range
+     * @param fromInclusive whether to include 'from' in the range of values
+     * @param to the end of the range (exclusive)
+     * @param toInclusive whether to include 'to' in the range of values
+     * @return {@link NavigableMap} of neighboring vertices in the specified
+     *     range
+     */
+    public NavigableMap<L, Vertex<L>> getNeighborsInRange(
+            L from, boolean fromInclusive, L to, boolean toInclusive) {
+
+        return edges.subMap(from, fromInclusive, to, toInclusive);
+    }
+
+    /**
      * Retrieve the labels of all neighboring vertices.
      *
      * @return Neighbor Vertex labels.
