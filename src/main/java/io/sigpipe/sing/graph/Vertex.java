@@ -260,29 +260,9 @@ public class Vertex<L extends Comparable<L>, V> {
         values.clear();
     }
 
-    /**
-     * Pretty-print this vertex (and its children) with a given indent level.
-     */
-    protected String toString(int indent) {
-        String ls = System.lineSeparator();
-        String str = "(" + getLabel() + " " + values + ")" + ls;
-
-        String space = " ";
-        for (int i = 0; i < indent; ++i) {
-            space += "|  ";
-        }
-        space += "|-";
-        ++indent;
-
-        for (Vertex<L, V> vertex : edges.values()) {
-            str += space + vertex.toString(indent);
-        }
-
-        return str;
-    }
-
     @Override
     public String toString() {
-        return toString(0);
+        return "V: [" + label.toString() + "] "
+            + "(" + this.getAllNeighbors().size() + ")";
     }
 }
