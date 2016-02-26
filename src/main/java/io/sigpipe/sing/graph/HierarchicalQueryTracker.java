@@ -41,36 +41,36 @@ import io.sigpipe.sing.dataset.feature.Feature;
  */
 public class HierarchicalQueryTracker<T> {
 
-    public List<List<Path<Feature, T>>> results = new ArrayList<>();
+    public List<List<Path>> results = new ArrayList<>();
     private int farthestEvaluatedExpression = 0;
     private int currentLevel = 0;
 
-    private Path<Feature, T> rootPath;
+    private Path rootPath;
 
-    public HierarchicalQueryTracker(Vertex<Feature, T> root, int numFeatures) {
+    public HierarchicalQueryTracker(Vertex root, int numFeatures) {
         int size = numFeatures + 1;
         results = new ArrayList<>(size);
         for (int i = 0; i < size; ++i) {
-            results.add(new ArrayList<Path<Feature, T>>());
+            results.add(new ArrayList<Path>());
         }
 
-        rootPath = new Path<Feature, T>(root);
-        List<Path<Feature, T>> l = new ArrayList<>(1);
+        rootPath = new Path(root);
+        List<Path> l = new ArrayList<>(1);
         l.add(rootPath);
         results.get(0).add(rootPath);
     }
 
-    public void addResults(Path<Feature, T> previousPath,
-            Collection<Vertex<Feature, T>> results) {
+    public void addResults(Path previousPath,
+            Collection<Vertex> results) {
 
-        for (Vertex<Feature, T> vertex : results) {
-            Path<Feature, T> path = new Path<>(previousPath);
+        for (Vertex vertex : results) {
+            Path path = new Path(previousPath);
             path.add(vertex);
 
-            /* Copy over the payload */
-            if (vertex.getValues().size() > 0) {
-                path.setPayload(new HashSet<>(vertex.getValues()));
-            }
+//            /* Copy over the payload */
+//            if (vertex.getValues().size() > 0) {
+//                path.setPayload(new HashSet<>(vertex.getValues()));
+//            }
 
             this.results.get(getCurrentLevel()).add(path);
         }
@@ -91,7 +91,7 @@ public class HierarchicalQueryTracker<T> {
      * Retrieves the results that are currently being processed. In other words,
      * get the results from the last level in the hierarchy.
      */
-    public List<Path<Feature, T>> getCurrentResults() {
+    public List<Path> getCurrentResults() {
         return results.get(getCurrentLevel() - 1);
     }
 
@@ -99,13 +99,13 @@ public class HierarchicalQueryTracker<T> {
         farthestEvaluatedExpression = getCurrentLevel();
     }
 
-    public List<Path<Feature, T>> getQueryResults() {
-        List<Path<Feature, T>> paths = new ArrayList<>();
+    public List<Path> getQueryResults() {
+        List<Path> paths = new ArrayList<>();
         for (int i = farthestEvaluatedExpression; i < results.size(); ++i) {
-            for (Path<Feature, T> path : results.get(i)) {
-                if (path.hasPayload()) {
-                    paths.add(path);
-                }
+            for (Path path : results.get(i)) {
+//                if (path.hasPayload()) {
+//                    paths.add(path);
+//                }
             }
         }
         return paths;

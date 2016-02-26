@@ -26,13 +26,12 @@ software, even if advised of the possibility of such damage.
 package io.sigpipe.sing.graph;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+
+import io.sigpipe.sing.dataset.feature.Feature;
 
 /**
  * Represents a simple graph path.  A path contains a number of vertices and
@@ -40,48 +39,38 @@ import java.util.Set;
  *
  * @author malensek
  */
-public class Path<L extends Comparable<L>, V>
-implements Iterable<Vertex<L, V>> {
+public class Path implements Iterable<Vertex> {
 
-    protected List<Vertex<L, V>> vertices = new ArrayList<>();
-    protected Set<V> payload = new HashSet<V>();
+    protected List<Vertex> vertices = new ArrayList<>();
 
     /**
      * Create a Path with a number of vertices pre-populated.
      */
     @SafeVarargs
-    public Path(Vertex<L, V>... vertices) {
-        for (Vertex<L, V> vertex : vertices) {
+    public Path(Vertex... vertices) {
+        for (Vertex vertex : vertices) {
             this.vertices.add(vertex);
         }
     }
 
     /**
-     * Create a Path with a single payload and number of vertices pre-populated.
+     * Create a Path from a number of features.
      */
     @SafeVarargs
-    public Path(V payload, Vertex<L, V>... vertices) {
-        this(vertices);
-        addPayload(payload);
-    }
-
-    /**
-     * Create a Path with payload(s) and number of vertices pre-populated.
-     */
-    @SafeVarargs
-    public Path(Set<V> payload, Vertex<L, V>... vertices) {
-        this(vertices);
-        setPayload(payload);
+    public Path(Feature... features) {
+        for (Feature feature : features) {
+            this.vertices.add(new Vertex(feature));
+        }
     }
 
     /**
      * Creates a path by copying the vertices from an existing path.
      */
-    public Path(Path<L, V> p) {
+    public Path(Path p) {
         /* New Vertices must be created if this path will be used anywhere but
          * its source graph; the type hierarchy is embedded in the vertices. */
-        for (Vertex<L, V> v : p.getVertices()) {
-            this.vertices.add(new Vertex<L, V>(v));
+        for (Vertex v : p.getVertices()) {
+            this.vertices.add(new Vertex(v));
         }
     }
 
@@ -92,72 +81,56 @@ implements Iterable<Vertex<L, V>> {
         return vertices.size();
     }
 
-    public void add(Vertex<L, V> vertex) {
+    public void add(Vertex vertex) {
         vertices.add(vertex);
     }
 
-    public void add(L label) {
-        add(new Vertex<L, V>(label));
+    public void add(Feature label) {
+        add(new Vertex(label));
     }
 
-    public void add(L label, V value) {
-        add(new Vertex<>(label, value));
+    public void add(Feature label, DataContainer value) {
+        add(new Vertex(label, value));
     }
 
     public void remove(int index) {
         vertices.remove(index);
     }
 
-    public boolean remove(Vertex<L, V> vertex) {
+    public boolean remove(Vertex vertex) {
         return vertices.remove(vertex);
     }
 
-    public Vertex<L, V> get(int index) {
+    public Vertex get(int index) {
         return vertices.get(index);
     }
 
-    public Vertex<L, V> getTail() {
+    public Vertex getTail() {
         return vertices.get(vertices.size() - 1);
     }
 
-    public List<Vertex<L, V>> getVertices() {
+    public List<Vertex> getVertices() {
         return vertices;
-    }
-
-    public Set<V> getPayload() {
-        return payload;
-    }
-
-    public void setPayload(Set<V> payload) {
-        this.payload = payload;
-    }
-
-    public void addPayload(V payload) {
-        this.payload.add(payload);
-    }
-
-    public boolean hasPayload() {
-        return payload.size() > 0;
     }
 
     /**
      * Retrieve a list of the {@link Vertex} labels in this Path.
      */
-    public List<L> getLabels() {
-        List<L> labels = new ArrayList<>();
-        for (Vertex<L, V> vertex : vertices) {
+    public List<Feature> getLabels() {
+        List<Feature> labels = new ArrayList<>();
+        for (Vertex vertex : vertices) {
             labels.add(vertex.getLabel());
         }
 
         return labels;
     }
 
-    public void sort(Comparator<? super Vertex<L, V>> c) {
+    public void sort(Comparator<? super Vertex> c) {
         Collections.sort(vertices, c);
     }
 
     @Override
-    public Iterator<Vertex<L, V>> iterator() {
+    public Iterator<Vertex> iterator() {
         return vertices.iterator();
     }
 
@@ -169,9 +142,6 @@ implements Iterable<Vertex<L, V>> {
 
             if (i < vertices.size() - 1) {
                 str += " -> ";
-            } else {
-                /* Include the path 'payload' */
-                str += " " + payload.toString();
             }
         }
 
