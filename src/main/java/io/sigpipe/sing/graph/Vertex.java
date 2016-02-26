@@ -252,7 +252,13 @@ public class Vertex {
      * @return number of descendant edges.
      */
     public long numDescendantEdges() {
-        long total = this.getAllNeighbors().size();
+        long total = 0;
+        int numNeighbors = this.getAllNeighbors().size();
+
+        if (numNeighbors > 0) {
+            total = numNeighbors + numNeighbors - 1;
+        }
+
         for (Vertex child : this.getAllNeighbors()) {
             total += child.numDescendantEdges();
         }
