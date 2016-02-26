@@ -1,13 +1,11 @@
 package io.sigpipe.sing.graph;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.NavigableMap;
 import java.util.logging.Logger;
 import java.util.Map;
@@ -18,10 +16,6 @@ import java.util.TreeSet;
 import io.sigpipe.sing.dataset.Pair;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
-import io.sigpipe.sing.query.Expression;
-import io.sigpipe.sing.query.Operation;
-import io.sigpipe.sing.query.PayloadFilter;
-import io.sigpipe.sing.query.Query;
 
 public class Sketch {
 
