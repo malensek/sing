@@ -171,6 +171,10 @@ public class Vertex {
         return edges.values();
     }
 
+    public long numNeighbors() {
+        return edges.size();
+    }
+
     /**
      * Connnects two vertices.  If this vertex is already connected to the
      * provided vertex label, then the already-connected vertex is returned.
