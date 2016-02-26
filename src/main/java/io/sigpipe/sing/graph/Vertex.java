@@ -256,6 +256,18 @@ public class Vertex {
         return total;
     }
 
+    public long numLeaves() {
+        long total = 0;
+        if (this.numNeighbors() == 0) {
+            total++;
+        } else {
+            for (Vertex child : this.getAllNeighbors()) {
+                total += child.numLeaves();
+            }
+        }
+        return total;
+    }
+
     @Override
     public String toString() {
         return "V: [" + label.toString() + "] "
