@@ -310,7 +310,9 @@ public class RunningStatistics implements ByteSerializable {
         str += "Number of Samples: " + n + System.lineSeparator();
         str += "Mean: " + mean + System.lineSeparator();
         str += "Variance: " + var() + System.lineSeparator();
-        str += "Std Dev: " + std();
+        str += "Std Dev: " + std() + System.lineSeparator();
+        str += "Min: " + min + System.lineSeparator();
+        str += "Max: " + max;
         return str;
     }
 
