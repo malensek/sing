@@ -228,6 +228,10 @@ public class Vertex {
         return data;
     }
 
+    public boolean hasData() {
+        return data != null;
+    }
+
     public void setData(DataContainer container) {
         this.data = container;
     }
