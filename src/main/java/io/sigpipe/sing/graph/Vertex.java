@@ -189,7 +189,12 @@ public class Vertex {
             edges.put(label, v);
             return v;
         } else {
-            neighbor.getData().merge(v.getData());
+            if (neighbor.hasData()) {
+                DataContainer container = neighbor.getData();
+                container.merge(v.getData());
+            } else {
+                neighbor.setData(v.getData());
+            }
             return neighbor;
         }
     }
