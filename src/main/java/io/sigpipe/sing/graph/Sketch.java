@@ -1,11 +1,13 @@
 package io.sigpipe.sing.graph;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NavigableMap;
 import java.util.logging.Logger;
 import java.util.Map;
@@ -16,6 +18,7 @@ import java.util.TreeSet;
 import io.sigpipe.sing.dataset.Pair;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
+import io.sigpipe.sing.stat.RunningStatistics2D;
 
 public class Sketch {
 
@@ -102,29 +105,54 @@ public class Sketch {
     /**
      * Adds a new {@link Path} to the Hierarchical Graph.
      */
-    public void addPath(Path path, DataContainer payload)
+    public void addPath(Path path)
     throws FeatureTypeMismatchException, GraphException {
         if (path.size() == 0) {
             throw new GraphException("Attempted to add empty path!");
         }
 
-        //for (Vertex v : path) {
-        //    Float newFloat = ts.ceiling(v.getLabel().getFloat());
-        //    if (newFloat == null) {
-        //        newFloat = 1.0f;
-        //    }
-        //    v.setLabel(new Feature(v.getLabel().getName(), newFloat));
-        //}
+        int counter = 0;
+
+        Iterator<Vertex> it = path.iterator();
+        while (it.hasNext()) {
+            Vertex v= it.next();
+            Float newFloat = ts.ceiling(v.getLabel().getFloat());
+            if (newFloat == null) {
+                newFloat = 1.0f;
+            }
+            v.setLabel(new Feature(v.getLabel().getName(), newFloat));
+            counter++;
+            if (counter >= 40) {
+                it.remove();
+            }
+        }
 
         checkFeatureTypes(path);
         addNullFeatures(path);
         reorientPath(path);
         optimizePath(path);
 
+        List<ContainerEntry> entries = new ArrayList<>();
+        for (int i = 0; i < path.size(); ++i) {
+            for (int j = i; j < path.size(); ++j) {
+                Feature f1 = path.get(i).getLabel();
+                Feature f2 = path.get(j).getLabel();
+                int o1 = levels.get(f1.getName()).order;
+                int o2 = levels.get(f2.getName()).order;
+                ContainerEntry entry = new ContainerEntry();
+                entry.feature1ID = o1;
+                entry.feature2ID = o2;
+                entry.stats = new RunningStatistics2D();
+                entry.stats.put(f1.getFloat(), f2.getFloat());
+                entries.add(entry);
+            }
+        }
+        DataContainer container = new DataContainer();
+        container.entries = entries;
 
 
         /* Place the path payload (traversal result) at the end of this path. */
-        path.get(path.size() - 1).setData(payload);
+        path.get(path.size() - 1).setData(container);
 
         root.addPath(path.iterator());
     }
