@@ -171,7 +171,7 @@ public class Vertex {
         return edges.values();
     }
 
-    public long numNeighbors() {
+    public int numNeighbors() {
         return edges.size();
     }
 
