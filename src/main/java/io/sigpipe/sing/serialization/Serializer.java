@@ -221,7 +221,7 @@ public class Serializer {
      * @param compressionLevel gzip compression level (1 - 9)
      */
     public static void persistCompressed(
-            ByteSerializable obj, File file, int compressionLevel)
+            ByteSerializable obj, File file, final int compressionLevel)
     throws IOException {
         FileOutputStream fOs = new FileOutputStream(file);
         /* Note: the GZIPOutputStream appears here in our stream pipeline
