@@ -23,7 +23,7 @@ public class Quantizer {
     }
 
     public Feature quantize(Feature feature) {
-        return ticks.ceiling(feature);
+        return ticks.floor(feature);
     }
 
     @Override
