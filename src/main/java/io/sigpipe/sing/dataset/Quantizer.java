@@ -46,7 +46,9 @@ public class Quantizer {
     }
 
     public Feature quantize(Feature feature) {
-        return ticks.floor(feature);
+        Feature result = ticks.floor(feature);
+        //TODO if this is null, handle the special case
+        return result;
     }
 
     @Override
