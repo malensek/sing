@@ -52,9 +52,7 @@ public class Quantizer {
     @Override
     public String toString() {
         String output = "";
-        Iterator<Feature> it = ticks.iterator();
-        while (it.hasNext()) {
-            Feature f = it.next();
+        for (Feature f : ticks) {
             output += f.getString() + System.lineSeparator();
         }
         return output;
