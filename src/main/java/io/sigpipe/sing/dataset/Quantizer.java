@@ -23,10 +23,6 @@ public class Quantizer {
     private NavigableSet<Feature> ticks = new TreeSet<>();
 
     public <T> Quantizer(Feature interval, T step) {
-//        if (interval.isInterval() == false) {
-//            return;
-//        }
-
         Double start = 0.0;
         Double finish = 100.0;
         Double stepSz = 2.8;
