@@ -33,7 +33,7 @@ import io.sigpipe.sing.dataset.Pair;
  *
  * @author malensek
  */
-abstract class IntervalFeatureData<T extends Number & Comparable<T>>
+public abstract class IntervalFeatureData<T extends Number & Comparable<T>>
 extends NumericFeatureData<T> {
 
     protected T data2;
