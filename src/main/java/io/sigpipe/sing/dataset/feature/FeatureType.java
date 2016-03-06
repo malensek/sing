@@ -40,8 +40,8 @@ public enum FeatureType {
     LONG(2),
     FLOAT(3),
     DOUBLE(4),
-    STRING(9),
-    BINARY(10);
+    STRING(5),
+    BINARY(6);
 
     private final int type;
 
