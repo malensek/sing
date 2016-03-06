@@ -40,10 +40,6 @@ public enum FeatureType {
     LONG(2),
     FLOAT(3),
     DOUBLE(4),
-    INTERVAL_INT(5),
-    INTERVAL_LONG(6),
-    INTERVAL_FLOAT(7),
-    INTERVAL_DOUBLE(8),
     STRING(9),
     BINARY(10);
 
