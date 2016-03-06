@@ -115,10 +115,6 @@ public enum FeatureType {
             case LONG: return LongFeatureData.class;
             case FLOAT: return FloatFeatureData.class;
             case DOUBLE: return DoubleFeatureData.class;
-            case INTERVAL_INT: return IntegerIntervalFeatureData.class;
-            case INTERVAL_LONG: return LongIntervalFeatureData.class;
-            case INTERVAL_FLOAT: return FloatIntervalFeatureData.class;
-            case INTERVAL_DOUBLE: return DoubleIntervalFeatureData.class;
             case STRING: return StringFeatureData.class;
             case BINARY: return BinaryFeatureData.class;
             default: return null;
