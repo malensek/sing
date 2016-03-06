@@ -120,71 +120,6 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
     }
 
     /**
-     * Constructs an interval Feature with bounds specified as int values.
-     */
-    public Feature(String name, int value1, int value2) {
-        setName(name);
-        this.data = new IntegerIntervalFeatureData(value1, value2);
-    }
-
-    /**
-     * Constructs a nameless interval Feature with bounds specified as int
-     * values.
-     */
-    public Feature(int value1, int value2) {
-        this("", value1, value2);
-    }
-
-    /**
-     * Constructs an interval Feature with bounds specified as long values.
-     */
-    public Feature(String name, long value1, long value2) {
-        setName(name);
-        this.data = new LongIntervalFeatureData(value1, value2);
-    }
-
-    /**
-     * Constructs an interval Feature with bounds specified as long values.
-     */
-    public Feature(long value1, long value2) {
-        this("", value1, value2);
-    }
-
-    /**
-     * Constructs an interval Feature with bounds specified as floating point
-     * values.
-     */
-    public Feature(String name, float value1, float value2) {
-        setName(name);
-        this.data = new FloatIntervalFeatureData(value1, value2);
-    }
-
-    /**
-     * Constructs a nameless interval Feature with bounds specified as floating
-     * point values.
-     */
-    public Feature(float value1, float value2) {
-        this("", value1, value2);
-    }
-
-    /**
-     * Constructs an interval Feature with bounds specified as double-precision
-     * floating point values.
-     */
-    public Feature(String name, double value1, double value2) {
-        setName(name);
-        this.data = new DoubleIntervalFeatureData(value1, value2);
-    }
-
-    /**
-     * Constructs a nameless interval Feature with bounds specified as
-     * double-precision floating point values.
-     */
-    public Feature(double value1, double value2) {
-        this("", value1, value2);
-    }
-
-    /**
      * Constructs a String Feature.
      */
     public Feature(String name, String value) {
@@ -272,10 +207,6 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
 
     public FeatureType getType() {
         return data.getType();
-    }
-
-    public boolean isInterval() {
-        return this.data.getType().isInterval();
     }
 
     public boolean isRawBytes() {
