@@ -27,6 +27,8 @@ package io.sigpipe.sing.dataset.feature;
 
 public class IllegalFeatureComparisonException extends ClassCastException {
 
+    private static final long serialVersionUID = 3609806621134764641L;
+
     public IllegalFeatureComparisonException(
             FeatureData<?> a, FeatureData<?> b) {
         super(
