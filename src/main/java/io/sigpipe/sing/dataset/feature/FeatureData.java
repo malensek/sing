@@ -25,9 +25,6 @@ software, even if advised of the possibility of such damage.
 
 package io.sigpipe.sing.dataset.feature;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import io.sigpipe.sing.dataset.Pair;
 import io.sigpipe.sing.serialization.ByteSerializable;
 
@@ -39,8 +36,6 @@ import io.sigpipe.sing.serialization.ByteSerializable;
  */
 abstract class FeatureData<T extends Comparable<T>>
 implements ByteSerializable, Comparable<FeatureData<?>> {
-
-    private static final Logger logger = Logger.getLogger("io.sigpipe.sing");
 
     protected T data;
     protected FeatureType type = FeatureType.NULL;
