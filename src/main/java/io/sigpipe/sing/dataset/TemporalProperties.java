@@ -30,10 +30,12 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 
+import io.sigpipe.sing.serialization.ByteSerializable;
 import io.sigpipe.sing.serialization.ByteSerializable.Deserialize;
 import io.sigpipe.sing.serialization.SerializationInputStream;
+import io.sigpipe.sing.serialization.SerializationOutputStream;
 
-public class TemporalProperties {
+public class TemporalProperties implements ByteSerializable {
 
     private long start;
     private long end;
@@ -157,5 +159,12 @@ public class TemporalProperties {
     throws IOException {
         this.start = in.readLong();
         this.end = in.readLong();
+    }
+
+    @Override
+    public void serialize(SerializationOutputStream out)
+    throws IOException {
+        out.writeLong(this.start);
+        out.writeLong(this.end);
     }
 }
