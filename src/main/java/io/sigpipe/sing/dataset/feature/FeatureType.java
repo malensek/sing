@@ -53,20 +53,6 @@ public enum FeatureType {
         return type;
     }
 
-    /**
-     * Determines whether this FeatureType is an interval type (represented by
-     * an {@link IntervalFeatureData} instance).
-     *
-     * @return true if the FeatureType is an an interval type.
-     */
-    public boolean isInterval() {
-        if (type >= 5 && type <= 8) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     static Map<Integer, FeatureType> typeMap = new HashMap<>();
 
     static {
