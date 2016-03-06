@@ -196,18 +196,7 @@ implements ByteSerializable, Comparable<FeatureData<?>> {
             int compare = this.data.compareTo((T) featureData.data);
             return compare;
         } catch (ClassCastException e) {
-            //TODO: should this really result in a log message? A better
-            //approach may be to throw a custom error here.
-            if (logger.isLoggable(Level.WARNING)) {
-                FeatureData<T> a = this;
-                FeatureData<?> b = featureData;
-
-                logger.warning("Illegal comparison between Feature types! "
-                        + "[" + a.getType() + ", " + a.data + "]"
-                        + " cannot be compared to "
-                        + "[" + b.getType() + ", " + b.data + "]");
-            }
-            throw e;
+            throw new IllegalFeatureComparisonException(this, featureData);
         }
     }
 }
