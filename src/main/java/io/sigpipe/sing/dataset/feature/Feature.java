@@ -341,12 +341,11 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
     }
 
     /**
-     * Adds this Feature to another Feature. If the data types are inconsistent,
-     * an attempt will be made to convert the Feature passed in. The resulting
-     * Feature will inherit this Feature's name.
+     * Adds two Features, and returns a new Feature containing the sum. The
+     * resulting Feature will inherit this Feature's name.
      *
-     * @param f Feature to add
-     * @return Sum of the two features
+     * @param f The feature to add to
+     * @return {@link Feature} instance containing the sum.
      */
     public Feature add(Feature f) {
         Feature result = this.data.add(f);

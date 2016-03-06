@@ -141,6 +141,12 @@ implements ByteSerializable, Comparable<FeatureData<?>> {
      */
     public abstract byte[] toBytes();
 
+    /**
+     * Adds two Features, and returns a new Feature containing the sum.
+     *
+     * @param f The feature to add to
+     * @return {@link Feature} instance containing the sum.
+     */
     public Feature add(Feature f) {
         throw new UnsupportedOperationException();
     }
