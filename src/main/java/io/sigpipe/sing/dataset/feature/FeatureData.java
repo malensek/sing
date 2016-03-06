@@ -141,6 +141,10 @@ implements ByteSerializable, Comparable<FeatureData<?>> {
      */
     public abstract byte[] toBytes();
 
+    public Feature add(Feature f) {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * Return this FeatureData's type.
      *

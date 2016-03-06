@@ -340,6 +340,10 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
         return data.toString();
     }
 
+    public Feature add(Feature f) {
+        return this.data.add(f);
+    }
+
     public boolean greater(Feature f) {
         return this.compareTo(f) > 0;
     }
