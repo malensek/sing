@@ -230,17 +230,6 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
     }
 
     /**
-     * If this Feature contains an interval, this method retrieves the general
-     * {@link IntervalFeatureData} container.
-     *
-     * @throws ClassCastException if the underlying FeatureData is not an
-     * interval.
-     */
-    public IntervalFeatureData<?> getInterval() {
-        return (IntervalFeatureData<?>) this.data;
-    }
-
-    /**
      * If this Feature contains raw bytes, this method retrieves them as a
      * native Java byte array.
      *
