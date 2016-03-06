@@ -30,10 +30,13 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 
-import io.sigpipe.sing.dataset.feature.LongIntervalFeatureData;
+import io.sigpipe.sing.serialization.ByteSerializable.Deserialize;
 import io.sigpipe.sing.serialization.SerializationInputStream;
 
-public class TemporalProperties extends LongIntervalFeatureData {
+public class TemporalProperties {
+
+    private long start;
+    private long end;
 
     private DateFormat formatter = DateFormat.getDateInstance(DateFormat.LONG);
 
@@ -43,7 +46,8 @@ public class TemporalProperties extends LongIntervalFeatureData {
      * @param timestamp Timestamp for these TemporalProperties
      */
     public TemporalProperties(long timestamp) {
-        super(timestamp, timestamp);
+        this.start = timestamp;
+        this.end = timestamp;
     }
 
     /**
@@ -55,7 +59,8 @@ public class TemporalProperties extends LongIntervalFeatureData {
      */
     public TemporalProperties(long start, long end)
     throws IllegalArgumentException {
-        super(start, end);
+        this.start = start;
+        this.end = end;
 
         verifyRange();
     }
@@ -69,12 +74,12 @@ public class TemporalProperties extends LongIntervalFeatureData {
      */
     public TemporalProperties(String start, String end)
     throws ParseException, IllegalArgumentException {
-        super(0, 0);
+        this(0, 0);
         Date startDate = formatter.parse(start);
         Date endDate = formatter.parse(end);
 
-        this.data = startDate.getTime();
-        this.data2 = endDate.getTime();
+        this.start = startDate.getTime();
+        this.end = endDate.getTime();
 
         verifyRange();
     }
@@ -110,7 +115,7 @@ public class TemporalProperties extends LongIntervalFeatureData {
      * @return starting point, as a long integer.
      */
     public long getStart() {
-        return data;
+        return start;
     }
 
     /**
@@ -120,7 +125,7 @@ public class TemporalProperties extends LongIntervalFeatureData {
      * @return the end time point, as a long integer.
      */
     public long getEnd() {
-        return data2;
+        return end;
     }
 
     /** 
@@ -150,6 +155,7 @@ public class TemporalProperties extends LongIntervalFeatureData {
     @Deserialize
     public TemporalProperties(SerializationInputStream in)
     throws IOException {
-        super(in);
+        this.start = in.readLong();
+        this.end = in.readLong();
     }
 }
