@@ -164,8 +164,8 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
      *
      * @param o Object to convert to a Feature
      */
-    public static Feature fromNativeType(Object o) {
-        return fromNativeType("", o);
+    public static Feature fromPrimitiveType(Object o) {
+        return fromPrimitiveType("", o);
     }
 
     /**
@@ -178,7 +178,7 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
      * @param name Name of the resulting Feature
      * @param o Object to convert to a Feature
      */
-    public static Feature fromNativeType(String name, Object o) {
+    public static Feature fromPrimitiveType(String name, Object o) {
         FeatureType type = FeatureType.fromPrimitiveType(o);
         if (type == null) {
             throw new IllegalArgumentException("Cannot construct a Feature "
