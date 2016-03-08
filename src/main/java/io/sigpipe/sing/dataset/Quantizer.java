@@ -22,6 +22,12 @@ public class Quantizer {
 
     private NavigableSet<Feature> ticks = new TreeSet<>();
 
+    public Quantizer(Object start, Object end, Object step) {
+        this(
+                Feature.fromPrimitiveType(start),
+                Feature.fromPrimitiveType(end),
+                Feature.fromPrimitiveType(step));
+    }
 
     public Quantizer(Feature start, Feature end, Feature step) {
         this.start = start;
