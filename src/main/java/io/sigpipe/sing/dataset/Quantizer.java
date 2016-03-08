@@ -30,6 +30,10 @@ public class Quantizer {
     }
 
     public Quantizer(Feature start, Feature end, Feature step) {
+        if (start.sameType(end) == false || start.sameType(step) == false) {
+            throw new IllegalArgumentException(
+                    "All feature types must be the same");
+        }
         this.start = start;
         this.end = end;
 
