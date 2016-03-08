@@ -313,7 +313,7 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
         }
 
         Feature other = (Feature) obj;
-        if (this.name.equals(other.name) && this.data.equals(other.data)) {
+        if (this.data.equals(other.data)) {
             return true;
         }
 
