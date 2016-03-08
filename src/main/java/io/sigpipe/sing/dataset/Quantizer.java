@@ -50,7 +50,9 @@ public class Quantizer {
 
     public Feature quantize(Feature feature) {
         Feature result = ticks.floor(feature);
-        //TODO if this is null, handle the special case
+        if (result == null) {
+            return ticks.first();
+        }
         return result;
     }
 
