@@ -45,11 +45,20 @@ public class Quantizer {
         return result;
     }
 
+    /**
+     * Retrieves the next tick mark value after the given Feature. In other
+     * words, this method will return the bucket after the given Feature's
+     * bucket. If there is no next tick mark (the specified Feature's bucket is
+     * at the end of the range) then this method returns null.
+     *
+     * @param feature Feature to use to locate the next tick mark bucket in the
+     *     range.
+     * @return Next tick mark, or null if the end of the range has been reached.
+     */
     public Feature nextTick(Feature feature) {
-        Feature result = ticks.higher(feature);
-        //TODO this will return null when feature > highest tick, but should
-        //actually return 'end'
-        return result;
+        return ticks.higher(feature);
+    }
+
     /**
      * Retrieves the tick mark value preceding the given Feature. In other
      * words, this method will return the bucket before the given Feature's
