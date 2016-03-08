@@ -30,16 +30,16 @@ public class Quantizer {
 
         Feature tick = new Feature(start);
         while (tick.less(end)) {
-            insertTick(tick);
+            addTick(tick);
             tick = tick.add(step);
         }
     }
 
-    public void insertTick(Feature tick) {
+    private void addTick(Feature tick) {
         ticks.add(tick);
     }
 
-    public void removeTick(Feature tick) {
+    private void removeTick(Feature tick) {
         ticks.remove(tick);
     }
 
