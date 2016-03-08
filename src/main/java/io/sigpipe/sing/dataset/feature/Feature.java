@@ -277,8 +277,16 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
         return this.compareTo(f) > 0;
     }
 
+    public boolean greaterEqual(Feature f) {
+        return this.compareTo(f) >= 0;
+    }
+
     public boolean less(Feature f) {
         return this.compareTo(f) < 0;
+    }
+
+    public boolean lessEqual(Feature f) {
+        return this.compareTo(f) <= 0;
     }
 
     @Override
