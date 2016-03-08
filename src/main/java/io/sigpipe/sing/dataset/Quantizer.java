@@ -22,14 +22,7 @@ public class Quantizer {
 
     private NavigableSet<Feature> ticks = new TreeSet<>();
 
-    public <T> Quantizer(Feature interval, T step) {
-        Double start = 0.0;
-        Double finish = 100.0;
-        Double stepSz = 2.8;
 
-        for (Double i = start; i < finish; i += stepSz) {
-            Feature f = new Feature(i);
-            insertTick(f);
         }
     }
 
