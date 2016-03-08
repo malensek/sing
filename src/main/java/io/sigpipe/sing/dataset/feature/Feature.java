@@ -209,6 +209,10 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
         return data.getType();
     }
 
+    public boolean sameType(Feature otherFeature) {
+        return this.getType() == otherFeature.getType();
+    }
+
     public boolean isRawBytes() {
         return this.data.getType() == FeatureType.BINARY;
     }
