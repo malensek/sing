@@ -102,4 +102,34 @@ public class Quantizer {
         return output;
     }
 
+    public static class QuantizerBuilder {
+        List<Feature> ticks = new ArrayList<>();
+
+        public void addTick(Feature tick) {
+            this.ticks.add(tick);
+        }
+
+        public void addTicks(Feature... ticks) {
+            for (Feature tick : ticks) {
+                addTick(tick);
+            }
+        }
+
+        public void removeTick(Feature tick) {
+            this.ticks.remove(tick);
+        }
+
+        public List<Feature> getTicks() {
+            return new ArrayList<Feature>(ticks);
+        }
+
+        public Quantizer build() {
+            Quantizer q = new Quantizer();
+            for (Feature tick : ticks) {
+                q.addTick(tick);
+            }
+
+            return q;
+        }
+    }
 }
