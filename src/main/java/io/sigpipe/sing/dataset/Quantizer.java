@@ -37,6 +37,10 @@ public class Quantizer {
         ticks.remove(tick);
     }
 
+    public int numTicks() {
+        return ticks.size();
+    }
+
     /**
      * Quantizes a given Feature based on this Quantizer's tick mark
      * configuration. When quantizing a Feature, a bucket will be retrieved that
