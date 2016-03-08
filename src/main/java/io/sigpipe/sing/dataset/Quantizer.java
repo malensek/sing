@@ -50,6 +50,18 @@ public class Quantizer {
         //TODO this will return null when feature > highest tick, but should
         //actually return 'end'
         return result;
+    /**
+     * Retrieves the tick mark value preceding the given Feature. In other
+     * words, this method will return the bucket before the given Feature's
+     * bucket. If there is no previous tick mark (the specified Feature's bucket
+     * is at the beginning of the range) then this method returns null.
+     *
+     * @param feature Feature to use to locate the previous tick mark bucket in
+     *     the range.
+     * @return Next tick mark, or null if the end of the range has been reached.
+     */
+    public Feature prevTick(Feature feature) {
+        return ticks.lower(feature);
     }
 
     @Override
