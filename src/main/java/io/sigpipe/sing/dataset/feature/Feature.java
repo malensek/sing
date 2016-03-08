@@ -264,6 +264,38 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
         return data.toString();
     }
 
+    public Feature convertTo(FeatureType type) {
+        Feature f = null;
+        switch (type) {
+            case INT:
+                f = new Feature(this.getInt());
+                break;
+            case LONG:
+                f = new Feature(this.getLong());
+                break;
+            case FLOAT:
+                f = new Feature(this.getFloat());
+                break;
+            case DOUBLE:
+                f = new Feature(this.getDouble());
+                break;
+            case STRING:
+                f = new Feature(this.getString());
+                break;
+            case BINARY:
+                f = new Feature(this.getRawBytes());
+                break;
+            default:
+                f = new Feature();
+        }
+        f.setName(this.getName());
+        return f;
+    }
+
+    public Feature convertTo(Feature f) {
+        return convertTo(f.getType());
+    }
+
     /**
      * Adds two Features, and returns a new Feature containing the sum. The
      * resulting Feature will inherit this Feature's name.
