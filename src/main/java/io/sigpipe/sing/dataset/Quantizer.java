@@ -9,6 +9,12 @@ public class Quantizer {
 
     private NavigableSet<Feature> ticks = new TreeSet<>();
 
+    public Quantizer(Feature... ticks) {
+        for (Feature tick : ticks) {
+            addTick(tick);
+        }
+    }
+
     public Quantizer(Object start, Object end, Object step) {
         this(
                 Feature.fromPrimitiveType(start),
