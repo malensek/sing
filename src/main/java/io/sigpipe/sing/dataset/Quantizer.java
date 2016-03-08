@@ -8,17 +8,6 @@ import io.sigpipe.sing.dataset.feature.Feature;
 
 public class Quantizer {
 
-    public static void main(String[] args) {
-        Quantizer q = new Quantizer(new Feature(28.3), 2.8);
-        System.out.println(q);
-
-        System.out.println(q.quantize(new Feature(1.1)));
-        System.out.println(q.quantize(new Feature(2.8)));
-        System.out.println(q.quantize(new Feature(-100.0)));
-        System.out.println(q.quantize(new Feature(80.0)));
-        System.out.println(q.quantize(new Feature(100.0)));
-
-    }
 
     private NavigableSet<Feature> ticks = new TreeSet<>();
 
