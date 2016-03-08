@@ -37,6 +37,16 @@ public class Quantizer {
         ticks.remove(tick);
     }
 
+    /**
+     * Quantizes a given Feature based on this Quantizer's tick mark
+     * configuration. When quantizing a Feature, a bucket will be retrieved that
+     * represents the Feature in question in the tick mark range. Note that the
+     * bucket returned is not necessarily closest in value to the Feature, but
+     * simply represents its range of values.
+     *
+     * @param feature The Feature to quantize
+     * @return A quantized representation of the Feature
+     */
     public Feature quantize(Feature feature) {
         Feature result = ticks.floor(feature);
         if (result == null) {
