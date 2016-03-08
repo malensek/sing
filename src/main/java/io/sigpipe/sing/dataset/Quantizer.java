@@ -49,6 +49,13 @@ public class Quantizer {
         return result;
     }
 
+    public Feature nextTick(Feature feature) {
+        Feature result = ticks.higher(feature);
+        //TODO this will return null when feature > highest tick, but should
+        //actually return 'end'
+        return result;
+    }
+
     @Override
     public String toString() {
         String output = "";
