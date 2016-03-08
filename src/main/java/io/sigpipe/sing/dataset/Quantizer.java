@@ -23,6 +23,14 @@ public class Quantizer {
     private NavigableSet<Feature> ticks = new TreeSet<>();
 
 
+    public Quantizer(Feature start, Feature end, Feature step) {
+        this.start = start;
+        this.end = end;
+
+        Feature tick = new Feature(start);
+        while (tick.less(end)) {
+            insertTick(tick);
+            tick = tick.add(step);
         }
     }
 
