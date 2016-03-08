@@ -1,13 +1,11 @@
 package io.sigpipe.sing.dataset;
 
-import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
 import io.sigpipe.sing.dataset.feature.Feature;
 
 public class Quantizer {
-
 
     private NavigableSet<Feature> ticks = new TreeSet<>();
 
@@ -23,8 +21,6 @@ public class Quantizer {
             throw new IllegalArgumentException(
                     "All feature types must be the same");
         }
-        this.start = start;
-        this.end = end;
 
         Feature tick = new Feature(start);
         while (tick.less(end)) {
