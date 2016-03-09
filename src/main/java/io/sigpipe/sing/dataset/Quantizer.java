@@ -58,6 +58,7 @@ public class Quantizer {
         if (result == null) {
             return ticks.first();
         }
+
         return result;
     }
 
@@ -98,6 +99,9 @@ public class Quantizer {
         return output;
     }
 
+    /**
+     * Builder that allows incremental creation of a {@link Quantizer}.
+     */
     public static class QuantizerBuilder {
         List<Feature> ticks = new ArrayList<>();
 
