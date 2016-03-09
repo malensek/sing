@@ -39,10 +39,6 @@ public class Quantizer {
         ticks.add(tick);
     }
 
-    private void removeTick(Feature tick) {
-        ticks.remove(tick);
-    }
-
     public int numTicks() {
         return ticks.size();
     }
