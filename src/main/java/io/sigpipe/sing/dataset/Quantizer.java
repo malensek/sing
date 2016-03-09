@@ -53,12 +53,30 @@ public class Quantizer {
 
     private NavigableSet<Feature> ticks = new TreeSet<>();
 
+    /**
+     * Constructs a Quantizer with a predefined list of Tick marks. For
+     * incremental construction of a Quantizer instance, see
+     * {@link QuantizerBuilder}.
+     *
+     * @param ticks collection of tick marks to be used during quantization
+     */
     public Quantizer(Feature... ticks) {
         for (Feature tick : ticks) {
             addTick(tick);
         }
     }
 
+    /**
+     * Constructs a Quantizer with start and end points, as well as an
+     * intermediate step size that is used to populate tick marks uniformly
+     * between. Primitive types may be used to parameterize this constructor,
+     * but note that each parameter must be of the same type to avoid ambiguity
+     * during quantization.
+     *
+     * @param start The beginning of the feature range
+     * @param end The end of the feature range
+     * @param step Step size to use for populating intermediate tick marks
+     */
     public Quantizer(Object start, Object end, Object step) {
         this(
                 Feature.fromPrimitiveType(start),
@@ -66,6 +84,16 @@ public class Quantizer {
                 Feature.fromPrimitiveType(step));
     }
 
+    /**
+     * Constructs a Quantizer with start and end points, as well as an
+     * intermediate step size that is used to populate tick marks uniformly
+     * between. Note that each of these features must be of the same
+     * {@link FeatureType} to avoid ambiguity during quantization.
+     *
+     * @param start The beginning of the feature range
+     * @param end The end of the feature range
+     * @param step Step size to use for populating intermediate tick marks
+     */
     public Quantizer(Feature start, Feature end, Feature step) {
         if (start.sameType(end) == false || start.sameType(step) == false) {
             throw new IllegalArgumentException(
@@ -79,10 +107,20 @@ public class Quantizer {
         }
     }
 
+    /**
+     * Adds a new tick mark value to this Quantizer.
+     *
+     * @param tick the new tick mark to add
+     */
     private void addTick(Feature tick) {
         ticks.add(tick);
     }
 
+    /**
+     * Retrieves the number of tick mark subdivisions in this Quantizer.
+     *
+     * @return number of tick marks
+     */
     public int numTicks() {
         return ticks.size();
     }
