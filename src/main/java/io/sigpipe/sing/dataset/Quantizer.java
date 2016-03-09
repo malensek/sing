@@ -32,6 +32,23 @@ import java.util.TreeSet;
 
 import io.sigpipe.sing.dataset.feature.Feature;
 
+/**
+ * Handles quantization of {@link Feature} values. In other words, a Quantizer
+ * instance takes in high-resolution data and outputs low-resolution values that
+ * represent subdivisions ("buckets" or "tick marks") in the feature space. Each
+ * bucket handles Features for a particular range of values.
+ * <p>
+ * For example, imagine a Quantizer instance set up for values ranging from 0 to
+ * 100, with a step size of 2 (note that each of these values are integers).
+ * Inputting values of 24.6f or 25.9999f would return bucket 24, while 99.9d
+ * would return 98, and 1 would return 0.
+ * <p>
+ * Note that the outputs returned by the Quantizer.quantize() method are not
+ * meant to be 'closest' to their original values; rather, the output values are
+ * simply identifiers for the particular bucket in question.
+ *
+ * @author malensek
+ */
 public class Quantizer {
 
     private NavigableSet<Feature> ticks = new TreeSet<>();
