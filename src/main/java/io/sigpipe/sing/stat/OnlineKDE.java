@@ -11,7 +11,6 @@ import de.tuhh.luethke.okde.model.SampleModel;
 
 public class OnlineKDE {
 
-    private static final int DIM = 1;
 
     public static void main(String[] args) throws Exception {
         OnlineKDE test = new OnlineKDE();
@@ -46,35 +45,6 @@ public class OnlineKDE {
                     new double[][] {{ temperatures.get(i) }});
             samples[i] = sample;
         }
-
-        // generate sample points using three different Gaussian distributions
-        // first define the means and standard deviations
-//        int[] mean1 = { 3, 2 };
-//        float stddev1 = .2f;
-//        int[] mean2 = { 7, 4 };
-//        float stddev2 = .2f;
-//        int[] mean3 = { 3, 8 };
-//        float stddev3 = .5f;
-//        SimpleMatrix[] samples = new SimpleMatrix[noOfSamples];
-//        // now generate the random samples
-//        for (int i = 0; i < noOfSamples; i++) {
-//            // 30% are distributed with mean1 and stddev1
-//            // 20% are distributed with mean2 and stddev2
-//            // 50% are distributed with mean3 and stddev3
-//            if (i < noOfSamples * 0.3) {
-//                double[][] sampleArray = { { gaussian(mean1[0], stddev1) } };
-//                SimpleMatrix sample = new SimpleMatrix(sampleArray);
-//                samples[i] = sample;
-//            } else if (i < noOfSamples * 0.5) {
-//                double[][] sampleArray = { { gaussian(mean2[0], stddev2) } };
-//                SimpleMatrix sample = new SimpleMatrix(sampleArray);
-//                samples[i] = sample;
-//            } else if (i < noOfSamples) {
-//                double[][] sampleArray = { { gaussian(mean3[0], stddev3) } };
-//                SimpleMatrix sample = new SimpleMatrix(sampleArray);
-//                samples[i] = sample;
-//            }
-//        }
 
         /*
          * Now the sample model is updated using the generated sample data.
