@@ -11,7 +11,6 @@ import de.tuhh.luethke.okde.model.SampleModel;
 
 public class OnlineKDE {
 
-
     public static void main(String[] args) throws Exception {
         OnlineKDE test = new OnlineKDE();
     }
@@ -30,12 +29,10 @@ public class OnlineKDE {
         double forgettingFactor = 1;
         // set the compression threshold
         double compressionThreshold = 0.02;
-        // number of samples to genereate
-        int noOfSamples = 1000;
 
         // sample model object used for sample distribution estimation
-        SampleModel sampleDistribution = new SampleModel(forgettingFactor,
-                compressionThreshold);
+        SampleModel sampleDistribution = new SampleModel(
+                forgettingFactor, compressionThreshold);
 
         double[][] c = { { 0 } };
 
@@ -62,7 +59,7 @@ public class OnlineKDE {
                     initSamples.toArray(new SimpleMatrix[3]), cov, w);
 
             // Update the sample model with all generated samples one by one.
-            for (int i = 3; i < noOfSamples; i++) {
+            for (int i = 3; i < temperatures.size(); i++) {
                 SimpleMatrix pos = samples[i];
                 sampleDistribution.updateDistribution(pos, new SimpleMatrix(c),
                         1d);
