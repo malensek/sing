@@ -38,13 +38,7 @@ public class OnlineKDE {
         SampleModel sampleDistribution = new SampleModel(forgettingFactor,
                 compressionThreshold);
 
-        // create a covariance matrix with all entries 0
-        double[][] c = new double[DIM][DIM];
-        for (int i = 0; i < c.length; i++) {
-            for (int j = 0; j < c.length; j++) {
-                c[i][j] = 0;
-            }
-        }
+        double[][] c = { { 0 } };
 
         SimpleMatrix[] samples = new SimpleMatrix[temperatures.size()];
         for (int i = 0; i < temperatures.size(); ++i) {
