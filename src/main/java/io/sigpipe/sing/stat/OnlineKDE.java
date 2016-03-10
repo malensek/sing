@@ -23,6 +23,7 @@ public class OnlineKDE {
         while ((line = br.readLine()) != null) {
             temperatures.add(Double.parseDouble(line));
         }
+        br.close();
         System.out.println("Samples: " + temperatures.size());
 
         // disable the forgetting factor
