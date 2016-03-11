@@ -5,11 +5,13 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.math3.analysis.UnivariateFunction;
+
 import org.ejml.simple.SimpleMatrix;
 
 import de.tuhh.luethke.okde.model.SampleModel;
 
-public class OnlineKDE {
+public class OnlineKDE implements UnivariateFunction {
 
     public static void main(String[] args) throws Exception {
         OnlineKDE test = new OnlineKDE();
@@ -75,4 +77,10 @@ public class OnlineKDE {
                 System.out.println(i + "\t" + sampleDistribution.evaluate(pointVector));
         }
     }
+
+    public double value(double x) {
+        return 0;
+    }
+
+
 }
