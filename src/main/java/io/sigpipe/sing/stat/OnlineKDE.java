@@ -40,8 +40,7 @@ public class OnlineKDE implements UnivariateFunction {
         double compressionThreshold = 0.02;
 
         // sample model object used for sample distribution estimation
-        SampleModel sampleDistribution = new SampleModel(
-                forgettingFactor, compressionThreshold);
+        this.model = new SampleModel(forgettingFactor, compressionThreshold);
 
         double[][] c = { { 0 } };
 
@@ -64,13 +63,13 @@ public class OnlineKDE implements UnivariateFunction {
             double[] w = { 1, 1, 1 };
             SimpleMatrix[] cov = { new SimpleMatrix(c), new SimpleMatrix(c),
                 new SimpleMatrix(c) };
-            sampleDistribution.updateDistribution(
+            this.model.updateDistribution(
                     initSamples.toArray(new SimpleMatrix[3]), cov, w);
 
             // Update the sample model with all generated samples one by one.
             for (int i = 3; i < temperatures.size(); i++) {
                 SimpleMatrix pos = samples[i];
-                sampleDistribution.updateDistribution(pos, new SimpleMatrix(c),
+                this.model.updateDistribution(pos, new SimpleMatrix(c),
                         1d);
             }
         } catch (Exception e) {
@@ -80,7 +79,7 @@ public class OnlineKDE implements UnivariateFunction {
         for (int i = 270; i < 320; ++i) {
                 double[][] point = {{ (double) i }};
                 SimpleMatrix pointVector = new SimpleMatrix(point);
-                System.out.println(i + "\t" + sampleDistribution.evaluate(pointVector));
+                System.out.println(i + "\t" + this.model.evaluate(pointVector));
         }
     }
 
