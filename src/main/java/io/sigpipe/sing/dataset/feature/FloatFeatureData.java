@@ -48,6 +48,11 @@ extends NumericFeatureData<Float> implements ByteSerializable {
         return new Feature(this.data + f.getFloat());
     }
 
+    @Override
+    public Feature subtract(Feature f) {
+        return new Feature(this.data - f.getFloat());
+    }
+
     @Deserialize
     public FloatFeatureData(SerializationInputStream in)
     throws IOException {
