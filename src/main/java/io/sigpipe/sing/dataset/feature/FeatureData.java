@@ -152,6 +152,17 @@ implements ByteSerializable, Comparable<FeatureData<?>> {
     }
 
     /**
+     * Subtracts two Features, and returns a new Feature containing the
+     * difference.
+     *
+     * @param f The feature to subtact
+     * @return {@link Feature} instance containing the difference.
+     */
+    public Feature subtract(Feature f) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      * Return this FeatureData's type.
      *
      * @return the FeatureType for this FeatureData.
