@@ -309,6 +309,19 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
         return result;
     }
 
+    /**
+     * Subtracts two Features, and returns a new Feature containing the
+     * difference. The resulting Feature will inherit this Feature's name.
+     *
+     * @param f The feature to subtact from this feature
+     * @return {@link Feature} instance containing the difference.
+     */
+    public Feature subtract(Feature f) {
+        Feature result = this.data.subtract(f);
+        result.setName(this.getName());
+        return result;
+    }
+
     public boolean greater(Feature f) {
         return this.compareTo(f) > 0;
     }
