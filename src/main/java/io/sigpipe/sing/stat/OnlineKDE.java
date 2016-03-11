@@ -83,6 +83,27 @@ public class OnlineKDE implements UnivariateFunction {
         }
     }
 
+    private double expandedMin() {
+        double val = stats.min();
+        while (this.model.evaluate(
+                    new SimpleMatrix(
+                        new double[][] { { val } })) != 0.0) {
+            val = val - 0.1;
+        }
+
+        return val;
+    }
+
+    private double expandedMax() {
+        double val = stats.min();
+        while (this.model.evaluate(
+                    new SimpleMatrix(
+                        new double[][] { { val } })) != 0.0) {
+            val = val + 0.1;
+        }
+        return val;
+    }
+
     public double value(double x) {
         return 0;
     }
