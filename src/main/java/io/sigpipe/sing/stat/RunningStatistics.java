@@ -46,8 +46,9 @@ public class RunningStatistics implements ByteSerializable {
     private double mean;
     private double M2;
 
-    private double max;
-    private double min;
+    /* Initialize max/min to their respective opposite values: */
+    private double max = Double.MIN_VALUE;
+    private double min = Double.MAX_VALUE;
 
     public static class WelchResult {
         /** T-statistic */
@@ -65,7 +66,9 @@ public class RunningStatistics implements ByteSerializable {
     /**
      * Creates a Welford running statistics instance without no observed values.
      */
-    public RunningStatistics() { }
+    public RunningStatistics() {
+
+    }
 
     /**
      * Creates a copy of a {@link RunningStatistics} instance.
