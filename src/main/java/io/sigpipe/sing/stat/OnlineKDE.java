@@ -76,7 +76,6 @@ public class OnlineKDE implements UnivariateFunction {
             e.printStackTrace();
         }
 
-        for (int i = 270; i < 320; ++i) {
                 double[][] point = {{ (double) i }};
                 SimpleMatrix pointVector = new SimpleMatrix(point);
                 System.out.println(i + "\t" + this.model.evaluate(pointVector));
