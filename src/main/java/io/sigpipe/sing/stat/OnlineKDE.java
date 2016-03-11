@@ -76,11 +76,15 @@ public class OnlineKDE implements UnivariateFunction {
             e.printStackTrace();
         }
 
-        for (int i = (int) stats.min(); i <= (int) stats.max() + 1; ++i) {
-                double[][] point = {{ (double) i }};
+        double min = expandedMin();
+        double max = expandedMax();
+        for (double i = min; i <= max; ++i) {
+                double[][] point = {{ i }};
                 SimpleMatrix pointVector = new SimpleMatrix(point);
                 System.out.println(i + "\t" + this.model.evaluate(pointVector));
         }
+        System.out.println(expandedMin());
+        System.out.println(expandedMax());
     }
 
     private double expandedMin() {
