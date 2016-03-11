@@ -26,10 +26,13 @@ public class OnlineKDE implements UnivariateFunction {
                 new FileReader("temperatures.txt"));
         String line;
         while ((line = br.readLine()) != null) {
-            temperatures.add(Double.parseDouble(line));
+            double temp = Double.parseDouble(line);
+            temperatures.add(temp);
+            stats.put(temp);
         }
         br.close();
-        System.out.println("Samples: " + temperatures.size());
+
+        System.out.println(stats);
 
         // disable the forgetting factor
         double forgettingFactor = 1;
