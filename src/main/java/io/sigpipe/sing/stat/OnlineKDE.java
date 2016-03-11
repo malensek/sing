@@ -105,8 +105,7 @@ public class OnlineKDE implements UnivariateFunction {
     }
 
     public double value(double x) {
-        return 0;
+        return this.model.evaluate(new SimpleMatrix(new double[][] { { x } }));
     }
-
 
 }
