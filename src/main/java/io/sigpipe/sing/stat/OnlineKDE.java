@@ -13,6 +13,9 @@ import de.tuhh.luethke.okde.model.SampleModel;
 
 public class OnlineKDE implements UnivariateFunction {
 
+    private RunningStatistics stats = new RunningStatistics();
+    private SampleModel model;
+
     public static void main(String[] args) throws Exception {
         OnlineKDE test = new OnlineKDE();
     }
