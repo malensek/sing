@@ -163,6 +163,16 @@ implements ByteSerializable, Comparable<FeatureData<?>> {
     }
 
     /**
+     * Divides two Features, and returns a new Feature containing the quotient.
+     *
+     * @param f divisor
+     * @return {@link Feature} instance containing the quotient.
+     */
+    public Feature divide(Feature f) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      * Return this FeatureData's type.
      *
      * @return the FeatureType for this FeatureData.

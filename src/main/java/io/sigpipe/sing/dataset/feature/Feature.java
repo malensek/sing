@@ -322,6 +322,19 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
         return result;
     }
 
+    /**
+     * Divides two Features, and returns a new Feature containing the quotient.
+     * The resulting Feature will inherit this Feature's name.
+     *
+     * @param f divisor
+     * @return {@link Feature} instance containing the quotient.
+     */
+    public Feature divide(Feature f) {
+        Feature result = this.data.divide(f);
+        result.setName(this.getName());
+        return result;
+    }
+
     public boolean greater(Feature f) {
         return this.compareTo(f) > 0;
     }
