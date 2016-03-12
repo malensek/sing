@@ -60,11 +60,14 @@ public class OnlineKDE implements UnivariateFunction {
             initSamples.add(samples[0]);
             initSamples.add(samples[1]);
             initSamples.add(samples[2]);
-            double[] w = { 1, 1, 1 };
-            SimpleMatrix[] cov = { new SimpleMatrix(c), new SimpleMatrix(c),
-                new SimpleMatrix(c) };
-            this.model.updateDistribution(
-                    initSamples.toArray(new SimpleMatrix[3]), cov, w);
+            initSamples.add(samples[3]);
+            double[] w = { 1, 1, 1, 1 };
+            SimpleMatrix[] cov = {
+                new SimpleMatrix(1, 1),
+                new SimpleMatrix(1, 1),
+                new SimpleMatrix(1, 1),
+                new SimpleMatrix(1, 1) };
+            this.model.updateDistribution(samples, cov, w);
 
             // Update the sample model with all generated samples one by one.
             for (int i = 3; i < temperatures.size(); i++) {
