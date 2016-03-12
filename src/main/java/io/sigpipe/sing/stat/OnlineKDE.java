@@ -42,19 +42,22 @@ public class OnlineKDE implements UnivariateFunction {
         // sample model object used for sample distribution estimation
         this.model = new SampleModel(forgettingFactor, compressionThreshold);
 
-        double[][] c = { { 0 } };
-
         SimpleMatrix[] samples = new SimpleMatrix[temperatures.size()];
+        SimpleMatrix[] covs = new SimpleMatrix[temperatures.size()];
         for (int i = 0; i < temperatures.size(); ++i) {
             SimpleMatrix sample = new SimpleMatrix(
-                    new double[][] {{ temperatures.get(i) }});
+                    new double[][] { { temperatures.get(i) } });
             samples[i] = sample;
+            covs[i] = new SimpleMatrix(1, 1);
         }
+        double[] weights = new double[temperatures.size()];
+        Arrays.fill(weights, 1.0);
 
         /*
          * Now the sample model is updated using the generated sample data.
          */
         try {
+
             // Add three samples at once to initialize the sample model
             ArrayList<SimpleMatrix> initSamples = new ArrayList<SimpleMatrix>();
             initSamples.add(samples[0]);
