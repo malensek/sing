@@ -69,7 +69,7 @@ public class OnlineKDE implements UnivariateFunction {
             // Update the sample model with all generated samples one by one.
             for (int i = 3; i < temperatures.size(); i++) {
                 SimpleMatrix pos = samples[i];
-                this.model.updateDistribution(pos, new SimpleMatrix(c),
+                this.model.updateDistribution(pos, new SimpleMatrix(1, 1),
                         1d);
             }
         } catch (Exception e) {
