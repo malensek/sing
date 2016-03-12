@@ -3,13 +3,17 @@ package io.sigpipe.sing.stat;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.math3.analysis.UnivariateFunction;
-
+import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 import org.ejml.simple.SimpleMatrix;
 
 import de.tuhh.luethke.okde.model.SampleModel;
+
+import io.sigpipe.sing.dataset.Quantizer;
+import io.sigpipe.sing.dataset.feature.Feature;
 
 public class OnlineKDE implements UnivariateFunction {
 
@@ -18,6 +22,52 @@ public class OnlineKDE implements UnivariateFunction {
 
     public static void main(String[] args) throws Exception {
         OnlineKDE test = new OnlineKDE();
+        SimpsonIntegrator si = new SimpsonIntegrator();
+        int ticks = 20;
+        double tickSize = 1.0 / (double) ticks;
+
+        System.out.println("Tick size: " + tickSize);
+        double start = test.expandedMin();
+        double increment = 0.05;
+        List<Feature> tickList = new ArrayList<>();
+        for (int t = 0; t < ticks; ++t) {
+            double total = 0.0;
+            tickList.add(new Feature(start));
+            while (total < tickSize) {
+                double z = si.integrate(Integer.MAX_VALUE, test, start, start + increment);
+                total += z;
+                start = start + increment;
+                if (t == ticks - 1 && z <= 0.0) {
+                    break;
+                }
+            }
+        }
+        tickList.add(new Feature(start));
+
+        Quantizer q = new Quantizer(tickList);
+        System.out.println(q);
+
+        List<Feature> temperatures = new ArrayList<>();
+        BufferedReader br = new BufferedReader(
+                new FileReader("temperatures.txt"));
+        String line;
+        while ((line = br.readLine()) != null) {
+            double temp = Double.parseDouble(line);
+            temperatures.add(new Feature("temperature", temp));
+        }
+        br.close();
+
+        for (Feature f : temperatures) {
+            /* Find the midpoint */
+            Feature initial = q.quantize(f);
+            Feature next = q.nextTick(initial);
+            Feature difference = next.subtract(initial);
+            Feature midpoint = difference.divide(new Feature(2.0));
+            Feature predicted = initial.add(midpoint);
+
+            System.out.println(f.getDouble() + "    " + predicted.getFloat());
+        }
+
     }
 
     public OnlineKDE() throws Exception {
