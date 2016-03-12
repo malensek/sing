@@ -87,7 +87,7 @@ public class OnlineKDE implements UnivariateFunction {
         System.out.println(expandedMax());
     }
 
-    private double expandedMin() {
+    public double expandedMin() {
         double val = stats.min();
         while (this.model.evaluate(
                     new SimpleMatrix(
@@ -98,7 +98,7 @@ public class OnlineKDE implements UnivariateFunction {
         return val;
     }
 
-    private double expandedMax() {
+    public double expandedMax() {
         double val = stats.min();
         while (this.model.evaluate(
                     new SimpleMatrix(
