@@ -323,6 +323,19 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
     }
 
     /**
+     * Multiplies two Features, and returns a new Feature containing the
+     * product.  The resulting Feature will inherit this Feature's name.
+     *
+     * @param f factor to multiply by
+     * @return {@link Feature} instance containing the multiplied product.
+     */
+    public Feature multiply(Feature f) {
+        Feature result = this.data.multiply(f);
+        result.setName(this.getName());
+        return result;
+    }
+
+    /**
      * Divides two Features, and returns a new Feature containing the quotient.
      * The resulting Feature will inherit this Feature's name.
      *
