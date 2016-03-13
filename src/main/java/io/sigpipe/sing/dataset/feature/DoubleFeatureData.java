@@ -58,6 +58,11 @@ extends NumericFeatureData<Double> implements ByteSerializable {
         return new Feature(this.data / f.getDouble());
     }
 
+    @Override
+    public Feature multiply(Feature f) {
+        return new Feature(this.data * f.getDouble());
+    }
+
     @Deserialize
     public DoubleFeatureData(SerializationInputStream in)
     throws IOException {
