@@ -173,6 +173,17 @@ implements ByteSerializable, Comparable<FeatureData<?>> {
     }
 
     /**
+     * Multiplies two Features, and returns a new Feature containing the
+     * product.
+     *
+     * @param f factor to multiply by
+     * @return {@link Feature} instance containing the multiplied product.
+     */
+    public Feature multiply(Feature f) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      * Return this FeatureData's type.
      *
      * @return the FeatureType for this FeatureData.
