@@ -80,54 +80,6 @@ implements ByteSerializable, Comparable<FeatureData<?>> {
     public abstract double toDouble();
 
     /**
-     * Provides the integer-based interval representation of this FeatureData.
-     * If the FeatureData does not contain an interval (i.e., it is just a
-     * single point) then the start and end points of the interval will be the
-     * same value.
-     *
-     * @return integer interval representation of this FeatureData.
-     */
-    public Pair<Integer, Integer> toIntInterval() {
-        return new Pair<Integer, Integer>(this.toInt(), this.toInt());
-    }
-
-    /**
-     * Provides the long integer-based interval representation of this
-     * FeatureData.  If the FeatureData does not contain an interval (i.e., it
-     * is just a single point) then the start and end points of the interval
-     * will be the same value.
-     *
-     * @return long interval representation of this FeatureData.
-     */
-    public Pair<Long, Long> toLongInterval() {
-        return new Pair<Long, Long>(this.toLong(), this.toLong());
-    }
-
-    /**
-     * Provides the floating point interval representation of this FeatureData.
-     * If the FeatureData does not contain an interval (i.e., it is just a
-     * single point) then the start and end points of the interval will be the
-     * same value.
-     *
-     * @return float interval representation of this FeatureData.
-     */
-    public Pair<Float, Float> toFloatInterval() {
-        return new Pair<Float, Float>(this.toFloat(), this.toFloat());
-    }
-
-    /**
-     * Provides the double-precision floating point interval representation of
-     * this FeatureData.  If the FeatureData does not contain an interval (i.e.,
-     * it is just a single point) then the start and end points of the interval
-     * will be the same value.
-     *
-     * @return double interval representation of this FeatureData.
-     */
-    public Pair<Double, Double> toDoubleInterval() {
-        return new Pair<Double, Double>(this.toDouble(), this.toDouble());
-    }
-
-    /**
      * Provides the String-based representation of this FeatureData.
      *
      * @return String representation of this FeatureData.
