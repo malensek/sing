@@ -25,7 +25,6 @@ software, even if advised of the possibility of such damage.
 
 package io.sigpipe.sing.dataset.feature;
 
-import io.sigpipe.sing.dataset.Pair;
 import io.sigpipe.sing.serialization.ByteSerializable;
 
 /**
