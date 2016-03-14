@@ -53,6 +53,16 @@ extends NumericFeatureData<Integer> implements ByteSerializable {
         return new Feature(this.data - f.getInt());
     }
 
+    @Override
+    public Feature divide(Feature f) {
+        return new Feature(this.data / f.getInt());
+    }
+
+    @Override
+    public Feature multiply(Feature f) {
+        return new Feature(this.data * f.getInt());
+    }
+
     @Deserialize
     public IntegerFeatureData(SerializationInputStream in)
     throws IOException {
