@@ -20,6 +20,9 @@ public class OnlineKDE implements UnivariateFunction {
     private RunningStatistics stats = new RunningStatistics();
     private SampleModel model;
 
+    private static final double DEFAULT_FORGET = 1.0d;
+    private static final double DEFAULT_COMPRESSION = 0.02d;
+
     public static void main(String[] args) throws Exception {
         OnlineKDE test = new OnlineKDE();
         SimpsonIntegrator si = new SimpsonIntegrator();
