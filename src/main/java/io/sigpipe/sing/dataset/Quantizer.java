@@ -26,7 +26,6 @@ software, even if advised of the possibility of such damage.
 package io.sigpipe.sing.dataset;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
@@ -74,7 +73,7 @@ public class Quantizer {
      *
      * @param ticks collection of tick marks to be used during quantization
      */
-    public Quantizer(Collection<Feature> ticks) {
+    public Quantizer(Iterable<Feature> ticks) {
         for (Feature tick : ticks) {
             addTick(tick);
         }
