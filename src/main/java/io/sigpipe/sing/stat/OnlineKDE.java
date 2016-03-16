@@ -28,6 +28,10 @@ public class OnlineKDE implements UnivariateFunction {
         this(initialSamples, DEFAULT_FORGET, DEFAULT_COMPRESSION);
     }
 
+    public OnlineKDE(List<Double> initialSamples, double forgettingFactor,
+            double compressionThreshold) {
+        this(forgettingFactor, compressionThreshold);
+        initializeDistribution(initialSamples);
 
     }
 
