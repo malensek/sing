@@ -29,6 +29,26 @@ public class OnlineKDE implements UnivariateFunction {
     }
 
 
+    }
+
+    private void initializeDistribution(List<Double> samples) {
+        SimpleMatrix[] sampleMatrices = new SimpleMatrix[samples.size()];
+        SimpleMatrix[] covarianceMatrices = new SimpleMatrix[samples.size()];
+        double[] weights = new double[samples.size()];
+        for (int i = 0; i < samples.size(); ++i) {
+            double sample = samples.get(i);
+            stats.put(sample);
+            sampleMatrices[i] = new SimpleMatrix(
+                    new double[][] { { sample } });
+            covarianceMatrices[i] = new SimpleMatrix(1, 1);
+            weights[i] = 1.0d;
+        }
+        try {
+            this.model.updateDistribution(
+                    sampleMatrices, covarianceMatrices, weights);
+        } catch (Exception e) {
+            //TODO generic online kde exception
+            e.printStackTrace();
         }
     }
 
