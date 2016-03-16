@@ -51,6 +51,17 @@ public class OnlineKDE implements UnivariateFunction {
             e.printStackTrace();
         }
     }
+
+    public void updateDistribution(Double... samples) {
+        updateDistribution(Arrays.asList(samples));
+    }
+
+    public void updateDistribution(Iterable<Double> samples) {
+        for (double d : samples) {
+            updateDistribution(d);
+        }
+    }
+
     public double expandedMin() {
         double val = stats.min();
         while (this.model.evaluate(
