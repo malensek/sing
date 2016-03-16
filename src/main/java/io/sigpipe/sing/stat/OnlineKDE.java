@@ -146,6 +146,17 @@ public class OnlineKDE implements UnivariateFunction {
         System.out.println(expandedMax());
     }
 
+    public void updateDistribution(double sample) {
+        stats.put(sample);
+        SimpleMatrix mat = new SimpleMatrix(new double[][] { { sample } });
+        SimpleMatrix cov = new SimpleMatrix(1, 1);
+        try {
+            this.model.updateDistribution(mat, cov, 1.0d);
+        } catch (Exception e) {
+            //TODO generic online kde exception
+            e.printStackTrace();
+        }
+    }
     public double expandedMin() {
         double val = stats.min();
         while (this.model.evaluate(
