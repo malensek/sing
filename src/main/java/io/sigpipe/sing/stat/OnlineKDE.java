@@ -76,4 +76,16 @@ public class OnlineKDE implements UnivariateFunction {
         return this.model.evaluate(new SimpleMatrix(new double[][] { { x } }));
     }
 
+    public String toString(double step) {
+        String str = "";
+        double min = expandedMin();
+        double max = expandedMax();
+        for (double i = min; i <= max; i += step) {
+            double[][] point = { { i } };
+            SimpleMatrix pointVector = new SimpleMatrix(point);
+            str += i + "\t" + this.model.evaluate(pointVector)
+                + System.lineSeparator();
+        }
+        return str;
+    }
 }
