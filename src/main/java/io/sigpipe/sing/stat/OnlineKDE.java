@@ -88,4 +88,9 @@ public class OnlineKDE implements UnivariateFunction {
         }
         return str;
     }
+
+    @Override
+    public String toString() {
+        return toString(1.0d);
+    }
 }
