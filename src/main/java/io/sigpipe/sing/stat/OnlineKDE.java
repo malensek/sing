@@ -29,15 +29,7 @@ public class OnlineKDE implements UnivariateFunction {
     }
 
 
-        double min = expandedMin();
-        double max = expandedMax();
-        for (double i = min; i <= max; ++i) {
-                double[][] point = {{ i }};
-                SimpleMatrix pointVector = new SimpleMatrix(point);
-                System.out.println(i + "\t" + this.model.evaluate(pointVector));
         }
-        System.out.println(expandedMin());
-        System.out.println(expandedMax());
     }
 
     public void updateDistribution(double sample) {
