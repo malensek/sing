@@ -79,6 +79,42 @@ public class AutoQuantizer {
         update.stop();
 
         //System.out.println(kde);
+
+        SimpsonIntegrator integrator = new SimpsonIntegrator();
+        int ticks = Integer.parseInt(args[1]);
+        double tickSize = 1.0 / (double) ticks;
+
+        //System.out.println("Tick size: " + tickSize);
+        System.err.println("Integrating");
+        double start = kde.expandedMin();
+        double end = kde.expandedMax();
+        double step = ((end - start) / (double) ticks) * 0.01;
+        List<Feature> tickList = new ArrayList<>();
+        for (int t = 0; t < ticks; ++t) {
+            double total = 0.0;
+            tickList.add(new Feature(start));
+            double increment = step;
+            while (total < tickSize) {
+                double integral = integrator.integrate(
+                        Integer.MAX_VALUE, kde, start, start + increment);
+                if (total + integral > (tickSize * 1.05)) {
+                    System.err.println("Oversized: " + t + " ; " + total + " + " + integral + " [" + tickSize + "]");
+                    increment = increment / 2.0;
+                    continue;
+                }
+
+                total += integral;
+                start = start + increment;
+                if (start > end) {
+                    break;
+                }
+            }
+        }
+        tickList.add(new Feature(start));
+
+        Quantizer q = new Quantizer(tickList);
+        //System.out.println("ticks=" + q.numTicks());
+        //System.out.println(q);
     }
     public static double RMSE(List<Feature> actual, List<Feature> predicted) {
         RunningStatistics rs = new RunningStatistics();
