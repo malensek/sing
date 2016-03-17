@@ -41,4 +41,13 @@ public class SquaredError {
     public double CVRMSE() {
         return RMSE() / actualStats.mean();
     }
+
+    public SummaryStatistics actualSummary() {
+        return new SummaryStatistics(actualStats);
+    }
+
+    public SummaryStatistics predictedSummary() {
+        return new SummaryStatistics(predictedStats);
+    }
+
 }
