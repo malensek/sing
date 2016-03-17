@@ -29,6 +29,13 @@ public class AutoQuantizer {
         "ice_cover_ice1_no_ice0_surface",
         "categorical_snow_yes1_no0_surface",
     };
+
+    public static Quantizer create(OnlineKDE kde) {
+
+
+        return null;
+    }
+
     public static void main(String[] args)
     throws Exception {
         PerformanceTimer read = new PerformanceTimer("read");
