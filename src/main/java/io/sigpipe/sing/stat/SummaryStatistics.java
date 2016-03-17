@@ -41,4 +41,16 @@ public class SummaryStatistics {
     public double var() {
         return this.var;
     }
+
+    @Override
+    public String toString() {
+        String str = "";
+        str += "Number of Samples: " + num + System.lineSeparator();
+        str += "Mean: " + mean + System.lineSeparator();
+        str += "Variance: " + var() + System.lineSeparator();
+        str += "Std Dev: " + std() + System.lineSeparator();
+        str += "Min: " + min + System.lineSeparator();
+        str += "Max: " + max;
+        return str;
+    }
 }
