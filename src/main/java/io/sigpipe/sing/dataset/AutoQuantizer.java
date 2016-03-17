@@ -70,6 +70,15 @@ public class AutoQuantizer {
         OnlineKDE kde = new OnlineKDE(seedValues);
         //OnlineKDE kde = new OnlineKDE(seedValues, 1.0, 0.05);
         seed.stop();
+
+        PerformanceTimer update = new PerformanceTimer("update");
+        update.start();
+        for (int i = seedSize; i < features.size(); i += 10) {
+            kde.updateDistribution(features.get(i).getDouble());
+        }
+        update.stop();
+
+        //System.out.println(kde);
     }
     public static double RMSE(List<Feature> actual, List<Feature> predicted) {
         RunningStatistics rs = new RunningStatistics();
