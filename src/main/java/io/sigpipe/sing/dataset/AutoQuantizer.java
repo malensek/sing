@@ -129,7 +129,14 @@ public class AutoQuantizer {
 
             //System.out.println(f.getFloat() + "    " + predicted.getFloat());
         }
+
+        SummaryStatistics ss = kde.summaryStatistics();
+        double rmse = RMSE(features, quantized);
+        double nrmse = rmse / (ss.max() - ss.min());
+        double cvrmse = rmse / ss.mean();
+        System.out.println(q.numTicks() + "    " + rmse + "    " + nrmse + "    " + cvrmse);
     }
+
     public static double RMSE(List<Feature> actual, List<Feature> predicted) {
         RunningStatistics rs = new RunningStatistics();
         //TODO check to make sure dimensions are equal
