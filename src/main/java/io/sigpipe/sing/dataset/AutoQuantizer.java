@@ -29,4 +29,17 @@ public class AutoQuantizer {
         "ice_cover_ice1_no_ice0_surface",
         "categorical_snow_yes1_no0_surface",
     };
+    public static double RMSE(List<Feature> actual, List<Feature> predicted) {
+        RunningStatistics rs = new RunningStatistics();
+        //TODO check to make sure dimensions are equal
+        for (int i = 0; i < actual.size(); ++i) {
+
+            Feature a = actual.get(i);
+            Feature b = predicted.get(i);
+            Feature err = a.subtract(b);
+            double p = Math.pow(err.getDouble(), 2.0);
+            rs.put(p);
+        }
+        return Math.sqrt(rs.mean());
+    }
 }
