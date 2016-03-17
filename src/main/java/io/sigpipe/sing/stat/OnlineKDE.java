@@ -32,7 +32,6 @@ public class OnlineKDE implements UnivariateFunction {
             double compressionThreshold) {
         this(forgettingFactor, compressionThreshold);
         initializeDistribution(initialSamples);
-
     }
 
     private void initializeDistribution(List<Double> samples) {
@@ -78,6 +77,10 @@ public class OnlineKDE implements UnivariateFunction {
         }
     }
 
+    public double value(double x) {
+        return this.model.evaluate(new SimpleMatrix(new double[][] { { x } }));
+    }
+
     public double expandedMin() {
         double val = stats.min();
         while (this.model.evaluate(
@@ -99,8 +102,6 @@ public class OnlineKDE implements UnivariateFunction {
         return val;
     }
 
-    public double value(double x) {
-        return this.model.evaluate(new SimpleMatrix(new double[][] { { x } }));
     public SummaryStatistics summaryStatistics() {
         return new SummaryStatistics(stats);
     }
