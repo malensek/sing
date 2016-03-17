@@ -29,6 +29,30 @@ public class AutoQuantizer {
         "ice_cover_ice1_no_ice0_surface",
         "categorical_snow_yes1_no0_surface",
     };
+    public static void main(String[] args)
+    throws Exception {
+        PerformanceTimer read = new PerformanceTimer("read");
+        read.start();
+        //for (String fileName : args) {
+            FileInputStream fIn = new FileInputStream(args[0]);
+            BufferedInputStream bIn = new BufferedInputStream(fIn);
+            SerializationInputStream in = new SerializationInputStream(bIn);
+
+            List<Feature> features = new ArrayList<>();
+            int num = in.readInt();
+            for (int i = 0; i < num; ++i) {
+                /* Ignore lat, lon: */
+                in.readFloat();
+                in.readFloat();
+
+                byte[] payload = in.readField();
+                Metadata m = Serializer.deserialize(Metadata.class, payload);
+                Feature f = m.getAttribute(FEATURE_NAMES[0]);
+                features.add(f);
+            }
+        //}
+        read.stop();
+    }
     public static double RMSE(List<Feature> actual, List<Feature> predicted) {
         RunningStatistics rs = new RunningStatistics();
         //TODO check to make sure dimensions are equal
