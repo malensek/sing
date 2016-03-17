@@ -29,4 +29,16 @@ public class SquaredError {
             predictedStats.put(b.getDouble());
         }
     }
+
+    public double RMSE() {
+        return Math.sqrt(sqErrs.mean());
+    }
+
+    public double NRMSE() {
+        return RMSE() / (actualStats.max() - actualStats.min());
+    }
+
+    public double CVRMSE() {
+        return RMSE() / actualStats.mean();
+    }
 }
