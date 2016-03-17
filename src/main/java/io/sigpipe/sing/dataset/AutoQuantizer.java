@@ -59,6 +59,17 @@ public class AutoQuantizer {
             }
         //}
         read.stop();
+
+        PerformanceTimer seed = new PerformanceTimer("seed");
+        seed.start();
+        int seedSize = 100;
+        List<Double> seedValues = new ArrayList<>();
+        for (int i = 0; i < seedSize; ++i) {
+            seedValues.add(features.get(i).getDouble());
+        }
+        OnlineKDE kde = new OnlineKDE(seedValues);
+        //OnlineKDE kde = new OnlineKDE(seedValues, 1.0, 0.05);
+        seed.stop();
     }
     public static double RMSE(List<Feature> actual, List<Feature> predicted) {
         RunningStatistics rs = new RunningStatistics();
