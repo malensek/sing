@@ -115,6 +115,20 @@ public class AutoQuantizer {
         Quantizer q = new Quantizer(tickList);
         //System.out.println("ticks=" + q.numTicks());
         //System.out.println(q);
+
+        List<Feature> quantized = new ArrayList<>();
+        for (Feature f : features) {
+            /* Find the midpoint */
+            Feature initial = q.quantize(f.convertTo(FeatureType.DOUBLE));
+            Feature next = q.nextTick(initial);
+            Feature difference = next.subtract(initial);
+            Feature midpoint = difference.divide(new Feature(2.0f));
+            Feature prediction = initial.add(midpoint);
+
+            quantized.add(prediction);
+
+            //System.out.println(f.getFloat() + "    " + predicted.getFloat());
+        }
     }
     public static double RMSE(List<Feature> actual, List<Feature> predicted) {
         RunningStatistics rs = new RunningStatistics();
