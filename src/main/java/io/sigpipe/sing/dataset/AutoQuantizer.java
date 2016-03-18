@@ -96,12 +96,9 @@ public class AutoQuantizer {
 
         //System.out.println(kde);
 
+    public static Quantizer fromKDE(OnlineKDE kde, int ticks) {
         SimpsonIntegrator integrator = new SimpsonIntegrator();
-        int ticks = Integer.parseInt(args[1]);
         double tickSize = 1.0 / (double) ticks;
-
-        //System.out.println("Tick size: " + tickSize);
-        System.err.println("Integrating");
         double start = kde.expandedMin();
         double end = kde.expandedMax();
         double step = ((end - start) / (double) ticks) * 0.01;
@@ -114,7 +111,7 @@ public class AutoQuantizer {
                 double integral = integrator.integrate(
                         Integer.MAX_VALUE, kde, start, start + increment);
                 if (total + integral > (tickSize * 1.05)) {
-                    System.err.println("Oversized: " + t + " ; " + total + " + " + integral + " [" + tickSize + "]");
+                    //System.err.println("Oversized: " + t + " ; " + total + " + " + integral + " [" + tickSize + "]");
                     increment = increment / 2.0;
                     continue;
                 }
@@ -128,18 +125,8 @@ public class AutoQuantizer {
         }
         tickList.add(new Feature(start));
 
-        Quantizer q = new Quantizer(tickList);
-        //System.out.println("ticks=" + q.numTicks());
-        //System.out.println(q);
-
-        List<Feature> quantized = new ArrayList<>();
-        for (Feature f : features) {
-            /* Find the midpoint */
-            Feature initial = q.quantize(f.convertTo(FeatureType.DOUBLE));
-            Feature next = q.nextTick(initial);
-            Feature difference = next.subtract(initial);
-            Feature midpoint = difference.divide(new Feature(2.0f));
-            Feature prediction = initial.add(midpoint);
+        return new Quantizer(tickList);
+    }
 
             quantized.add(prediction);
 
