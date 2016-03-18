@@ -92,51 +92,48 @@ public class AutoQuantizer {
     }
 
     public static void main(String[] args)
-    throws Exception {
-        List<Metadata> allMetadata = new ArrayList<>();
-        for (String fileName : args) {
-            System.err.println("Reading: " + fileName);
-            List<Metadata> meta = ReadMetadata.readMetaBlob(new File(fileName));
-
-            allMetadata.addAll(meta);
-        }
-
-        for (String featureName : FEATURE_NAMES) {
-        List<Feature> features = new ArrayList<>();
-        for (Metadata m : allMetadata) {
-            features.add(m.getAttribute(featureName));
-        }
-
-        Quantizer q = null;
-        int ticks = 10;
-        double err = Double.MAX_VALUE;
-        while (err > 0.025) {
-            q = AutoQuantizer.fromList(features, ticks);
-            //System.out.println(q);
-
-            List<Feature> quantized = new ArrayList<>();
-            for (Feature f : features) {
-                /* Find the midpoint */
-                Feature initial = q.quantize(f.convertTo(FeatureType.DOUBLE));
-                Feature next = q.nextTick(initial);
-                if (next == null) {
-                    next = initial;
+        throws Exception {
+        for (String name : FEATURE_NAMES) {
+            List<Feature> features = new ArrayList<>();
+            for (String fileName : args) {
+                System.err.println("Reading: " + fileName);
+                List<Metadata> meta = ReadMetadata.readMetaBlob(new File(fileName));
+                for (Metadata m : meta) {
+                    features.add(m.getAttribute(name));
                 }
-                Feature difference = next.subtract(initial);
-                Feature midpoint = difference.divide(new Feature(2.0f));
-                Feature prediction = initial.add(midpoint);
-
-                quantized.add(prediction);
-
-                //System.out.println(f.getFloat() + "    " + predicted.getFloat());
             }
 
-            SquaredError se = new SquaredError(features, quantized);
-            System.out.println(featureName + "    " + q.numTicks() + "    " + se.RMSE() + "    "
-                    + se.NRMSE() + "    " + se.CVRMSE());
-            err = se.NRMSE();
-            ticks += 1;
-        }
+            Quantizer q = null;
+            int ticks = 10;
+            double err = Double.MAX_VALUE;
+            while (err > 0.025) {
+                q = AutoQuantizer.fromList(features, ticks);
+                //System.out.println(q);
+
+                List<Feature> quantized = new ArrayList<>();
+                for (Feature f : features) {
+                    /* Find the midpoint */
+                    Feature initial = q.quantize(f.convertTo(FeatureType.DOUBLE));
+                    Feature next = q.nextTick(initial);
+                    if (next == null) {
+                        next = initial;
+                    }
+                    Feature difference = next.subtract(initial);
+                    Feature midpoint = difference.divide(new Feature(2.0f));
+                    Feature prediction = initial.add(midpoint);
+
+                    quantized.add(prediction);
+
+                    //System.out.println(f.getFloat() + "    " + predicted.getFloat());
+                }
+
+                SquaredError se = new SquaredError(features, quantized);
+                System.out.println(name + "    " + q.numTicks() + "    " + se.RMSE() + "    "
+                        + se.NRMSE() + "    " + se.CVRMSE());
+                err = se.NRMSE();
+                ticks += 1;
+            }
+            System.out.println(q);
         }
     }
 }
