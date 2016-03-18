@@ -46,11 +46,6 @@ public class AutoQuantizer {
         //"categorical_snow_yes1_no0_surface",
     };
 
-    public static Quantizer create(OnlineKDE kde) {
-
-
-        return null;
-    }
 
     public static void main(String[] args)
     throws Exception {
