@@ -34,7 +34,6 @@ public class AutoQuantizer {
         "upward_long_wave_rad_flux_surface",
         "vegitation_type_as_in_sib_surface",
         "albedo_surface",
-        "lightning_surface",
         "convective_inhibition_surface",
         "pressure_surface",
         "transpiration_stress-onset_soil_moisture_surface",
@@ -42,8 +41,9 @@ public class AutoQuantizer {
         "vegetation_surface",
         "downward_long_wave_rad_flux_surface",
         "planetary_boundary_layer_height_surface",
-        "ice_cover_ice1_no_ice0_surface",
-        "categorical_snow_yes1_no0_surface",
+        //"lightning_surface",
+        //"ice_cover_ice1_no_ice0_surface",
+        //"categorical_snow_yes1_no0_surface",
     };
 
     public static Quantizer create(OnlineKDE kde) {
