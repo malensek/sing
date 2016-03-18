@@ -95,11 +95,17 @@ public class AutoQuantizer {
         throws Exception {
         for (String name : FEATURE_NAMES) {
             List<Feature> features = new ArrayList<>();
+
             for (String fileName : args) {
                 System.err.println("Reading: " + fileName);
                 List<Metadata> meta = ReadMetadata.readMetaBlob(new File(fileName));
                 for (Metadata m : meta) {
-                    features.add(m.getAttribute(name));
+                    Feature f = m.getAttribute(name);
+                    if (f != null) {
+                        features.add(m.getAttribute(name));
+                    } else {
+                        System.err.println("null feature: " + name);
+                    }
                 }
             }
 
