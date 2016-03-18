@@ -1,20 +1,15 @@
 package io.sigpipe.sing.dataset;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 
+import io.sigpipe.sing.adapters.ReadMetadata;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
-import io.sigpipe.sing.serialization.SerializationInputStream;
-import io.sigpipe.sing.serialization.Serializer;
 import io.sigpipe.sing.stat.OnlineKDE;
-import io.sigpipe.sing.stat.RunningStatistics;
-import io.sigpipe.sing.stat.SummaryStatistics;
-import io.sigpipe.sing.util.PerformanceTimer;
 import io.sigpipe.sing.stat.SquaredError;
 
 public class AutoQuantizer {
