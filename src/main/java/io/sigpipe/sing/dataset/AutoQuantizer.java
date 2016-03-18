@@ -46,51 +46,6 @@ public class AutoQuantizer {
         //"categorical_snow_yes1_no0_surface",
     };
 
-
-    public static void main(String[] args)
-    throws Exception {
-        PerformanceTimer read = new PerformanceTimer("read");
-        read.start();
-        //for (String fileName : args) {
-            FileInputStream fIn = new FileInputStream(args[0]);
-            BufferedInputStream bIn = new BufferedInputStream(fIn);
-            SerializationInputStream in = new SerializationInputStream(bIn);
-
-            List<Feature> features = new ArrayList<>();
-            int num = in.readInt();
-            for (int i = 0; i < num; ++i) {
-                /* Ignore lat, lon: */
-                in.readFloat();
-                in.readFloat();
-
-                byte[] payload = in.readField();
-                Metadata m = Serializer.deserialize(Metadata.class, payload);
-                Feature f = m.getAttribute(FEATURE_NAMES[0]);
-                features.add(f);
-            }
-        //}
-        read.stop();
-
-        PerformanceTimer seed = new PerformanceTimer("seed");
-        seed.start();
-        int seedSize = 100;
-        List<Double> seedValues = new ArrayList<>();
-        for (int i = 0; i < seedSize; ++i) {
-            seedValues.add(features.get(i).getDouble());
-        }
-        OnlineKDE kde = new OnlineKDE(seedValues);
-        //OnlineKDE kde = new OnlineKDE(seedValues, 1.0, 0.05);
-        seed.stop();
-
-        PerformanceTimer update = new PerformanceTimer("update");
-        update.start();
-        for (int i = seedSize; i < features.size(); i += 10) {
-            kde.updateDistribution(features.get(i).getDouble());
-        }
-        update.stop();
-
-        //System.out.println(kde);
-
     public static Quantizer fromKDE(OnlineKDE kde, int ticks) {
         SimpsonIntegrator integrator = new SimpsonIntegrator();
         double tickSize = 1.0 / (double) ticks;
@@ -123,16 +78,21 @@ public class AutoQuantizer {
         return new Quantizer(tickList);
     }
 
-            quantized.add(prediction);
+    public static Quantizer fromList(List<Feature> features, int ticks) {
+        /* Seed the oKDE */
+        int seedSize = 1000;
+        List<Double> seedValues = new ArrayList<>();
+        for (int i = 0; i < seedSize; ++i) {
+            seedValues.add(features.get(i).getDouble());
+        }
+        OnlineKDE kde = new OnlineKDE(seedValues);
 
-            //System.out.println(f.getFloat() + "    " + predicted.getFloat());
+        /* Populate the rest of the data */
+        for (int i = seedSize; i < features.size(); i += 50) {
+            kde.updateDistribution(features.get(i).getDouble());
         }
 
-        SummaryStatistics ss = kde.summaryStatistics();
-        double rmse = RMSE(features, quantized);
-        double nrmse = rmse / (ss.max() - ss.min());
-        double cvrmse = rmse / ss.mean();
-        System.out.println(q.numTicks() + "    " + rmse + "    " + nrmse + "    " + cvrmse);
+        return AutoQuantizer.fromKDE(kde, ticks);
     }
 
         return Math.sqrt(rs.mean());
