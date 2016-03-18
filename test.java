@@ -1,48 +1,3 @@
-package io.sigpipe.sing.util;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import io.sigpipe.sing.dataset.Quantizer;
-import io.sigpipe.sing.dataset.feature.Feature;
-
-public class TestConfiguration {
-
-    public static final String[] FEATURE_NAMES = {
-        "temperature_surface",
-        "temperature_tropopause",
-        "relative_humidity_zerodegc_isotherm", // 0-100 range
-        "snow_depth_surface",
-        "snow_cover_surface", // 0-100 range
-        "pressure_tropopause",
-        "precipitable_water_entire_atmosphere",
-        "visibility_surface",
-        "upward_short_wave_rad_flux_surface",
-        "surface_wind_gust_surface",
-        "total_cloud_cover_entire_atmosphere", // 0-100 range
-        "upward_long_wave_rad_flux_surface",
-        "vegitation_type_as_in_sib_surface",
-        "albedo_surface",
-        "pressure_surface",
-        "vegetation_surface",
-        "downward_long_wave_rad_flux_surface",
-        "planetary_boundary_layer_height_surface",
-        "lightning_surface", // boolean
-        "ice_cover_ice1_no_ice0_surface", // boolean
-        "categorical_snow_yes1_no0_surface", // boolean
-    };
-
-    /* Temporarily disabled features:
-     * ------------------------------
-     *  "convective_inhibition_surface",
-     *  "transpiration_stress-onset_soil_moisture_surface",
-     *  "soil_porosity_surface",
-     *  "total_precipitation_surface_3_hour_accumulation", // not in all files
-     */
-
-    public static final Map<String, Quantizer> quantizers = new HashMap<>();
-
-    static {
         quantizers.put("temperature_surface", new Quantizer(
                     new Feature(232.42301635742223f),
                     new Feature(261.2430508401904f),
@@ -75,7 +30,6 @@ public class TestConfiguration {
                     new Feature(304.588119805722f),
                     new Feature(327.7230163574538f)
         ));
-
         quantizers.put("temperature_tropopause", new Quantizer(
                     new Feature(186.40544433593777f),
                     new Feature(193.84038719307839f),
@@ -114,7 +68,6 @@ public class TestConfiguration {
                     new Feature(228.8490157644964f),
                     new Feature(254.72495862163143f)
         ));
-
         quantizers.put("relative_humidity_zerodegc_isotherm", new Quantizer(
                     new Feature(0.0f),
                     new Feature(1.9414666666663918f),
@@ -148,7 +101,6 @@ public class TestConfiguration {
                     new Feature(98.75506666666791f),
                     new Feature(100.0f)
         ));
-
         quantizers.put("snow_depth_surface", new Quantizer(
                     new Feature(0.0f),
                     new Feature(0.0013375000000001385f),
@@ -158,7 +110,6 @@ public class TestConfiguration {
                     new Feature(0.09133125000000025f),
                     new Feature(2.102131249999994f)
         ));
-
         quantizers.put("pressure_tropopause", new Quantizer(
                     new Feature(5200.393164052437f),
                     new Feature(9070.849634601085f),
@@ -196,7 +147,6 @@ public class TestConfiguration {
                     new Feature(32998.56445788668f),
                     new Feature(52212.616222392535f)
         ));
-
         quantizers.put("precipitable_water_entire_atmosphere", new Quantizer(
                     new Feature(0.0f),
                     new Feature(3.944119160486341f),
@@ -223,7 +173,6 @@ public class TestConfiguration {
                     new Feature(51.5929887257024f),
                     new Feature(73.96816263874697f)
         ));
-
         quantizers.put("visibility_surface", new Quantizer(
                     new Feature(0.0f),
                     new Feature(2951.9677428600316f),
@@ -255,7 +204,6 @@ public class TestConfiguration {
                     new Feature(24595.734762873737f),
                     new Feature(26016.98197715446f)
         ));
-
         quantizers.put("upward_short_wave_rad_flux_surface", new Quantizer(
                     new Feature(0.0f),
                     new Feature(0.5359090909088516f),
@@ -268,7 +216,6 @@ public class TestConfiguration {
                     new Feature(52.23545454545287f),
                     new Feature(178.88454545453553f)
         ));
-
         quantizers.put("surface_wind_gust_surface", new Quantizer(
                     new Feature(0.0f),
                     new Feature(1.0617455382347378f),
@@ -304,7 +251,6 @@ public class TestConfiguration {
                     new Feature(17.20458928823446f),
                     new Feature(28.040995538235695f)
         ));
-
         quantizers.put("upward_long_wave_rad_flux_surface", new Quantizer(
                     new Feature(144.5060455322288f),
                     new Feature(264.4813788655802f),
@@ -335,7 +281,6 @@ public class TestConfiguration {
                     new Feature(488.38671219894724f),
                     new Feature(636.8060455323418f)
         ));
-
         quantizers.put("vegitation_type_as_in_sib_surface", new Quantizer(
                     new Feature(0.0f),
                     new Feature(0.03155000000000228f),
@@ -354,7 +299,6 @@ public class TestConfiguration {
                     new Feature(15.860000000000214f),
                     new Feature(20.10000000000028f)
         ));
-
         quantizers.put("albedo_surface", new Quantizer(
                     new Feature(2.600000000000006f),
                     new Feature(5.265576923076906f),
@@ -384,7 +328,6 @@ public class TestConfiguration {
                     new Feature(65.67862980769468f),
                     new Feature(86.1040144230767f)
         ));
-
         quantizers.put("pressure_surface", new Quantizer(
                     new Feature(64264.90000000174f),
                     new Feature(80120.48597588505f),
@@ -428,7 +371,6 @@ public class TestConfiguration {
                     new Feature(103051.33099591265f),
                     new Feature(105482.7268960481f)
         ));
-
         quantizers.put("vegetation_surface", new Quantizer(
                     new Feature(0.0f),
                     new Feature(0.10548214285705897f),
@@ -448,7 +390,6 @@ public class TestConfiguration {
                     new Feature(78.84651190476008f),
                     new Feature(100.0f)
         ));
-
         quantizers.put("downward_long_wave_rad_flux_surface", new Quantizer(
                     new Feature(78.91627807617476f),
                     new Feature(205.34037485038738f),
@@ -483,7 +424,6 @@ public class TestConfiguration {
                     new Feature(438.39560065687414f),
                     new Feature(511.0162780762399f)
         ));
-
         quantizers.put("planetary_boundary_layer_height_surface", new Quantizer(
                     new Feature(0.0f),
                     new Feature(221.1000000021814f),
@@ -520,20 +460,15 @@ public class TestConfiguration {
                     new Feature(5655.625000014554f),
                     new Feature(14149.050000034356f)
         ));
-
         quantizers.put("lightning_surface", new Quantizer(
                     new Feature(0.0f),
                     new Feature(1.0f)
         ));
-
         quantizers.put("ice_cover_ice1_no_ice0_surface", new Quantizer(
                     new Feature(0.0f),
                     new Feature(1.0f)
         ));
-
         quantizers.put("categorical_snow_yes1_no0_surface", new Quantizer(
                     new Feature(0.0f),
                     new Feature(1.0f)
         ));
-    }
-}
