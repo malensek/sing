@@ -11,36 +11,9 @@ import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.stat.OnlineKDE;
 import io.sigpipe.sing.stat.SquaredError;
+import io.sigpipe.sing.util.TestConfiguration;
 
 public class AutoQuantizer {
-
-    private static final String[] FEATURE_NAMES = {
-        "temperature_surface",
-        "temperature_tropopause",
-        "relative_humidity_zerodegc_isotherm",
-        "total_precipitation_surface_3_hour_accumulation",
-        "snow_depth_surface",
-        "snow_cover_surface",
-        "pressure_tropopause",
-        "precipitable_water_entire_atmosphere",
-        "visibility_surface",
-        "upward_short_wave_rad_flux_surface",
-        "surface_wind_gust_surface",
-        "total_cloud_cover_entire_atmosphere",
-        "upward_long_wave_rad_flux_surface",
-        "vegitation_type_as_in_sib_surface",
-        "albedo_surface",
-        "convective_inhibition_surface",
-        "pressure_surface",
-        "transpiration_stress-onset_soil_moisture_surface",
-        "soil_porosity_surface",
-        "vegetation_surface",
-        "downward_long_wave_rad_flux_surface",
-        "planetary_boundary_layer_height_surface",
-        //"lightning_surface",
-        //"ice_cover_ice1_no_ice0_surface",
-        //"categorical_snow_yes1_no0_surface",
-    };
 
     public static Quantizer fromKDE(OnlineKDE kde, int ticks) {
         SimpsonIntegrator integrator = new SimpsonIntegrator();
@@ -93,7 +66,7 @@ public class AutoQuantizer {
 
     public static void main(String[] args)
         throws Exception {
-        for (String name : FEATURE_NAMES) {
+        for (String name : TestConfiguration.FEATURE_NAMES) {
             List<Feature> features = new ArrayList<>();
 
             for (String fileName : args) {
