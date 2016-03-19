@@ -20,13 +20,8 @@ public class SquaredError {
 
         for (int i = 0; i < actual.size(); ++i) {
             Feature a = actual.get(i);
-            Feature b = predicted.get(i);
-            Feature err = a.subtract(b);
-            double p = FastMath.pow(err.getDouble(), 2.0);
-
-            sqErrs.put(p);
-            actualStats.put(a.getDouble());
-            predictedStats.put(b.getDouble());
+            Feature p = predicted.get(i);
+            this.put(a, p);
         }
     }
 
