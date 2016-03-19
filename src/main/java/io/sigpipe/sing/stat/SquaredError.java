@@ -37,6 +37,15 @@ public class SquaredError {
         actualStats.put(actual.getDouble());
         predictedStats.put(predicted.getDouble());
     }
+
+    public void put(double actual, double predicted) {
+        double err = actual - predicted;
+        double p = FastMath.pow(err, 2.0);
+        sqErrs.put(p);
+        actualStats.put(actual);
+        predictedStats.put(predicted);
+    }
+
     public double RMSE() {
         return FastMath.sqrt(sqErrs.mean());
     }
