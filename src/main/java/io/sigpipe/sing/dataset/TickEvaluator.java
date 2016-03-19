@@ -1,11 +1,16 @@
 package io.sigpipe.sing.dataset;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.sigpipe.sing.adapters.ReadMetadata;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.stat.RunningStatistics;
+import io.sigpipe.sing.stat.SquaredError;
+import io.sigpipe.sing.util.TestConfiguration;
 
 public class TickEvaluator {
 
@@ -29,6 +34,33 @@ public class TickEvaluator {
     }
 
     public void evaluate(List<Feature> features) {
+        RunningStatistics allStats = new RunningStatistics();
 
+        Map<Feature, SquaredError> errors = new HashMap<>();
+        for (Feature feature : features) {
+            allStats.put(feature.getDouble());
+
+            Feature q = quantizer.quantize(feature);
+            RunningStatistics rs = statMap.get(q);
+            double mean = rs.mean();
+            double actual = feature.getDouble();
+            SquaredError se = errors.get(q);
+            if (se == null) {
+                se = new SquaredError();
+                errors.put(q, se);
+            }
+            se.put(actual, mean);
+        }
+
+        for (Feature q : errors.keySet()) {
+            SquaredError se = errors.get(q);
+            double nrmse = se.RMSE() / (allStats.max() - allStats.min());
+            double cvrmse = se.RMSE() / allStats.mean();
+            System.out.println(q + "\t" + se.RMSE() + "\t" + nrmse
+                    + "\t" + cvrmse);
+        }
+
+        System.out.println(allStats);
+    }
     }
 }
