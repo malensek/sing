@@ -62,5 +62,30 @@ public class TickEvaluator {
 
         System.out.println(allStats);
     }
+
+    public static void main(String[] args)
+    throws Exception {
+        String targetFeature = "temperature_surface";
+        List<Feature> features = new ArrayList<>();
+        for (String fileName : args) {
+            System.err.println("Reading: " + fileName);
+            List<Metadata> meta = ReadMetadata.readMetaBlob(new File(fileName));
+            for (Metadata m : meta) {
+                Feature f = m.getAttribute(targetFeature);
+                if (f == null) {
+                    System.err.println("Feature not found");
+                    continue;
+                } else {
+                    System.out.println(f.getString());
+                    features.add(f);
+                }
+            }
+        }
+        System.exit(0);
+
+        TickEvaluator te = new TickEvaluator(
+                TestConfiguration.quantizers.get(targetFeature));
+        te.train(features);
+        te.evaluate(features);
     }
 }
