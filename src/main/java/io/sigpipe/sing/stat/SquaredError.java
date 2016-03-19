@@ -31,11 +31,7 @@ public class SquaredError {
     }
 
     public void put(Feature actual, Feature predicted) {
-        Feature err = actual.subtract(predicted);
-        double p = FastMath.pow(err.getDouble(), 2.0);
-        sqErrs.put(p);
-        actualStats.put(actual.getDouble());
-        predictedStats.put(predicted.getDouble());
+        this.put(actual.getDouble(), predicted.getDouble());
     }
 
     public void put(double actual, double predicted) {
