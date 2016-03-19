@@ -49,11 +49,28 @@ import io.sigpipe.sing.util.TestConfiguration;
 public class AutoQuantizer {
 
     public static Quantizer fromKDE(OnlineKDE kde, int ticks) {
+        return fromKDE(kde, ticks, true);
+    }
+
+    public static Quantizer fromKDE(
+            OnlineKDE kde, int ticks, boolean expandRange) {
+
         SimpsonIntegrator integrator = new SimpsonIntegrator();
+        double start = 0.0;
+        double end = 0.0;
+
         /** Fraction of the PDF to allocate to each tick */
         double tickSize = 1.0 / (double) ticks;
-        double start = kde.expandedMin();
-        double end = kde.expandedMax();
+
+        if (expandRange) {
+            start = kde.expandedMin();
+            end = kde.expandedMax();
+        } else {
+            SummaryStatistics ss = kde.summaryStatistics();
+            start = ss.min();
+            start = ss.max();
+        }
+
         double step = ((end - start) / (double) ticks) * 0.01;
         List<Feature> tickList = new ArrayList<>();
         for (int t = 0; t < ticks; ++t) {
