@@ -50,6 +50,7 @@ public class AutoQuantizer {
 
     public static Quantizer fromKDE(OnlineKDE kde, int ticks) {
         SimpsonIntegrator integrator = new SimpsonIntegrator();
+        /** Fraction of the PDF to allocate to each tick */
         double tickSize = 1.0 / (double) ticks;
         double start = kde.expandedMin();
         double end = kde.expandedMax();
