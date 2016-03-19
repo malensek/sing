@@ -100,6 +100,11 @@ public class AutoQuantizer {
     }
 
     public static Quantizer fromList(List<Feature> features, int ticks) {
+        return fromList(features, ticks, true);
+    }
+
+    public static Quantizer fromList(
+            List<Feature> features, int ticks, boolean expandRange) {
         /* Seed the oKDE */
         int seedSize = 1000;
         List<Double> seedValues = new ArrayList<>();
@@ -113,7 +118,7 @@ public class AutoQuantizer {
             kde.updateDistribution(features.get(i).getDouble());
         }
 
-        return AutoQuantizer.fromKDE(kde, ticks);
+        return AutoQuantizer.fromKDE(kde, ticks, expandRange);
     }
 
     public static void main(String[] args)
