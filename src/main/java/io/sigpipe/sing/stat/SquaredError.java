@@ -12,6 +12,10 @@ public class SquaredError {
     private RunningStatistics actualStats = new RunningStatistics();
     private RunningStatistics predictedStats = new RunningStatistics();
 
+    public SquaredError() {
+
+    }
+
     public SquaredError(List<Feature> actual, List<Feature> predicted) {
         if (actual.size() != predicted.size()) {
             throw new IllegalArgumentException(
