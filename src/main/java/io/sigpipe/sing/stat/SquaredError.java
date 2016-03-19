@@ -30,6 +30,13 @@ public class SquaredError {
         }
     }
 
+    public void put(Feature actual, Feature predicted) {
+        Feature err = actual.subtract(predicted);
+        double p = FastMath.pow(err.getDouble(), 2.0);
+        sqErrs.put(p);
+        actualStats.put(actual.getDouble());
+        predictedStats.put(predicted.getDouble());
+    }
     public double RMSE() {
         return FastMath.sqrt(sqErrs.mean());
     }
