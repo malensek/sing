@@ -38,6 +38,14 @@ import io.sigpipe.sing.stat.OnlineKDE;
 import io.sigpipe.sing.stat.SquaredError;
 import io.sigpipe.sing.util.TestConfiguration;
 
+/**
+ * Given a list of Feature values or a predefined {@link OnlineKDE} instance,
+ * the AutoQuantizer attempts to spread a given number of tick marks across a
+ * distribution such that the densest parts of the curve are represented by the
+ * smallest tick mark ranges.
+ *
+ * @author malensek
+ */
 public class AutoQuantizer {
 
     public static Quantizer fromKDE(OnlineKDE kde, int ticks) {
