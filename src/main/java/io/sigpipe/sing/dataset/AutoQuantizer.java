@@ -36,6 +36,7 @@ import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.stat.OnlineKDE;
 import io.sigpipe.sing.stat.SquaredError;
+import io.sigpipe.sing.stat.SummaryStatistics;
 import io.sigpipe.sing.util.TestConfiguration;
 
 /**
