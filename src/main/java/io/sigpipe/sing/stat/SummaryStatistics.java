@@ -25,6 +25,12 @@ software, even if advised of the possibility of such damage.
 
 package io.sigpipe.sing.stat;
 
+/**
+ * Represents an immutable snapshot of summary statistics for a
+ * {@link RunningStatistics} instance.
+ *
+ * @malensek
+ */
 public class SummaryStatistics {
 
     private long num;
