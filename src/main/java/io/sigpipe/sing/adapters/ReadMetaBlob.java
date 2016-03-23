@@ -29,7 +29,15 @@ public class ReadMetaBlob {
         int num = in.readInt();
         System.out.println("Records: " + num);
 
-        Sketch s = new Sketch();
+        FeatureHierarchy fh = new FeatureHierarchy();
+        for (String featureName : TestConfiguration.FEATURE_NAMES) {
+            System.out.println(
+                    TestConfiguration.quantizers.get(featureName).numTicks()
+                    + "   " + featureName);
+            fh.addFeature(featureName, FeatureType.FLOAT);
+        }
+        fh.addFeature("location", FeatureType.LONG);
+        Sketch s = new Sketch(fh);
 
         FeatureSurvey fs = new FeatureSurvey();
         for (int i = 0; i < num; ++i) {
