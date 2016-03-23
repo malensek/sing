@@ -9,24 +9,18 @@ import io.sigpipe.sing.dataset.feature.Feature;
 public class TestConfiguration {
 
     public static final String[] FEATURE_NAMES = {
-        "temperature_surface",
-        "temperature_tropopause",
-        "relative_humidity_zerodegc_isotherm", // 0-100 range
-        "snow_depth_surface",
-        "snow_cover_surface", // 0-100 range
-        "pressure_tropopause",
-        "precipitable_water_entire_atmosphere",
-        "visibility_surface",
-        "upward_short_wave_rad_flux_surface",
-        "surface_wind_gust_surface",
-        "total_cloud_cover_entire_atmosphere", // 0-100 range
-        "upward_long_wave_rad_flux_surface",
         "vegitation_type_as_in_sib_surface",
-        "albedo_surface",
-        "pressure_surface",
         "vegetation_surface",
+        "precipitable_water_entire_atmosphere",
+        "albedo_surface",
+        "visibility_surface",
+        "pressure_surface",
+        "temperature_tropopause",
+        "temperature_surface",
+        "relative_humidity_zerodegc_isotherm", // 0-100 range
         "downward_long_wave_rad_flux_surface",
-        "planetary_boundary_layer_height_surface",
+        "upward_short_wave_rad_flux_surface",
+        "snow_depth_surface",
         "lightning_surface", // boolean
         "ice_cover_ice1_no_ice0_surface", // boolean
         "categorical_snow_yes1_no0_surface", // boolean
@@ -38,6 +32,12 @@ public class TestConfiguration {
      *  "transpiration_stress-onset_soil_moisture_surface",
      *  "soil_porosity_surface",
      *  "total_precipitation_surface_3_hour_accumulation", // not in all files
+     *  "snow_cover_surface", // 0-100 range
+     *  "total_cloud_cover_entire_atmosphere", // 0-100 range
+     *  "upward_long_wave_rad_flux_surface",
+     *  "pressure_tropopause",
+     *  "planetary_boundary_layer_height_surface",
+     *  "surface_wind_gust_surface",
      */
 
     public static final Map<String, Quantizer> quantizers = new HashMap<>();
