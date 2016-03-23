@@ -38,6 +38,8 @@ import io.sigpipe.sing.dataset.feature.Feature;
  */
 public class Path extends ArrayList<Vertex> {
 
+    private static final long serialVersionUID = 8201748135149945940L;
+
     /**
      * Create a Path with a number of vertices pre-populated.
      */
