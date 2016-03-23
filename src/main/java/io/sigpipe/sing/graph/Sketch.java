@@ -20,6 +20,7 @@ import io.sigpipe.sing.dataset.Quantizer;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.stat.RunningStatistics2D;
+import io.sigpipe.sing.stat.RunningStatisticsND;
 import io.sigpipe.sing.util.GeoHash;
 import io.sigpipe.sing.util.TestConfiguration;
 
@@ -137,23 +138,16 @@ public class Sketch {
         reorientPath(path);
         optimizePath(path);
 
-        List<ContainerEntry> entries = new ArrayList<>();
-        for (int i = 0; i < path.size() - 1; ++i) {
-            for (int j = i; j < path.size() - 1; ++j) {
-                Feature f1 = path.get(i).getLabel();
-                Feature f2 = path.get(j).getLabel();
-                int o1 = levels.get(f1.getName()).order;
-                int o2 = levels.get(f2.getName()).order;
-                ContainerEntry entry = new ContainerEntry();
-                entry.feature1ID = o1;
-                entry.feature2ID = o2;
-                entry.stats = new RunningStatistics2D();
-                entry.stats.put(f1.getFloat(), f2.getFloat());
-                entries.add(entry);
-            }
+        double[] values = new double[path.size()];
+        for (int i = 0; i < path.size(); ++i) {
+            values[i] = path.get(i).getLabel().getDouble();
         }
+        RunningStatisticsND rsnd = new RunningStatisticsND(path.size());
+        rsnd.put(values);
+        ContainerEntry entry = new ContainerEntry();
+        entry.stats = rsnd;
         DataContainer container = new DataContainer();
-        container.entries = entries;
+        container.entry = entry;
 
         /* Place the path payload (traversal result) at the end of this path. */
         path.get(path.size() - 1).setData(container);
