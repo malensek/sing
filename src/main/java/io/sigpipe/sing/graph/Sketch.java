@@ -16,9 +16,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import io.sigpipe.sing.dataset.Pair;
+import io.sigpipe.sing.dataset.Quantizer;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.stat.RunningStatistics2D;
+import io.sigpipe.sing.util.GeoHash;
+import io.sigpipe.sing.util.TestConfiguration;
 
 public class Sketch {
 
@@ -100,20 +103,33 @@ public class Sketch {
             throw new GraphException("Attempted to add empty path!");
         }
 
-        int counter = 0;
-
         Iterator<Vertex> it = path.iterator();
         while (it.hasNext()) {
-            Vertex v= it.next();
-            Float newFloat = ts.ceiling(v.getLabel().getFloat());
-            if (newFloat == null) {
-                newFloat = 1.0f;
-            }
-            v.setLabel(new Feature(v.getLabel().getName(), newFloat));
-            counter++;
-            if (counter >= 40) {
+            Vertex v = it.next();
+            Quantizer q = TestConfiguration.quantizers.get(
+                    v.getLabel().getName());
+            if (q == null) {
+                if (v.getLabel().getName().equals("location")) {
+                    continue;
+                }
+
                 it.remove();
+                continue;
             }
+            boolean ok = false;
+            for (String featureName : TestConfiguration.FEATURE_NAMES) {
+                if (featureName.equals(v.getLabel().getName()) == true) {
+                    ok = true;
+                    break;
+                }
+            }
+            if (ok == false) {
+                it.remove();
+                continue;
+            }
+
+            Feature quantizedFeature = q.quantize(v.getLabel());
+            v.setLabel(new Feature(v.getLabel().getName(), quantizedFeature));
         }
 
         checkFeatureTypes(path);
@@ -122,8 +138,8 @@ public class Sketch {
         optimizePath(path);
 
         List<ContainerEntry> entries = new ArrayList<>();
-        for (int i = 0; i < path.size(); ++i) {
-            for (int j = i; j < path.size(); ++j) {
+        for (int i = 0; i < path.size() - 1; ++i) {
+            for (int j = i; j < path.size() - 1; ++j) {
                 Feature f1 = path.get(i).getLabel();
                 Feature f2 = path.get(j).getLabel();
                 int o1 = levels.get(f1.getName()).order;
@@ -138,7 +154,6 @@ public class Sketch {
         }
         DataContainer container = new DataContainer();
         container.entries = entries;
-
 
         /* Place the path payload (traversal result) at the end of this path. */
         path.get(path.size() - 1).setData(container);
