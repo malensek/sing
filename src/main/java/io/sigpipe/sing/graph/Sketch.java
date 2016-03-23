@@ -52,20 +52,9 @@ public class Sketch {
         public FeatureType type;
 
     }
-    private TreeSet<Float> ts = new TreeSet<>();
 
     public Sketch() {
-        ts.add(0.0f);
-        ts.add(0.1f);
-        ts.add(0.2f);
-        ts.add(0.3f);
-        ts.add(0.4f);
-        ts.add(0.5f);
-        ts.add(0.6f);
-        ts.add(0.7f);
-        ts.add(0.8f);
-        ts.add(0.9f);
-        ts.add(1.0f);
+
     }
 
     /**
