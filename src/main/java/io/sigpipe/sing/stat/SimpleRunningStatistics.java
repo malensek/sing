@@ -31,9 +31,6 @@ import io.sigpipe.sing.serialization.SerializationOutputStream;
 
 import java.io.IOException;
 
-import org.apache.commons.math3.distribution.TDistribution;
-import org.apache.commons.math3.util.FastMath;
-
 /**
  * Provides an online method for computing mean, variance, and standard
  * deviation.  Based on "Note on a Method for Calculating Corrected Sums of
@@ -47,24 +44,21 @@ public class SimpleRunningStatistics implements ByteSerializable {
     private double mean;
     private double m2;
 
-    public static class WelchResult {
-        /** T-statistic */
-        public double t;
-
-        /** Two-tailed p-value */
-        public double p;
-
-        public WelchResult(double t, double p) {
-            this.t = t;
-            this.p = p;
-        }
-    }
-
     /**
      * Creates an empty running statistics instance.
      */
     public SimpleRunningStatistics() {
 
+    }
+
+    /**
+     * Creates a running statistics instance with an array of samples.
+     * Samples are added to the statistics in order.
+     */
+    public SimpleRunningStatistics(double... samples ) {
+        for (double sample : samples) {
+            put(sample);
+        }
     }
 
     /**
@@ -107,16 +101,6 @@ public class SimpleRunningStatistics implements ByteSerializable {
         mean = (this.n * this.mean + that.n * that.mean) / newN;
         m2 = m2 + that.m2 + delta * delta * this.n * that.n / newN;
         n = newN;
-    }
-
-    /**
-     * Creates a running statistics instance with an array of samples.
-     * Samples are added to the statistics in order.
-     */
-    public SimpleRunningStatistics(double... samples ) {
-        for (double sample : samples) {
-            put(sample);
-        }
     }
 
     /**
@@ -218,7 +202,7 @@ public class SimpleRunningStatistics implements ByteSerializable {
      * @return sample standard deviation
      */
     public double std() {
-        return FastMath.sqrt(var());
+        return Math.sqrt(var());
     }
 
     /**
@@ -228,7 +212,7 @@ public class SimpleRunningStatistics implements ByteSerializable {
      * @return population standard deviation
      */
     public double popStd() {
-        return FastMath.sqrt(popVar());
+        return Math.sqrt(popVar());
     }
 
     /**
@@ -240,13 +224,7 @@ public class SimpleRunningStatistics implements ByteSerializable {
      * @return standard deviation
      */
     public double std(double ddof) {
-        return FastMath.sqrt(var(ddof));
-    }
-
-    public double prob(double sample) {
-        double norm = 1 / FastMath.sqrt(2 * FastMath.PI * this.var());
-        return norm * FastMath.exp((- FastMath.pow(sample - this.mean, 2))
-                / (2 * this.var()));
+        return Math.sqrt(var(ddof));
     }
 
     /**
@@ -255,32 +233,8 @@ public class SimpleRunningStatistics implements ByteSerializable {
      *
      * @return number of samples
      */
-    public long n() {
+    public long count() {
         return n;
-    }
-
-    public static WelchResult welchT(
-            RunningStatistics rs1, RunningStatistics rs2) {
-        double vn1 = rs1.var() / rs1.n();
-        double vn2 = rs2.var() / rs2.n();
-
-        /* Calculate t */
-        double xbs = rs1.mean() - rs2.mean();
-        double t = xbs / FastMath.sqrt(vn1 + vn2);
-
-        double vn12 = FastMath.pow(vn1, 2);
-        double vn22 = FastMath.pow(vn2, 2);
-
-        /* Calculate degrees of freedom */
-        double v = FastMath.pow(vn1 + vn2, 2)
-            / ((vn12 / (rs1.n() - 1)) + (vn22 / (rs2.n() - 1)));
-        if (v == Double.NaN) {
-            v = 1;
-        }
-
-        TDistribution tdist = new TDistribution(v);
-        double p = tdist.cumulativeProbability(t) * 2;
-        return new WelchResult(t, p);
     }
 
     @Override
