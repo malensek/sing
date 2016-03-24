@@ -64,7 +64,7 @@ public class RunningStatistics implements ByteSerializable {
     }
 
     /**
-     * Creates a Welford running statistics instance without no observed values.
+     * Creates an empty Welford running statistics instance.
      */
     public RunningStatistics() {
 
