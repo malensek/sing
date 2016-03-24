@@ -8,13 +8,17 @@ import java.util.Scanner;
 
 import io.sigpipe.sing.dataset.Metadata;
 import io.sigpipe.sing.dataset.feature.Feature;
+import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.graph.DataContainer;
+import io.sigpipe.sing.graph.FeatureHierarchy;
 import io.sigpipe.sing.graph.Path;
 import io.sigpipe.sing.graph.Sketch;
 import io.sigpipe.sing.serialization.SerializationInputStream;
 import io.sigpipe.sing.serialization.Serializer;
 import io.sigpipe.sing.stat.FeatureSurvey;
+import io.sigpipe.sing.util.GeoHash;
 import io.sigpipe.sing.util.PerformanceTimer;
+import io.sigpipe.sing.util.TestConfiguration;
 
 public class ReadMetaBlob {
 
