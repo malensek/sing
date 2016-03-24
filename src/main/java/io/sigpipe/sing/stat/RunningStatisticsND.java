@@ -19,18 +19,18 @@ public class RunningStatisticsND implements ByteSerializable {
 
     private double[] ss;
 
-    public RunningStatisticsND(int size) {
-        this.mean = new double[size];
-        this.m2 = new double[size];
-        this.min = new double[size];
-        this.max = new double[size];
+    public RunningStatisticsND(int dimensions) {
+        this.mean = new double[dimensions];
+        this.m2 = new double[dimensions];
+        this.min = new double[dimensions];
+        this.max = new double[dimensions];
 
-        for (int d = 0; d < size; ++d) {
+        for (int d = 0; d < dimensions; ++d) {
             this.min[d] = Double.MAX_VALUE;
             this.max[d] = Double.MIN_VALUE;
         }
 
-        ss = new double[size * (size - 1) / 2];
+        this.ss = new double[dimensions * (dimensions - 1) / 2];
     }
 
     /**
