@@ -142,8 +142,7 @@ public class Sketch {
         for (int i = 0; i < path.size(); ++i) {
             values[i] = path.get(i).getLabel().getDouble();
         }
-        RunningStatisticsND rsnd = new RunningStatisticsND(path.size());
-        rsnd.put(values);
+        RunningStatisticsND rsnd = new RunningStatisticsND(values);
         ContainerEntry entry = new ContainerEntry();
         entry.stats = rsnd;
         DataContainer container = new DataContainer();
