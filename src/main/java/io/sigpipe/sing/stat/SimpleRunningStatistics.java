@@ -42,13 +42,10 @@ import org.apache.commons.math3.util.FastMath;
  * @author malensek
  */
 public class SimpleRunningStatistics implements ByteSerializable {
+
     private long n;
     private double mean;
-    private double M2;
-
-    /* Initialize max/min to their respective opposite values: */
-    private double min = Double.MAX_VALUE;
-    private double max = Double.MIN_VALUE;
+    private double m2;
 
     public static class WelchResult {
         /** T-statistic */
@@ -101,16 +98,14 @@ public class SimpleRunningStatistics implements ByteSerializable {
     private void copyFrom(SimpleRunningStatistics that) {
         this.n = that.n;
         this.mean = that.mean;
-        this.M2 = that.M2;
-        this.min = that.min;
-        this.max = that.max;
+        this.m2 = that.m2;
     }
 
     public void merge(SimpleRunningStatistics that) {
         long newN = n + that.n;
         double delta = this.mean - that.mean;
         mean = (this.n * this.mean + that.n * that.mean) / newN;
-        M2 = M2 + that.M2 + delta * delta * this.n * that.n / newN;
+        m2 = m2 + that.m2 + delta * delta * this.n * that.n / newN;
         n = newN;
     }
 
@@ -140,10 +135,7 @@ public class SimpleRunningStatistics implements ByteSerializable {
         n++;
         double delta = sample - mean;
         mean = mean + delta / n;
-        M2 = M2 + delta * (sample - mean);
-
-        min = FastMath.min(this.min, sample);
-        max = FastMath.max(this.max, sample);
+        m2 = m2 + delta * (sample - mean);
     }
 
     /**
@@ -162,7 +154,7 @@ public class SimpleRunningStatistics implements ByteSerializable {
         }
 
         double prevMean = (n * mean - sample) / (n - 1);
-        M2 = M2 - (sample - mean) * (sample - prevMean);
+        m2 = m2 - (sample - mean) * (sample - prevMean);
         mean = prevMean;
         n--;
     }
@@ -174,9 +166,7 @@ public class SimpleRunningStatistics implements ByteSerializable {
     public void clear() {
         n = 0;
         mean = 0;
-        M2 = 0;
-        min = Double.MAX_VALUE;
-        max = Double.MIN_VALUE;
+        m2 = 0;
     }
 
     /**
@@ -219,7 +209,7 @@ public class SimpleRunningStatistics implements ByteSerializable {
             return Double.NaN;
         }
 
-        return M2 / (n - ddof);
+        return m2 / (n - ddof);
     }
 
     /**
@@ -251,22 +241,6 @@ public class SimpleRunningStatistics implements ByteSerializable {
      */
     public double std(double ddof) {
         return FastMath.sqrt(var(ddof));
-    }
-
-    /**
-     * Retrieves the largest value seen thus far by this RunningStatistics
-     * instance.
-     */
-    public double max() {
-        return this.max;
-    }
-
-    /**
-     * Retrieves the smallest value seen thus far by this RunningStatistics
-     * instance.
-     */
-    public double min() {
-        return this.min;
     }
 
     public double prob(double sample) {
@@ -316,8 +290,6 @@ public class SimpleRunningStatistics implements ByteSerializable {
         str += "Mean: " + mean + System.lineSeparator();
         str += "Variance: " + var() + System.lineSeparator();
         str += "Std Dev: " + std() + System.lineSeparator();
-        str += "Min: " + min + System.lineSeparator();
-        str += "Max: " + max;
         return str;
     }
 
@@ -326,7 +298,7 @@ public class SimpleRunningStatistics implements ByteSerializable {
     throws IOException {
         n = in.readLong();
         mean = in.readDouble();
-        M2 = in.readDouble();
+        m2 = in.readDouble();
     }
 
     @Override
@@ -334,6 +306,6 @@ public class SimpleRunningStatistics implements ByteSerializable {
     throws IOException {
         out.writeLong(n);
         out.writeDouble(mean);
-        out.writeDouble(M2);
+        out.writeDouble(m2);
     }
 }
