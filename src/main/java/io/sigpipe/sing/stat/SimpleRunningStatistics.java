@@ -62,15 +62,15 @@ public class SimpleRunningStatistics implements ByteSerializable {
     }
 
     /**
-     * Creates a copy of a {@link RunningStatistics} instance.
+     * Creates a copy of a {@link SimpleRunningStatistics} instance.
      */
     public SimpleRunningStatistics(SimpleRunningStatistics that) {
         copyFrom(that);
     }
 
     /**
-     * Create a new {@link RunningStatistics} instance by combining multiple
-     * existing instances.
+     * Create a new {@link SimpleRunningStatistics} instance by combining
+     * multiple existing instances.
      */
     public SimpleRunningStatistics(SimpleRunningStatistics... others) {
         if (others.length == 0) {
@@ -87,7 +87,7 @@ public class SimpleRunningStatistics implements ByteSerializable {
     }
 
     /**
-     * Copies statistics from another RunningStatistics instance.
+     * Copies statistics from another SimpleRunningStatistics instance.
      */
     private void copyFrom(SimpleRunningStatistics that) {
         this.n = that.n;
@@ -95,6 +95,9 @@ public class SimpleRunningStatistics implements ByteSerializable {
         this.m2 = that.m2;
     }
 
+    /**
+     * Merges this set of running statistics with another.
+     */
     public void merge(SimpleRunningStatistics that) {
         long newN = n + that.n;
         double delta = this.mean - that.mean;
@@ -127,8 +130,8 @@ public class SimpleRunningStatistics implements ByteSerializable {
      * give careful consideration when using this method. If a value is removed
      * that wasn't previously added, the statistics will be meaningless.
      * Additionally, if you're keeping track of previous additions, then it
-     * might be worth evaluating whether a RunningStatistics instance is the
-     * right thing to be using at all. Caveat emptor, etc, etc.
+     * might be worth evaluating whether a SimpleRunningStatistics instance is
+     * the right thing to be using at all. Caveat emptor, etc, etc.
      */
     public void remove(double sample) {
         if (n <= 1) {
@@ -144,8 +147,8 @@ public class SimpleRunningStatistics implements ByteSerializable {
     }
 
     /**
-     * Clears all values passed in, returning the RunningStatistics instance to
-     * its original state.
+     * Clears all values passed in, returning the SimpleRunningStatistics
+     * instance to its original state.
      */
     public void clear() {
         n = 0;
@@ -228,7 +231,7 @@ public class SimpleRunningStatistics implements ByteSerializable {
     }
 
     /**
-     * Retrieves the number of samples submitted to the RunningStatistics
+     * Retrieves the number of samples submitted to the SimpleRunningStatistics
      * instance so far.
      *
      * @return number of samples
