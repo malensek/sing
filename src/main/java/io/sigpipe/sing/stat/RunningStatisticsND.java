@@ -34,7 +34,7 @@ public class RunningStatisticsND implements ByteSerializable {
     }
 
     /**
-     * Add a new sample to the running statistics.
+     * Add a new set of samples to the running statistics.
      */
     public void put(double... samples) {
         if (samples.length != this.dimensions()) {
