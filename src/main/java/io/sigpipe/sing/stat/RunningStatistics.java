@@ -42,6 +42,7 @@ import org.apache.commons.math3.util.FastMath;
  * @author malensek
  */
 public class RunningStatistics implements ByteSerializable {
+
     private long n;
     private double mean;
     private double M2;
@@ -324,9 +325,11 @@ public class RunningStatistics implements ByteSerializable {
     @Deserialize
     public RunningStatistics(SerializationInputStream in)
     throws IOException {
-        n = in.readLong();
-        mean = in.readDouble();
-        M2 = in.readDouble();
+        this.n = in.readLong();
+        this.mean = in.readDouble();
+        this.M2 = in.readDouble();
+        this.min = in.readDouble();
+        this.max = in.readDouble();
     }
 
     @Override
@@ -335,5 +338,7 @@ public class RunningStatistics implements ByteSerializable {
         out.writeLong(n);
         out.writeDouble(mean);
         out.writeDouble(M2);
+        out.writeDouble(min);
+        out.writeDouble(max);
     }
 }
