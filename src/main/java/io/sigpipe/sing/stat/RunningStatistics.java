@@ -47,8 +47,8 @@ public class RunningStatistics implements ByteSerializable {
     private double M2;
 
     /* Initialize max/min to their respective opposite values: */
-    private double max = Double.MIN_VALUE;
     private double min = Double.MAX_VALUE;
+    private double max = Double.MIN_VALUE;
 
     public static class WelchResult {
         /** T-statistic */
@@ -102,8 +102,8 @@ public class RunningStatistics implements ByteSerializable {
         this.n = that.n;
         this.mean = that.mean;
         this.M2 = that.M2;
-        this.max = that.max;
         this.min = that.min;
+        this.max = that.max;
     }
 
     public void merge(RunningStatistics that) {
@@ -142,8 +142,8 @@ public class RunningStatistics implements ByteSerializable {
         mean = mean + delta / n;
         M2 = M2 + delta * (sample - mean);
 
-        max = FastMath.max(this.max, sample);
         min = FastMath.min(this.min, sample);
+        max = FastMath.max(this.max, sample);
     }
 
     /**
@@ -175,6 +175,8 @@ public class RunningStatistics implements ByteSerializable {
         n = 0;
         mean = 0;
         M2 = 0;
+        min = Double.MAX_VALUE;
+        max = Double.MIN_VALUE;
     }
 
     /**
