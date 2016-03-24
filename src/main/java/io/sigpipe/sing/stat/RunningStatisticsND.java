@@ -33,6 +33,11 @@ public class RunningStatisticsND implements ByteSerializable {
         this.ss = new double[dimensions * (dimensions - 1) / 2];
     }
 
+    public RunningStatisticsND(double... samples) {
+        this(samples.length);
+        put(samples);
+    }
+
     /**
      * Add a new set of samples to the running statistics.
      */
