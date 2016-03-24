@@ -1,8 +1,14 @@
 package io.sigpipe.sing.stat;
 
+import java.io.IOException;
+
 import org.apache.commons.math3.util.FastMath;
 
-public class RunningStatisticsND {
+import io.sigpipe.sing.serialization.ByteSerializable;
+import io.sigpipe.sing.serialization.SerializationInputStream;
+import io.sigpipe.sing.serialization.SerializationOutputStream;
+
+public class RunningStatisticsND implements ByteSerializable {
 
     private long n;
 
@@ -69,6 +75,49 @@ public class RunningStatisticsND {
 
     public long n() {
         return this.n;
+    }
+
+    @Deserialize
+    public RunningStatisticsND(SerializationInputStream in)
+    throws IOException {
+        int dimensions = in.readInt();
+        this.mean = new double[dimensions];
+        this.m2 = new double[dimensions];
+        this.min = new double[dimensions];
+        this.max = new double[dimensions];
+        this.ss = new double[dimensions * (dimensions - 1) / 2];
+
+        this.n = in.readLong();
+
+        for (int i = 0; i < dimensions; ++i) {
+            mean[i] = in.readDouble();
+            m2[i] = in.readDouble();
+            min[i] = in.readDouble();
+            max[i] = in.readDouble();
+        }
+
+        for (int i = 0; i < this.ss.length; ++i) {
+            ss[i] = in.readDouble();
+        }
+    }
+
+    @Override
+    public void serialize(SerializationOutputStream out)
+    throws IOException {
+        out.writeInt(this.dimensions());
+
+        out.writeLong(this.n());
+
+        for (int i = 0; i < this.dimensions(); ++i) {
+            out.writeDouble(mean[i]);
+            out.writeDouble(m2[i]);
+            out.writeDouble(min[i]);
+            out.writeDouble(max[i]);
+        }
+
+        for (int i = 0; i < ss.length; ++i) {
+            out.writeDouble(ss[i]);
+        }
     }
 
 }
