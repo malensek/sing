@@ -54,7 +54,7 @@ public class RunningStatisticsND implements ByteSerializable {
                 double dx = samples[i] - mean[i];
                 double dy = samples[j] - mean[j];
                 int index = index1D(i, j);
-                ss[index] += dx * dy * n() / (n() + 1);
+                ss[index] += dx * dy * count() / (count() + 1);
             }
         }
 
@@ -78,7 +78,7 @@ public class RunningStatisticsND implements ByteSerializable {
         return mean.length;
     }
 
-    public long n() {
+    public long count() {
         return this.n;
     }
 
