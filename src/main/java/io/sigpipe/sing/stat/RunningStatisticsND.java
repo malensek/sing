@@ -54,7 +54,7 @@ public class RunningStatisticsND implements ByteSerializable {
                 double dx = samples[i] - mean[i];
                 double dy = samples[j] - mean[j];
                 int index = index1D(i, j);
-                ss[index] += dx * dy * count() / (count() + 1);
+                ss[index] += dx * dy * n / (n + 1);
             }
         }
 
@@ -116,7 +116,7 @@ public class RunningStatisticsND implements ByteSerializable {
     throws IOException {
         out.writeInt(this.dimensions());
 
-        out.writeLong(this.n());
+        out.writeLong(n);
 
         for (int i = 0; i < this.dimensions(); ++i) {
             out.writeDouble(mean[i]);
