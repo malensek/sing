@@ -68,6 +68,11 @@ public class RunningStatisticsND implements ByteSerializable {
         }
     }
 
+    /**
+     * Converts a 2D matrix index (i, j) to a 1D array position.
+     *
+     * @return corresponding array position.
+     */
     private int index1D(int i, int j) {
         int dims = this.dimensions();
         return (dims * (dims - 1) / 2)
