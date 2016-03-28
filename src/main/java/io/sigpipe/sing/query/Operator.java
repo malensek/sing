@@ -40,7 +40,9 @@ public enum Operator {
     LESS(3),
     GREATER(4),
     LESSEQUAL(5),
-    GREATEREQUAL(6);
+    GREATEREQUAL(6),
+    AND(7),
+    ;
 
     /**
      * String representation of the operators.  Note that the array index
@@ -55,6 +57,7 @@ public enum Operator {
         ">",  // GREATER(4)
         "<=", // LESSEQUAL(5)
         ">=", // GREATEREQUAL(6)
+        "&", // AND(7)
     };
 
     private final int op;
