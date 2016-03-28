@@ -258,20 +258,6 @@ public class Sketch {
         }
     }
 
-//    private boolean applyPayloadFilter(Path path, PayloadFilter filter) {
-//
-//        Set<T> payload = path.getPayload();
-//        if (filter.excludesItems() == false) {
-//            /* We only include the items in the filter */
-//            payload.retainAll(filter.getItems());
-//        } else {
-//            /* Excludes anything in the filter */
-//            payload.removeAll(filter.getItems());
-//        }
-//
-//        return payload.isEmpty();
-//    }
-
     /**
      * Determines the numeric order of a Feature based on the current
      * orientation of the graph.  For example, humidity features may come first,
@@ -326,14 +312,6 @@ public class Sketch {
         }
         return hierarchy;
     }
-
-//    public List<Path> getAllPaths() {
-//        List<Path> paths = root.descendantPaths();
-//        for (Path<Feature, T> path : paths) {
-//            removeNullFeatures(path);
-//        }
-//        return paths;
-//    }
 
     public Vertex getRoot() {
         return root;
