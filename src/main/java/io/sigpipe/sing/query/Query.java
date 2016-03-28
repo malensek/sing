@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013, Colorado State University
+Copyright (c) 2016, Colorado State University
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -25,63 +25,21 @@ software, even if advised of the possibility of such damage.
 
 package io.sigpipe.sing.query;
 
-import io.sigpipe.sing.serialization.ByteSerializable;
+import java.io.IOException;
 
-import io.sigpipe.sing.serialization.SerializationException;
-import io.sigpipe.sing.serialization.SerializationInputStream;
+import io.sigpipe.sing.graph.Vertex;
+import io.sigpipe.sing.serialization.ByteSerializable;
 import io.sigpipe.sing.serialization.SerializationOutputStream;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Encapsulates a Galileo query.
+ * General query interface. In SING, queries are executed against a graph
+ * (defined by its root vertex).
  *
  * @author malensek
  */
-public class Query implements ByteSerializable {
+public interface Query extends ByteSerializable {
 
-    private List<Operation> operations = new ArrayList<>();
+    public void execute(Vertex root, SerializationOutputStream out)
+    throws IOException, QueryException;
 
-    public Query() { }
-
-    public Query(Operation... operations) {
-        for (Operation operation : operations) {
-            addOperation(operation);
-        }
-    }
-
-    public void addOperation(Operation op) {
-        operations.add(op);
-    }
-
-    public List<Operation> getOperations() {
-        return operations;
-    }
-
-    @Override
-    public String toString() {
-        String str = "";
-        for (int i = 0; i < operations.size(); ++i) {
-            str += operations.get(i);
-
-            if (i < operations.size() - 1) {
-                str += " || ";
-            }
-        }
-        return str;
-    }
-
-    @Deserialize
-    public Query(SerializationInputStream in)
-    throws IOException, SerializationException {
-        in.readSerializableCollection(Operation.class, operations);
-    }
-
-    @Override
-    public void serialize(SerializationOutputStream out)
-    throws IOException {
-        out.writeSerializableCollection(operations);
-    }
 }
