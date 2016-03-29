@@ -143,10 +143,7 @@ public class Sketch {
             values[i] = path.get(i).getLabel().getDouble();
         }
         RunningStatisticsND rsnd = new RunningStatisticsND(values);
-        ContainerEntry entry = new ContainerEntry();
-        entry.stats = rsnd;
-        DataContainer container = new DataContainer();
-        container.entry = entry;
+        DataContainer container = new DataContainer(rsnd);
 
         /* Place the path payload (traversal result) at the end of this path. */
         path.get(path.size() - 1).setData(container);
