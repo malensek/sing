@@ -16,7 +16,7 @@ import io.sigpipe.sing.serialization.SerializationException;
 import io.sigpipe.sing.serialization.SerializationInputStream;
 import io.sigpipe.sing.serialization.SerializationOutputStream;
 
-public class MetaQuery implements Query {
+public class MetaQuery extends Query {
 
     private Map<String, List<Expression>> expressions = new HashMap<>();
 

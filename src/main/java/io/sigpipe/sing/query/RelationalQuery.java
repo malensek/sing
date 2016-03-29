@@ -6,7 +6,7 @@ import io.sigpipe.sing.graph.Vertex;
 import io.sigpipe.sing.serialization.SerializationInputStream;
 import io.sigpipe.sing.serialization.SerializationOutputStream;
 
-public class RelationalQuery implements Query {
+public class RelationalQuery extends Query {
 
     public RelationalQuery() {
 

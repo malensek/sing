@@ -37,9 +37,9 @@ import io.sigpipe.sing.serialization.SerializationOutputStream;
  *
  * @author malensek
  */
-public interface Query extends ByteSerializable {
+public abstract class Query implements ByteSerializable {
 
-    public void execute(Vertex root, SerializationOutputStream out)
+    public abstract void execute(Vertex root, SerializationOutputStream out)
     throws IOException, QueryException;
 
 }
