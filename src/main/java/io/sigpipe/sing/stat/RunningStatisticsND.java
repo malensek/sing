@@ -20,6 +20,24 @@ public class RunningStatisticsND implements ByteSerializable {
     private double[] ss;
 
     public RunningStatisticsND(int dimensions) {
+        this.initialize(dimensions);
+    }
+
+    public RunningStatisticsND(double... samples) {
+        this(samples.length);
+        put(samples);
+    }
+
+    /**
+     * Initializes all instance variables based on a given number of dimensions.
+     * Useful for constructing new instances or resetting already existing
+     * instances.
+     *
+     * @param dimensions Number of dimensions to initialize
+     */
+    private void initialize(int dimensions) {
+        this.n = 0;
+
         this.mean = new double[dimensions];
         this.m2 = new double[dimensions];
         this.min = new double[dimensions];
@@ -33,9 +51,15 @@ public class RunningStatisticsND implements ByteSerializable {
         this.ss = new double[dimensions * (dimensions - 1) / 2];
     }
 
-    public RunningStatisticsND(double... samples) {
-        this(samples.length);
-        put(samples);
+    /**
+     * Converts a 2D matrix index (i, j) to a 1D array position.
+     *
+     * @return corresponding array position.
+     */
+    private int index1D(int i, int j) {
+        int dims = this.dimensions();
+        return (dims * (dims - 1) / 2)
+            - (dims - i) * ((dims - i) - 1) / 2 + j - i - 1;
     }
 
     /**
@@ -68,23 +92,12 @@ public class RunningStatisticsND implements ByteSerializable {
         }
     }
 
-    /**
-     * Converts a 2D matrix index (i, j) to a 1D array position.
-     *
-     * @return corresponding array position.
-     */
-    private int index1D(int i, int j) {
-        int dims = this.dimensions();
-        return (dims * (dims - 1) / 2)
-            - (dims - i) * ((dims - i) - 1) / 2 + j - i - 1;
-    }
-
     public void merge(RunningStatisticsND that) {
 
     }
 
     public void clear() {
-
+        this.initialize(this.dimensions());
     }
 
     public int dimensions() {
