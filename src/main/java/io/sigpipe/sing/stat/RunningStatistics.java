@@ -107,6 +107,12 @@ public class RunningStatistics implements ByteSerializable {
         this.max = that.max;
     }
 
+    /**
+     * Merges statistics from another {@link RunningStatistics} instance with
+     * this instance.
+     *
+     * @param that The {@link RunningStatistics} instance to merge data from.
+     */
     public void merge(RunningStatistics that) {
         long newN = n + that.n;
         double delta = this.mean - that.mean;
