@@ -155,7 +155,8 @@ public class Vertex implements ByteSerializable {
      *     range
      */
     public NavigableMap<Feature, Vertex> getNeighborsInRange(
-            Feature from, boolean fromInclusive, Feature to, boolean toInclusive) {
+            Feature from, boolean fromInclusive,
+            Feature to, boolean toInclusive) {
 
         return edges.subMap(from, fromInclusive, to, toInclusive);
     }
