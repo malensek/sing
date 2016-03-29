@@ -249,18 +249,6 @@ public class Vertex implements ByteSerializable {
         this.data = container;
     }
 
-    public void find(Feature f) {
-        if (this.label.getType() == f.getType()) {
-            //System.out.println("same; " + this.label.getLong() + " -- " + f.getLong());
-            if (this.label.compareTo(f) == 0) {
-                System.out.println("found!");
-            }
-        }
-        for (Vertex child : this.getAllNeighbors()) {
-            child.find(f);
-        }
-    }
-
     /**
      * Retrieves the number of descendant vertices for this {@link Vertex}.
      *
