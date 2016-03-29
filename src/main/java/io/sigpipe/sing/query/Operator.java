@@ -41,7 +41,11 @@ public enum Operator {
     GREATER(4),
     LESSEQUAL(5),
     GREATEREQUAL(6),
-    AND(7),
+    RANGE_INC(7),
+    RANGE_EXC(8),
+    RANGE_INC_EXC(9),
+    RANGE_EXC_INC(10),
+    AND(11),
     ;
 
     /**
@@ -57,7 +61,11 @@ public enum Operator {
         ">",  // GREATER(4)
         "<=", // LESSEQUAL(5)
         ">=", // GREATEREQUAL(6)
-        "&", // AND(7)
+        "[]", // RANGE_INC(7)
+        "()", // RANGE_EXC(8)
+        "[)", // RANGE_INC_EXC(9)
+        "(]", // RANGE_EXC_INC(10)
+        "&",  // AND(11)
     };
 
     private final int op;
