@@ -113,6 +113,8 @@ public class RunningStatistics implements ByteSerializable {
         mean = (this.n * this.mean + that.n * that.mean) / newN;
         M2 = M2 + that.M2 + delta * delta * this.n * that.n / newN;
         n = newN;
+        this.min = FastMath.min(this.min, that.min);
+        this.max = FastMath.max(this.max, that.max);
     }
 
     /**
