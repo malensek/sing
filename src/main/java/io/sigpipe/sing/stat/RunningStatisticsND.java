@@ -79,6 +79,9 @@ public class RunningStatisticsND implements ByteSerializable {
             - (dims - i) * ((dims - i) - 1) / 2 + j - i - 1;
     }
 
+    public void merge(RunningStatisticsND that) {
+
+    }
     public int dimensions() {
         return mean.length;
     }
