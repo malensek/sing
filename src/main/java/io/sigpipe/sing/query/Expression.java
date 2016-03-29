@@ -75,13 +75,22 @@ public class Expression implements ByteSerializable {
     public Expression(SerializationInputStream in)
     throws IOException, SerializationException {
         operator = Operator.fromInt(in.readInt());
-        value = new Feature(in);
+        boolean hasRange = (in.readInt() == 2);
+        this.operand1 = new Feature(in);
+        if (hasRange) {
+            this.operand2 = new Feature(in);
+        }
     }
 
     @Override
     public void serialize(SerializationOutputStream out)
     throws IOException {
         out.writeInt(operator.toInt());
-        out.writeSerializable(value);
+        int numOperands = (operand2 != null) ? 2 : 1;
+        out.writeInt(numOperands);
+        operand1.serialize(out);
+        if (operand2 != null) {
+            operand2.serialize(out);
+        }
     }
 }
