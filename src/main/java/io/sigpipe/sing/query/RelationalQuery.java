@@ -16,7 +16,8 @@ public class RelationalQuery extends Query {
 
     }
 
-    public void execute(Vertex root, SerializationOutputStream out)
+    @Override
+    public void execute(Vertex root)
     throws IOException, QueryException {
 
     }
