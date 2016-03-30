@@ -22,17 +22,17 @@ public class MetaQuery extends Query {
 
     }
 
-    public void execute(Vertex root, SerializationOutputStream out)
+    @Override
+    public void execute(Vertex root)
     throws IOException, QueryException {
-        this.query(root, out);
+        this.query(root);
     }
 
-    private void query(Vertex vertex, SerializationOutputStream out)
+    private void query(Vertex vertex)
     throws IOException, QueryException {
         DataContainer container = vertex.getData();
         if (container != null) {
             //System.out.println("Serializing: " + vertex.toString());
-            container.serialize(out);
         }
 
         List<Expression> expList = expressions.get(vertex.getLabel().getName());
@@ -47,12 +47,12 @@ public class MetaQuery extends Query {
                     continue;
                 }
 
-                query(match, out);
+                query(match);
             }
         } else {
             /* No expression operates on this vertex. Consider all children. */
             for (Vertex neighbor : vertex.getAllNeighbors()) {
-                query(neighbor, out);
+                query(neighbor);
             }
         }
     }
