@@ -26,14 +26,16 @@ software, even if advised of the possibility of such damage.
 package io.sigpipe.sing.query;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.graph.Vertex;
 import io.sigpipe.sing.serialization.ByteSerializable;
-import io.sigpipe.sing.serialization.SerializationOutputStream;
 
 /**
  * General query interface. In SING, queries are executed against a graph
@@ -43,8 +45,20 @@ import io.sigpipe.sing.serialization.SerializationOutputStream;
  */
 public abstract class Query implements ByteSerializable {
 
+    protected Map<String, List<Expression>> expressions = new HashMap<>();
+
     public abstract void execute(Vertex root)
     throws IOException, QueryException;
+
+    public void addExpression(Expression e) {
+        String name = e.getOperand().getName();
+        List<Expression> expList = expressions.get(name);
+        if (expList == null) {
+            expList = new ArrayList<>();
+            expressions.put(name, expList);
+        }
+        expList.add(e);
+    }
 
     protected Set<Vertex> evaluate(Vertex vertex, List<Expression> expressions)
     throws QueryException {
