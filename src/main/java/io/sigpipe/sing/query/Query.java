@@ -43,7 +43,7 @@ import io.sigpipe.sing.serialization.SerializationOutputStream;
  */
 public abstract class Query implements ByteSerializable {
 
-    public abstract void execute(Vertex root, SerializationOutputStream out)
+    public abstract void execute(Vertex root)
     throws IOException, QueryException;
 
     protected Set<Vertex> evaluate(Vertex vertex, List<Expression> expressions)
