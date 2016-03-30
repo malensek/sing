@@ -100,6 +100,10 @@ public class Vertex implements ByteSerializable {
         return edges.get(label);
     }
 
+    public Vertex getFirstNeighbor() {
+        return edges.firstEntry().getValue();
+    }
+
     /**
      * Retrieves the {@link NavigableMap} of neighboring vertices less than the
      * specified value.
