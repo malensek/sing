@@ -15,11 +15,14 @@ import io.sigpipe.sing.serialization.SerializationOutputStream;
 
 public class MetaQuery extends Query {
 
+    public DataContainer aggregateData = new DataContainer();
 
     public MetaQuery() {
 
     }
 
+    public DataContainer result() {
+        return aggregateData;
     }
 
     @Override
@@ -32,7 +35,7 @@ public class MetaQuery extends Query {
     throws IOException, QueryException {
         DataContainer container = vertex.getData();
         if (container != null) {
-            //System.out.println("Serializing: " + vertex.toString());
+            this.aggregateData.merge(container);
         }
 
         List<Expression> expList = expressions.get(vertex.getLabel().getName());
