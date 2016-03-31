@@ -51,6 +51,20 @@ public class RunningStatisticsND implements ByteSerializable {
         this.ss = new double[dimensions * (dimensions - 1) / 2];
     }
 
+    private void copyFrom(RunningStatisticsND that) {
+        initialize(that.dimensions());
+        this.n = that.n;
+        for (int i = 0; i < that.dimensions(); ++i) {
+            this.mean[i] = that.mean[i];
+            this.m2[i] = that.m2[i];
+            this.min[i] = that.min[i];
+            this.max[i] = that.max[i];
+        }
+        for (int i = 0; i < that.ss.length; ++i) {
+            this.ss[i] = that.ss[i];
+        }
+    }
+
     /**
      * Converts a 2D matrix index (i, j) to a 1D array position.
      *
