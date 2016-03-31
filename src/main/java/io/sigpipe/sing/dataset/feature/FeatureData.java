@@ -124,6 +124,17 @@ implements ByteSerializable, Comparable<FeatureData<?>> {
     }
 
     /**
+     * Determines whether the bits in the given Feature match this feature. In
+     * other words, computes the result of (this &amp; that) == that.
+     *
+     * @param f Feature containing bits to test for.
+     * @return true if the provided Feature's bits are present.
+     */
+    public boolean bitwiseMatch(Feature f) {
+        throw new UnsupportedOperationException("Unsupported operand type");
+    }
+
+    /**
      * Multiplies two Features, and returns a new Feature containing the
      * product.
      *
