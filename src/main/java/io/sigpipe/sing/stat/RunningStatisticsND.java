@@ -32,6 +32,10 @@ public class RunningStatisticsND implements ByteSerializable {
         put(samples);
     }
 
+    public RunningStatisticsND(RunningStatisticsND that) {
+        this.copyFrom(that);
+    }
+
     /**
      * Initializes all instance variables based on a given number of dimensions.
      * Useful for constructing new instances or resetting already existing
