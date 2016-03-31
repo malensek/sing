@@ -173,6 +173,11 @@ public class RunningStatisticsND implements ByteSerializable {
     public double mean(int dimension) {
         return this.mean[dimension];
     }
+
+    public double max(int dimension) {
+        return this.max[dimension];
+    }
+
     @Deserialize
     public RunningStatisticsND(SerializationInputStream in)
     throws IOException {
