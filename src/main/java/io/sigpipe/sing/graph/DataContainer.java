@@ -9,7 +9,7 @@ import io.sigpipe.sing.stat.RunningStatisticsND;
 
 public class DataContainer implements ByteSerializable {
 
-    private RunningStatisticsND statistics;
+    public RunningStatisticsND statistics;
 
     public DataContainer() {
         this.statistics = new RunningStatisticsND();

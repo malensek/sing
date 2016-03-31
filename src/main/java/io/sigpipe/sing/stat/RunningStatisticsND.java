@@ -95,6 +95,7 @@ public class RunningStatisticsND implements ByteSerializable {
         if (this.initialized() == false) {
             initialize(samples.length);
         }
+
         if (samples.length != this.dimensions()) {
             throw new IllegalArgumentException("Input dimension mismatch: "
                     + samples.length + " =/= " + this.dimensions());
