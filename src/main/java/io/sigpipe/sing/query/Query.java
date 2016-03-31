@@ -36,6 +36,9 @@ import java.util.Set;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.graph.Vertex;
 import io.sigpipe.sing.serialization.ByteSerializable;
+import io.sigpipe.sing.serialization.SerializationException;
+import io.sigpipe.sing.serialization.SerializationInputStream;
+import io.sigpipe.sing.serialization.SerializationOutputStream;
 
 /**
  * General query interface. In SING, queries are executed against a graph
@@ -160,4 +163,34 @@ public abstract class Query implements ByteSerializable {
 
         return matches;
     }
+
+    @Deserialize
+    public Query(SerializationInputStream in)
+    throws IOException, SerializationException {
+        int size = in.readInt();
+        this.expressions = new HashMap<>(size);
+        for (int i = 0; i < size; ++i) {
+            int listSize = in.readInt();
+            List<Expression> expList = new ArrayList<>(listSize);
+            for (int j = 0; j < listSize; ++j) {
+                Expression exp = new Expression(in);
+                expList.add(exp);
+            }
+            String featureName = expList.get(0).getOperand().getName();
+            this.expressions.put(featureName, expList);
+        }
+    }
+
+    @Override
+    public void serialize(SerializationOutputStream out)
+    throws IOException {
+        out.writeInt(this.expressions.size());
+        for (List<Expression> expList : this.expressions.values()) {
+            out.writeInt(expList.size());
+            for (Expression expression : expList) {
+                expression.serialize(out);
+            }
+        }
+    }
+
 }

@@ -66,34 +66,5 @@ public class MetaQuery extends Query {
         }
     }
 
-    @Deserialize
-    public MetaQuery(SerializationInputStream in)
-    throws IOException, SerializationException {
-        int size = in.readInt();
-        this.expressions = new HashMap<>(size);
-        for (int i = 0; i < size; ++i) {
-            int listSize = in.readInt();
-            List<Expression> expList = new ArrayList<>(listSize);
-            for (int j = 0; j < listSize; ++j) {
-                Expression exp = new Expression(in);
-                expList.add(exp);
-            }
-            String featureName = expList.get(0).getOperand().getName();
-            this.expressions.put(featureName, expList);
-        }
-    }
-
-    @Override
-    public void serialize(SerializationOutputStream out)
-    throws IOException {
-        out.writeInt(this.expressions.size());
-        for (List<Expression> expList : this.expressions.values()) {
-            out.writeInt(expList.size());
-            for (Expression expression : expList) {
-                expression.serialize(out);
-            }
-        }
-    }
-
 }
 
