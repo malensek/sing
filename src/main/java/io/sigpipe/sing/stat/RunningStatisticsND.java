@@ -51,6 +51,10 @@ public class RunningStatisticsND implements ByteSerializable {
         this.ss = new double[dimensions * (dimensions - 1) / 2];
     }
 
+    private boolean initialized() {
+        return mean != null;
+    }
+
     private void copyFrom(RunningStatisticsND that) {
         initialize(that.dimensions());
         this.n = that.n;
