@@ -170,6 +170,9 @@ public class RunningStatisticsND implements ByteSerializable {
         return this.n;
     }
 
+    public double mean(int dimension) {
+        return this.mean[dimension];
+    }
     @Deserialize
     public RunningStatisticsND(SerializationInputStream in)
     throws IOException {
