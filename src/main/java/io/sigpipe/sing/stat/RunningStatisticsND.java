@@ -19,6 +19,10 @@ public class RunningStatisticsND implements ByteSerializable {
 
     private double[] ss;
 
+    public RunningStatisticsND() {
+
+    }
+
     public RunningStatisticsND(int dimensions) {
         this.initialize(dimensions);
     }
@@ -84,6 +88,9 @@ public class RunningStatisticsND implements ByteSerializable {
      * Add a new set of samples to the running statistics.
      */
     public void put(double... samples) {
+        if (this.initialized() == false) {
+            initialize(samples.length);
+        }
         if (samples.length != this.dimensions()) {
             throw new IllegalArgumentException("Input dimension mismatch: "
                     + samples.length + " =/= " + this.dimensions());
