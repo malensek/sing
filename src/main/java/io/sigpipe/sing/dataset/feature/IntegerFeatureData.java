@@ -63,6 +63,12 @@ extends NumericFeatureData<Integer> implements ByteSerializable {
         return new Feature(this.data * f.getInt());
     }
 
+    @Override
+    public boolean bitwiseMatch(Feature f) {
+        long that = f.getInt();
+        return (this.data & that) == that;
+    }
+
     @Deserialize
     public IntegerFeatureData(SerializationInputStream in)
     throws IOException {
