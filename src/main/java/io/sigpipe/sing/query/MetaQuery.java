@@ -15,7 +15,7 @@ import io.sigpipe.sing.serialization.SerializationOutputStream;
 
 public class MetaQuery extends Query {
 
-    public DataContainer aggregateData = new DataContainer();
+    private DataContainer aggregateData = new DataContainer();
 
     public MetaQuery() {
 
