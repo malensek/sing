@@ -118,7 +118,40 @@ public class RunningStatisticsND implements ByteSerializable {
     }
 
     public void merge(RunningStatisticsND that) {
+        if (this.initialized() == false) {
+            this.copyFrom(that);
+            return;
+        }
 
+        if (this.dimensions() != that.dimensions()) {
+            throw new IllegalArgumentException("Dimension mismatch: "
+                    + this.dimensions() + " =/= " + that.dimensions() + "; "
+                    + "merge operations require equal number of dimensions.");
+        }
+
+        long newN = n + that.n;
+
+        for (int i = 0; i < this.dimensions() - 1; ++i) {
+            for (int j = i + 1; j < this.dimensions(); ++j) {
+                double dx = that.mean[i] - this.mean[i];
+                double dy = that.mean[j] - this.mean[j];
+                int index = index1D(i, j);
+                ss[index] += that.ss[index] + this.n * that.n * dx * dy
+                    / (this.n + that.n);
+            }
+        }
+
+        for (int d = 0; d < this.dimensions(); ++d) {
+            double delta = this.mean[d] - that.mean[d];
+            this.mean[d] =
+                (this.n * this.mean[d] + that.n * that.mean[d]) / newN;
+            this.m2[d] += that.m2[d] + delta * delta * this.n * that.n / newN;
+
+            min[d] = FastMath.min(this.min[d], that.min[d]);
+            max[d] = FastMath.max(this.max[d], that.max[d]);
+        }
+
+        this.n = newN;
     }
 
     public void clear() {
