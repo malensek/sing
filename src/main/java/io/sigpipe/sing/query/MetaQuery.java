@@ -38,7 +38,12 @@ public class MetaQuery extends Query {
             this.aggregateData.merge(container);
         }
 
-        List<Expression> expList = expressions.get(vertex.getLabel().getName());
+        if (vertex.numNeighbors() == 0) {
+            /* This is a leaf node */
+            return;
+        }
+
+        List<Expression> expList = this.expressions.get(vertex.getFirstNeighbor().getLabel().getName());
         if (expList != null) {
             Set<Vertex> matches = evaluate(vertex, expList);
             for (Vertex match : matches) {
