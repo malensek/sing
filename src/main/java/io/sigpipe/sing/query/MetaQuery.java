@@ -43,7 +43,8 @@ public class MetaQuery extends Query {
             return;
         }
 
-        List<Expression> expList = this.expressions.get(vertex.getFirstNeighbor().getLabel().getName());
+        String childFeature = vertex.getFirstNeighbor().getLabel().getName();
+        List<Expression> expList = this.expressions.get(childFeature);
         if (expList != null) {
             Set<Vertex> matches = evaluate(vertex, expList);
             for (Vertex match : matches) {
