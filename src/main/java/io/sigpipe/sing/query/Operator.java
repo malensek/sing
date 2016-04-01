@@ -45,7 +45,8 @@ public enum Operator {
     RANGE_EXC(8),
     RANGE_INC_EXC(9),
     RANGE_EXC_INC(10),
-    BIT_MATCH(11),
+    STR_PREFIX(11),
+    STR_SUFFIX(11),
     ;
 
     /**
@@ -65,7 +66,8 @@ public enum Operator {
         "()", // RANGE_EXC(8)
         "[)", // RANGE_INC_EXC(9)
         "(]", // RANGE_EXC_INC(10)
-        "&=", // BIT_MATCH(11)
+        "[=", // STR_PREFIX(11)
+        "=]", // STR_SUFFIX(11)
     };
 
     private final int op;
