@@ -1,25 +1,21 @@
 package io.sigpipe.sing.graph;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.NavigableMap;
 import java.util.logging.Logger;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.TreeSet;
 
 import io.sigpipe.sing.dataset.Pair;
 import io.sigpipe.sing.dataset.Quantizer;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
-import io.sigpipe.sing.stat.RunningStatistics2D;
 import io.sigpipe.sing.stat.RunningStatisticsND;
 import io.sigpipe.sing.util.TestConfiguration;
 
@@ -137,8 +133,8 @@ public class Sketch {
         reorientPath(path);
         optimizePath(path);
 
-        double[] values = new double[path.size()];
-        for (int i = 0; i < path.size(); ++i) {
+        double[] values = new double[path.size() - 1];
+        for (int i = 0; i < path.size() - 1; ++i) {
             values[i] = path.get(i).getLabel().getDouble();
         }
         RunningStatisticsND rsnd = new RunningStatisticsND(values);
