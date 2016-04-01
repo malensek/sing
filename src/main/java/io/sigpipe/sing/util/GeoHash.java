@@ -250,12 +250,12 @@ public class GeoHash {
     }
 
     /**
-     * Converts a GeoHash string to its binary representation.
+     * Converts a Geohash string to its binary representation.
      *
      * @param hash
-     *     GeoHash string to convert to binary
+     *     Geohash string to convert to binary
      *
-     * @return The GeoHash in binary form, as an ArrayList of Booleans.
+     * @return The Geohash in binary form, as an ArrayList of Booleans.
      */
     private static ArrayList<Boolean> getBits(String hash) {
         hash = hash.toLowerCase();
