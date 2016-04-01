@@ -63,12 +63,6 @@ extends NumericFeatureData<Long> implements ByteSerializable {
         return new Feature(this.data * f.getLong());
     }
 
-    @Override
-    public boolean bitwiseMatch(Feature f) {
-        long that = f.getLong();
-        return (this.data & that) == that;
-    }
-
     @Deserialize
     public LongFeatureData(SerializationInputStream in)
     throws IOException {

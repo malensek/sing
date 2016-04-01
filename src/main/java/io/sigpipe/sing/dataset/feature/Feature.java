@@ -348,18 +348,6 @@ public class Feature implements Comparable<Feature>, ByteSerializable {
         return result;
     }
 
-    /**
-     * Determines whether the bits in the given Feature match this feature. In
-     * other words, computes the result of (this &amp; that) == that.
-     *
-     * @param f Feature containing bits to test for.
-     * @return true if the provided Feature's bits are present.
-     */
-    public boolean bitwiseMatch(Feature f) {
-        return this.data.bitwiseMatch(f);
-        //return (this.getLong() & f.getLong()) == f.getLong();
-    }
-
     public boolean greater(Feature f) {
         return this.compareTo(f) > 0;
     }
