@@ -16,7 +16,7 @@ import io.sigpipe.sing.graph.Sketch;
 import io.sigpipe.sing.serialization.SerializationInputStream;
 import io.sigpipe.sing.serialization.Serializer;
 import io.sigpipe.sing.stat.FeatureSurvey;
-import io.sigpipe.sing.util.GeoHash;
+import io.sigpipe.sing.util.Geohash;
 import io.sigpipe.sing.util.PerformanceTimer;
 import io.sigpipe.sing.util.TestConfiguration;
 
@@ -40,7 +40,7 @@ public class ReadMetaBlob {
                     + "   " + featureName);
             fh.addFeature(featureName, FeatureType.FLOAT);
         }
-        fh.addFeature("location", FeatureType.LONG);
+        fh.addFeature("location", FeatureType.STRING);
         Sketch s = new Sketch(fh);
 
         FeatureSurvey fs = new FeatureSurvey();
@@ -51,15 +51,18 @@ public class ReadMetaBlob {
 
             Metadata m = Serializer.deserialize(Metadata.class, payload);
 
-            for (Feature feat : m.getAttributes()) {
-                fs.add(feat);
-            }
 
             Path p = new Path(m.getAttributes().toArray());
-            //PerformanceTimer pt = new PerformanceTimer("go");
-            //pt.start();
+            String location = Geohash.encode(lat, lon, 4);
+            p.add(new Feature("location", location));
             s.addPath(p);
-            //pt.stopAndPrint();
+
+            for (Vertex v : p) {
+                if (v.getLabel().getType() != FeatureType.STRING) {
+                    fs.add(v.getLabel());
+                }
+            }
+
             if (i % 1000 == 0) {
                 System.out.print('.');
             }

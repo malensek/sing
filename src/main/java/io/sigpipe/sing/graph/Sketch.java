@@ -21,7 +21,6 @@ import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.stat.RunningStatistics2D;
 import io.sigpipe.sing.stat.RunningStatisticsND;
-import io.sigpipe.sing.util.GeoHash;
 import io.sigpipe.sing.util.TestConfiguration;
 
 public class Sketch {
