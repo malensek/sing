@@ -163,7 +163,11 @@ public class Geohash {
     }
 
     /**
-     * Convert a Geohash String to a long integer.
+     * Convert a Geohash String to a long integer. Sets of Geohash bits are
+     * placed such that the least-significant 5 bits contain the first character
+     * of the hash, and so on. This method supports up to 12 characters of
+     * precision; extra characters will be dropped when creating the long
+     * integer.
      *
      * @param hash
      *     Geohash String to convert.
