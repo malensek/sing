@@ -163,6 +163,30 @@ public abstract class Query implements ByteSerializable {
                     break;
                 }
 
+                case STR_PREFIX: {
+                    vertex
+                        .getAllNeighbors()
+                        .stream()
+                        .filter(v -> v
+                                .getLabel()
+                                .getString()
+                                .startsWith(operand.getString()))
+                        .forEach(matches::add);
+                    break;
+                }
+
+                case STR_SUFFIX: {
+                    vertex
+                        .getAllNeighbors()
+                        .stream()
+                        .filter(v -> v
+                                .getLabel()
+                                .getString()
+                                .endsWith(operand.getString()))
+                        .forEach(matches::add);
+                    break;
+                }
+
                 default:
                     throw new QueryException("Unknown operator: " + operator);
             }
@@ -199,5 +223,4 @@ public abstract class Query implements ByteSerializable {
             }
         }
     }
-
 }
