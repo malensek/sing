@@ -50,6 +50,10 @@ public abstract class Query implements ByteSerializable {
 
     protected Map<String, List<Expression>> expressions = new HashMap<>();
 
+    public Query() {
+
+    }
+
     public abstract void execute(Vertex root)
     throws IOException, QueryException;
 
