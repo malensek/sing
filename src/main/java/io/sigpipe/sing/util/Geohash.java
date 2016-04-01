@@ -171,19 +171,23 @@ public class Geohash {
      * @return The Geohash as a long integer.
      */
     public static long hashToLong(String hash) {
-        long longForm = 0;
-
         /* Long can fit 12 Geohash characters worth of precision. */
-        if (hash.length() > 12) {
+        int hashLen = hash.length();
+        if (hashLen > 12) {
             hash = hash.substring(0, 12);
         }
 
-        for (char c : hash.toCharArray()) {
-            longForm <<= BITS_PER_CHAR;
-            longForm |= charLookupTable.get(c);
+        long longHash = 0;
+        for (int i = hashLen - 1; i >= 0; --i) {
+            char c = hash.charAt(i);
+            longHash |= charLookupTable.get(c);
+
+            if (i > 0) {
+                longHash <<= BITS_PER_CHAR;
+            }
         }
 
-        return longForm;
+        return longHash;
     }
 
     /**
