@@ -60,18 +60,8 @@ public class RelationalQuery extends Query {
                 prune(neighbor, expressionsEvaluated);
             }
         }
-    }
 
-    @Deserialize
-    public RelationalQuery(SerializationInputStream in)
-    throws IOException {
+        if (foundSubMatch == false) {
 
     }
-
-    @Override
-    public void serialize(SerializationOutputStream out)
-    throws IOException {
-
-    }
-
 }
