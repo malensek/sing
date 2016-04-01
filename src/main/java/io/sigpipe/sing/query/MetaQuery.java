@@ -1,17 +1,12 @@
 package io.sigpipe.sing.query;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.graph.DataContainer;
 import io.sigpipe.sing.graph.Vertex;
-import io.sigpipe.sing.serialization.SerializationException;
-import io.sigpipe.sing.serialization.SerializationInputStream;
-import io.sigpipe.sing.serialization.SerializationOutputStream;
 
 public class MetaQuery extends Query {
 
@@ -65,6 +60,5 @@ public class MetaQuery extends Query {
             }
         }
     }
-
 }
 
