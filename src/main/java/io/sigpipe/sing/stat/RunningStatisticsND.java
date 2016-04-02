@@ -187,6 +187,9 @@ public class RunningStatisticsND implements ByteSerializable {
     public RunningStatisticsND(SerializationInputStream in)
     throws IOException {
         int dimensions = in.readInt();
+        if (dimensions == 0) {
+            return;
+        }
         this.mean = new double[dimensions];
         this.m2 = new double[dimensions];
         this.min = new double[dimensions];
@@ -211,6 +214,9 @@ public class RunningStatisticsND implements ByteSerializable {
     public void serialize(SerializationOutputStream out)
     throws IOException {
         out.writeInt(this.dimensions());
+        if (this.dimensions() == 0) {
+            return;
+        }
 
         out.writeLong(n);
 
