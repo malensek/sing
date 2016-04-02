@@ -164,6 +164,10 @@ public class RunningStatisticsND implements ByteSerializable {
     }
 
     public int dimensions() {
+        if (this.initialized() == false) {
+            return 0;
+        }
+
         return mean.length;
     }
 
