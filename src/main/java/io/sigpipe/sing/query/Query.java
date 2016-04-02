@@ -32,11 +32,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import io.sigpipe.sing.dataset.feature.Feature;
-import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.graph.Vertex;
 import io.sigpipe.sing.serialization.ByteSerializable;
 import io.sigpipe.sing.serialization.SerializationException;
