@@ -7,21 +7,34 @@ import java.util.Set;
 
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.graph.DataContainer;
+import io.sigpipe.sing.graph.GraphMetrics;
 import io.sigpipe.sing.graph.Vertex;
 import io.sigpipe.sing.serialization.SerializationOutputStream;
 
 public class RelationalQuery extends Query {
 
     private Set<Vertex> pruned;
+    private GraphMetrics metrics;
 
     public RelationalQuery() {
 
     }
 
+    public RelationalQuery(GraphMetrics metrics) {
+        this.metrics = metrics;
+    }
     @Override
     public void execute(Vertex root)
     throws IOException, QueryException {
-        this.pruned = new HashSet<Vertex>();
+        if (this.metrics != null) {
+            /* To make sure we don't spend time resizing the pruned HashSet, set
+             * it to the number of vertices in the graph divided by the default
+             * load factor. */
+            this.pruned = new HashSet<Vertex>(
+                    (int) (metrics.getVertexCount() / 0.75));
+        } else {
+            this.pruned = new HashSet<>();
+        }
         System.out.println("expressions: " + expressions.size());
         prune(root, 0);
         System.out.println("Pruned " + pruned.size() + " vertices");
