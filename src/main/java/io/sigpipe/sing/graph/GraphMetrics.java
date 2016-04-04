@@ -22,8 +22,16 @@ public class GraphMetrics {
         this.leaves = leaves;
     }
 
+    public void addVertex() {
+        this.vertices++;
+    }
+
     public void addVertices(long vertices) {
         this.vertices += vertices;
+    }
+
+    public void addLeaf() {
+        this.leaves++;
     }
 
     public void addLeaves(long leaves) {
