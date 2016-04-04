@@ -226,22 +226,21 @@ public class Vertex implements ByteSerializable {
         addPath(path, null);
     }
 
-    public void addPath(Iterator<Vertex> path,
-            PathInfoCollector infoCollector) {
+    public void addPath(Iterator<Vertex> path, GraphMetrics metrics) {
         if (path.hasNext()) {
             Vertex vertex = path.next();
             Vertex connection = connect(vertex);
 
-            if (connection == vertex && infoCollector != null) {
+            if (connection == vertex && metrics != null) {
                 /* This connection was new */
-                infoCollector.vertices++;
+                metrics.addVertex();
 
                 if (vertex.hasData()) {
-                    infoCollector.leaves++;
+                    metrics.addLeaf();
                 }
             }
 
-            connection.addPath(path, infoCollector);
+            connection.addPath(path, metrics);
         }
     }
 
