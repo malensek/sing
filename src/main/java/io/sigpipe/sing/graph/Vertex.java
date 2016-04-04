@@ -322,13 +322,9 @@ public class Vertex implements ByteSerializable {
 
     @Deserialize
     public Vertex(SerializationInputStream in)
-    throws IOException {
-        try {
-            this.label = new Feature(in);
-            this.data = new DataContainer(in);
-        } catch (SerializationException e) {
-            e.printStackTrace();
-        }
+    throws IOException, SerializationException {
+        this.label = new Feature(in);
+        this.data = new DataContainer(in);
 
         int neighbors = in.readInt();
         for (int i = 0; i < neighbors; ++i) {
@@ -350,5 +346,4 @@ public class Vertex implements ByteSerializable {
             v.serialize(out);
         }
     }
-
 }
