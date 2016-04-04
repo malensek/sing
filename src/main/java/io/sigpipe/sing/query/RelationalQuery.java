@@ -23,6 +23,11 @@ public class RelationalQuery extends Query {
     public RelationalQuery(GraphMetrics metrics) {
         this.metrics = metrics;
     }
+
+    public int numPruned() {
+        return this.pruned.size();
+    }
+
     @Override
     public void execute(Vertex root)
     throws IOException, QueryException {
@@ -35,9 +40,10 @@ public class RelationalQuery extends Query {
         } else {
             this.pruned = new HashSet<>();
         }
-        System.out.println("expressions: " + expressions.size());
+
         prune(root, 0);
-        System.out.println("Pruned " + pruned.size() + " vertices");
+    }
+
     public void serializeResults(Vertex vertex, SerializationOutputStream out)
     throws IOException {
         if (pruned.contains(vertex)) {
