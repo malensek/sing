@@ -27,17 +27,24 @@ public class RelationalQuery extends Query {
         System.out.println("Pruned " + pruned.size() + " vertices");
     }
 
-    private void prune(Vertex vertex, int expressionsEvaluated)
+    private boolean prune(Vertex vertex, int expressionsEvaluated)
     throws QueryException {
         if (expressionsEvaluated == this.expressions.size()) {
-            return;
+            /* There are no further expressions to evaluate. Therefore, we must
+             * assume all children from this point are relevant to the query. */
+            return true;
         }
 
+        boolean foundSubMatch = false;
         String childFeature = vertex.getFirstNeighbor().getLabel().getName();
         List<Expression> expList = this.expressions.get(childFeature);
         if (expList != null) {
-            Set<Vertex> allNeighbors = new HashSet<>(vertex.getAllNeighbors());
             Set<Vertex> matches = evaluate(vertex, expList);
+            if (matches.size() == 0) {
+                pruned.add(vertex);
+                return false;
+            }
+
             for (Vertex match : matches) {
                 if (match == null) {
                     continue;
@@ -47,21 +54,29 @@ public class RelationalQuery extends Query {
                     continue;
                 }
 
-                prune(match, expressionsEvaluated + 1);
+                if (prune(match, expressionsEvaluated + 1) == true) {
+                    foundSubMatch = true;
+                }
             }
 
-            allNeighbors.removeAll(matches);
-            for (Vertex nonMatch : allNeighbors) {
+            Set<Vertex> nonMatches = new HashSet<>(vertex.getAllNeighbors());
+            nonMatches.removeAll(matches);
+            for (Vertex nonMatch : nonMatches) {
                 pruned.add(nonMatch);
             }
         } else {
             /* No expression operates on this vertex. Consider all children. */
             for (Vertex neighbor : vertex.getAllNeighbors()) {
-                prune(neighbor, expressionsEvaluated);
+                if (prune(neighbor, expressionsEvaluated) == true) {
+                    foundSubMatch = true;
+                }
             }
         }
 
         if (foundSubMatch == false) {
+            pruned.add(vertex);
+        }
 
+        return foundSubMatch;
     }
 }
