@@ -23,6 +23,7 @@ public class Sketch {
 
     private long numLeaves = 0;
     private long numVertices = 0;
+
     private static final Logger logger = Logger.getLogger("io.sigpipe.sing");
 
     /** The root vertex. */
@@ -101,6 +102,7 @@ public class Sketch {
             throw new GraphException("Attempted to add empty path!");
         }
 
+        //TODO this mess really needs to be fixed up.
         Iterator<Vertex> it = path.iterator();
         while (it.hasNext()) {
             Vertex v = it.next();
@@ -145,7 +147,10 @@ public class Sketch {
         /* Place the path payload (traversal result) at the end of this path. */
         path.get(path.size() - 1).setData(container);
 
-        root.addPath(path.iterator());
+        PathInfoCollector infoCollector = new PathInfoCollector();
+        root.addPath(path.iterator(), infoCollector);
+        numLeaves += infoCollector.leaves;
+        numVertices += infoCollector.vertices;
     }
 
     /**
