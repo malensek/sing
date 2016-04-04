@@ -21,8 +21,7 @@ import io.sigpipe.sing.util.TestConfiguration;
 
 public class Sketch {
 
-    private long numLeaves = 0;
-    private long numVertices = 0;
+    private GraphMetrics metrics = new GraphMetrics();
 
     private static final Logger logger = Logger.getLogger("io.sigpipe.sing");
 
@@ -147,10 +146,7 @@ public class Sketch {
         /* Place the path payload (traversal result) at the end of this path. */
         path.get(path.size() - 1).setData(container);
 
-        PathInfoCollector infoCollector = new PathInfoCollector();
-        root.addPath(path.iterator(), infoCollector);
-        numLeaves += infoCollector.leaves;
-        numVertices += infoCollector.vertices;
+        root.addPath(path.iterator(), this.metrics);
     }
 
     /**
@@ -316,12 +312,8 @@ public class Sketch {
         return root;
     }
 
-    public long numLeaves() {
-        return this.numLeaves;
-    }
-
-    public long numVertices() {
-        return this.numVertices;
+    public GraphMetrics getMetrics() {
+        return this.metrics;
     }
 
     @Override
