@@ -21,6 +21,8 @@ import io.sigpipe.sing.util.TestConfiguration;
 
 public class Sketch {
 
+    private long numLeaves = 0;
+    private long numVertices = 0;
     private static final Logger logger = Logger.getLogger("io.sigpipe.sing");
 
     /** The root vertex. */
@@ -307,6 +309,14 @@ public class Sketch {
 
     public Vertex getRoot() {
         return root;
+    }
+
+    public long numLeaves() {
+        return this.numLeaves;
+    }
+
+    public long numVertices() {
+        return this.numVertices;
     }
 
     @Override
