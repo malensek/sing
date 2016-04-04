@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 import io.sigpipe.sing.dataset.feature.FeatureType;
+import io.sigpipe.sing.graph.DataContainer;
 import io.sigpipe.sing.graph.Vertex;
-import io.sigpipe.sing.serialization.SerializationInputStream;
 import io.sigpipe.sing.serialization.SerializationOutputStream;
 
 public class RelationalQuery extends Query {
@@ -25,6 +25,32 @@ public class RelationalQuery extends Query {
         System.out.println("expressions: " + expressions.size());
         prune(root, 0);
         System.out.println("Pruned " + pruned.size() + " vertices");
+    public void serializeResults(Vertex vertex, SerializationOutputStream out)
+    throws IOException {
+        if (pruned.contains(vertex)) {
+            return;
+        }
+
+        vertex.getLabel().serialize(out);
+        if (vertex.hasData() == false) {
+            vertex.setData(new DataContainer());
+        }
+        vertex.getData().serialize(out);
+
+        /* How many neighbors are still valid after the pruning process? */
+        int numNeighbors = 0;
+        for (Vertex v : vertex.getAllNeighbors()) {
+            if (pruned.contains(v) == false) {
+                numNeighbors++;
+            }
+        }
+        out.writeInt(numNeighbors);
+
+        for (Vertex v : vertex.getAllNeighbors()) {
+            if (pruned.contains(v) == false) {
+                serializeResults(v, out);
+            }
+        }
     }
 
     private boolean prune(Vertex vertex, int expressionsEvaluated)
