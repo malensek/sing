@@ -223,10 +223,25 @@ public class Vertex implements ByteSerializable {
      * Add and connect a collection of vertices in the form of a traversal path.
      */
     public void addPath(Iterator<Vertex> path) {
+        addPath(path, null);
+    }
+
+    public void addPath(Iterator<Vertex> path,
+            PathInfoCollector infoCollector) {
         if (path.hasNext()) {
             Vertex vertex = path.next();
-            Vertex edge = connect(vertex);
-            edge.addPath(path);
+            Vertex connection = connect(vertex);
+
+            if (connection == vertex && infoCollector != null) {
+                /* This connection was new */
+                infoCollector.vertices++;
+
+                if (vertex.hasData()) {
+                    infoCollector.leaves++;
+                }
+            }
+
+            connection.addPath(path, infoCollector);
         }
     }
 
