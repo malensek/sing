@@ -194,7 +194,7 @@ public class Vertex implements ByteSerializable {
      * @param vertex The vertex to connect to.
      * @return Connected vertex.
      */
-    public Vertex connect(Vertex v) {
+    protected Vertex connect(Vertex v) {
         Feature label = v.getLabel();
         Vertex neighbor = getNeighbor(label);
         if (neighbor == null) {
