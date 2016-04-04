@@ -45,4 +45,8 @@ public class GraphMetrics {
     public long getLeafCount() {
         return this.leaves;
     }
+
+    public String toString() {
+        return "V: " + this.vertices + ", L: " + this.leaves;
+    }
 }
