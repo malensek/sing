@@ -64,6 +64,10 @@ public class RunningStatisticsND implements ByteSerializable {
     }
 
     private void copyFrom(RunningStatisticsND that) {
+        if (that.initialized() == false) {
+            return;
+        }
+
         initialize(that.dimensions());
         this.n = that.n;
         for (int i = 0; i < that.dimensions(); ++i) {
