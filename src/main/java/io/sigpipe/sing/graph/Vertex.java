@@ -329,15 +329,21 @@ public class Vertex implements ByteSerializable {
     @Deserialize
     public Vertex(SerializationInputStream in)
     throws IOException, SerializationException {
+        this(in, null);
+    }
+
+    public Vertex(SerializationInputStream in, GraphMetrics metrics)
+    throws IOException, SerializationException {
         this.label = new Feature(in);
         this.data = new DataContainer(in);
 
         int neighbors = in.readInt();
         for (int i = 0; i < neighbors; ++i) {
             Vertex v = new Vertex(in);
-            this.connect(v);
+            this.connect(v, metrics);
         }
     }
+
 
     @Override
     public void serialize(SerializationOutputStream out)
