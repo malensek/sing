@@ -329,7 +329,7 @@ public class Sketch {
         }
 
         Vertex connection = vertex.connect(
-                new Vertex(label, data), this.metrics);
+                new Vertex(label, data), true, this.metrics);
 
         int numNeighbors = in.readInt();
         for (int i = 0; i < numNeighbors; ++i) {

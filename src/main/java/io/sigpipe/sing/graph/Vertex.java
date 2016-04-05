@@ -270,7 +270,7 @@ public class Vertex implements ByteSerializable {
     public void addPath(Iterator<Vertex> path, GraphMetrics metrics) {
         if (path.hasNext()) {
             Vertex vertex = path.next();
-            Vertex connection = connect(vertex, metrics);
+            Vertex connection = connect(vertex, false, metrics);
             connection.addPath(path, metrics);
         }
     }
@@ -364,7 +364,7 @@ public class Vertex implements ByteSerializable {
         int neighbors = in.readInt();
         for (int i = 0; i < neighbors; ++i) {
             Vertex v = new Vertex(in);
-            this.connect(v, metrics);
+            this.connect(v, false, metrics);
         }
     }
 
