@@ -49,4 +49,5 @@ public class GraphMetrics {
     public String toString() {
         return "V: " + this.vertices + ", L: " + this.leaves;
     }
+
 }

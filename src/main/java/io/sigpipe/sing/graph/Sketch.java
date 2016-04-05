@@ -1,5 +1,6 @@
 package io.sigpipe.sing.graph;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +17,8 @@ import io.sigpipe.sing.dataset.Pair;
 import io.sigpipe.sing.dataset.Quantizer;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
+import io.sigpipe.sing.serialization.SerializationException;
+import io.sigpipe.sing.serialization.SerializationInputStream;
 import io.sigpipe.sing.stat.RunningStatisticsND;
 import io.sigpipe.sing.util.TestConfiguration;
 
@@ -314,6 +317,24 @@ public class Sketch {
 
     public GraphMetrics getMetrics() {
         return this.metrics;
+    }
+
+    public void merge(Vertex vertex, SerializationInputStream in)
+    throws IOException, SerializationException {
+        Feature label = new Feature(in);
+        boolean hasData = in.readBoolean();
+        DataContainer data = null;
+        if (hasData) {
+            data = new DataContainer(in);
+        }
+
+        Vertex connection = vertex.connect(
+                new Vertex(label, data), this.metrics);
+
+        int numNeighbors = in.readInt();
+        for (int i = 0; i < numNeighbors; ++i) {
+            merge(connection, in);
+        }
     }
 
     @Override
