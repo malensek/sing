@@ -195,7 +195,7 @@ public class Vertex implements ByteSerializable {
      * @return Connected vertex.
      */
     protected Vertex connect(Vertex v) {
-        return connect(v, null);
+        return connect(v, false, null);
     }
 
     /**
@@ -203,9 +203,27 @@ public class Vertex implements ByteSerializable {
      * provided vertex label, then the already-connected vertex is returned.
      *
      * @param vertex The vertex to connect to.
+     * @param overwriteData If set to true, any DataContainers in the
+     *     destination vertex will be overwritten instead of merged.
      * @return Connected vertex.
      */
-    protected Vertex connect(Vertex v, GraphMetrics metrics) {
+    protected Vertex connect(Vertex v, boolean overwriteData) {
+        return connect(v, overwriteData, null);
+    }
+
+    /**
+     * Connnects two vertices.  If this vertex is already connected to the
+     * provided vertex label, then the already-connected vertex is returned.
+     *
+     * @param vertex The vertex to connect to.
+     * @param overwriteData If set to true, any DataContainers in the
+     *     destination vertex will be overwritten instead of merged.
+     * @param metrics A {@link GraphMetrics} instance to update as the connect
+     *     operation is carred out.
+     * @return Connected vertex.
+     */
+    protected Vertex connect(
+            Vertex v, boolean overwriteData, GraphMetrics metrics) {
         Feature label = v.getLabel();
         Vertex neighbor = getNeighbor(label);
         if (neighbor == null) {
@@ -218,7 +236,7 @@ public class Vertex implements ByteSerializable {
             }
             return v;
         } else {
-            if (neighbor.hasData()) {
+            if (neighbor.hasData() && overwriteData == false) {
                 DataContainer container = neighbor.getData();
                 container.merge(v.getData());
             } else {
