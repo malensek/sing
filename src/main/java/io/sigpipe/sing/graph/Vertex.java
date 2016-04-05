@@ -189,7 +189,9 @@ public class Vertex implements ByteSerializable {
 
     /**
      * Connnects two vertices.  If this vertex is already connected to the
-     * provided vertex label, then the already-connected vertex is returned.
+     * provided vertex label (based on value), then the already-connected vertex
+     * is returned and its DataContainer will be merged with the vertex passed
+     * to this method.
      *
      * @param vertex The vertex to connect to.
      * @return Connected vertex.
@@ -200,7 +202,9 @@ public class Vertex implements ByteSerializable {
 
     /**
      * Connnects two vertices.  If this vertex is already connected to the
-     * provided vertex label, then the already-connected vertex is returned.
+     * provided vertex label (based on value), then the already-connected vertex
+     * is returned and its DataContainer will be merged with the vertex passed
+     * to this method.
      *
      * @param vertex The vertex to connect to.
      * @param overwriteData If set to true, any DataContainers in the
@@ -213,7 +217,9 @@ public class Vertex implements ByteSerializable {
 
     /**
      * Connnects two vertices.  If this vertex is already connected to the
-     * provided vertex label, then the already-connected vertex is returned.
+     * provided vertex label (based on value), then the already-connected vertex
+     * is returned and its DataContainer will be merged with the vertex passed
+     * to this method.
      *
      * @param vertex The vertex to connect to.
      * @param overwriteData If set to true, any DataContainers in the
