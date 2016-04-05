@@ -261,12 +261,23 @@ public class Vertex implements ByteSerializable {
     }
 
     /**
-     * Add and connect a collection of vertices in the form of a traversal path.
+     * Add and connect a collection of vertices in the form of a traversal path,
+     * starting with this vertex.
+     *
+     * @param path Collection of vertices to connect
      */
     public void addPath(Iterator<Vertex> path) {
         addPath(path, null);
     }
 
+    /**
+     * Add and connect a collection of vertices in the form of a traversal path,
+     * starting with this vertex.
+     *
+     * @param path Collection of vertices to connect
+     * @param metrics A {@link GraphMetrics} instance to populate as the path is
+     *     added.
+     */
     public void addPath(Iterator<Vertex> path, GraphMetrics metrics) {
         if (path.hasNext()) {
             Vertex vertex = path.next();
@@ -290,6 +301,10 @@ public class Vertex implements ByteSerializable {
         return data;
     }
 
+    /**
+     * Retrieves whether or not this vertex has an associated
+     * {@link DataContainer}.
+     */
     public boolean hasData() {
         return data != null;
     }
