@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import io.sigpipe.sing.dataset.feature.FeatureType;
-import io.sigpipe.sing.graph.DataContainer;
 import io.sigpipe.sing.graph.GraphMetrics;
 import io.sigpipe.sing.graph.Vertex;
 import io.sigpipe.sing.serialization.SerializationOutputStream;
@@ -51,10 +50,10 @@ public class RelationalQuery extends Query {
         }
 
         vertex.getLabel().serialize(out);
-        if (vertex.hasData() == false) {
-            vertex.setData(new DataContainer());
+        out.writeBoolean(vertex.hasData());
+        if (vertex.hasData() == true) {
+            vertex.getData().serialize(out);
         }
-        vertex.getData().serialize(out);
 
         /* How many neighbors are still valid after the pruning process? */
         int numNeighbors = 0;

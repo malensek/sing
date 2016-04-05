@@ -344,7 +344,6 @@ public class Vertex implements ByteSerializable {
         }
     }
 
-
     @Override
     public void serialize(SerializationOutputStream out)
     throws IOException {
