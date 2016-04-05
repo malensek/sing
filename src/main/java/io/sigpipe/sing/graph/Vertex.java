@@ -195,10 +195,27 @@ public class Vertex implements ByteSerializable {
      * @return Connected vertex.
      */
     protected Vertex connect(Vertex v) {
+        return connect(v, null);
+    }
+
+    /**
+     * Connnects two vertices.  If this vertex is already connected to the
+     * provided vertex label, then the already-connected vertex is returned.
+     *
+     * @param vertex The vertex to connect to.
+     * @return Connected vertex.
+     */
+    protected Vertex connect(Vertex v, GraphMetrics metrics) {
         Feature label = v.getLabel();
         Vertex neighbor = getNeighbor(label);
         if (neighbor == null) {
             edges.put(label, v);
+            if (metrics != null) {
+                metrics.addVertex();
+                if (v.hasData()) {
+                    metrics.addLeaf();
+                }
+            }
             return v;
         } else {
             if (neighbor.hasData()) {
@@ -229,17 +246,7 @@ public class Vertex implements ByteSerializable {
     public void addPath(Iterator<Vertex> path, GraphMetrics metrics) {
         if (path.hasNext()) {
             Vertex vertex = path.next();
-            Vertex connection = connect(vertex);
-
-            if (connection == vertex && metrics != null) {
-                /* This connection was new */
-                metrics.addVertex();
-
-                if (vertex.hasData()) {
-                    metrics.addLeaf();
-                }
-            }
-
+            Vertex connection = connect(vertex, metrics);
             connection.addPath(path, metrics);
         }
     }
