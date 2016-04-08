@@ -75,6 +75,24 @@ public class GeoTrie {
         }
     }
 
+    private Vertex findVertex(String geohash) {
+        return findVertex(this.root, hashToPath(geohash).iterator());
+    }
+
+    private Vertex findVertex(Vertex start, Iterator<Vertex> path) {
+        if (path.hasNext()) {
+            Vertex step = path.next();
+            Vertex neighbor = start.getNeighbor(step.getLabel());
+            if (neighbor == null) {
+                /* Part of the path is broken; return null */
+                return null;
+            } else {
+                return findVertex(neighbor, path);
+            }
+        } else {
+            return start;
+        }
+    }
     private List<Vertex> hashToPath(String geohash) {
         List<Vertex> path = new ArrayList<>(geohash.length());
         for (char c : geohash.toCharArray()) {
