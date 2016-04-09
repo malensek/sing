@@ -14,6 +14,7 @@ public class GraphMetrics implements Cloneable {
         return super.clone();
     }
 
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
