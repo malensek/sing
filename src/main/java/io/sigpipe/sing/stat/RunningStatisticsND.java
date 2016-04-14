@@ -208,6 +208,10 @@ public class RunningStatisticsND implements ByteSerializable {
         return this.mean[dimension];
     }
 
+    public double min(int dimension) {
+        return this.min[dimension];
+    }
+
     public double max(int dimension) {
         return this.max[dimension];
     }
