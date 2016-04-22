@@ -128,22 +128,4 @@ public class GeoTrie {
         }
         return path;
     }
-
-    public static void main(String[] args) throws Exception {
-
-        GeoTrie gt = new GeoTrie();
-        gt.addHash("9xqj", new CountContainer(1, 1));
-        gt.addHash("9xq2", new CountContainer(1, 1));
-        gt.addHash("9xd3", new CountContainer(1, 0));
-        gt.addHash("djjs", new CountContainer(0, 1));
-        gt.addHash("djj9", new CountContainer(1, 1));
-        gt.addHash("djj2", new CountContainer(1, 1));
-
-        gt.remove("9x");
-        CountContainer cc = gt.query("9");
-
-        System.out.println(gt.root.numDescendants());
-        System.out.println(cc.a);
-        System.out.println(cc.b);
-    }
 }
