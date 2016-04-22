@@ -25,6 +25,7 @@ import io.sigpipe.sing.util.TestConfiguration;
 public class Sketch {
 
     private GraphMetrics metrics = new GraphMetrics();
+    public GeoTrie geoTrie = new GeoTrie();
 
     private static final Logger logger = Logger.getLogger("io.sigpipe.sing");
 
