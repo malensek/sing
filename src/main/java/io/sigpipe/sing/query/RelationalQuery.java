@@ -56,13 +56,13 @@ public class RelationalQuery extends Query {
         }
 
         /* How many neighbors are still valid after the pruning process? */
-        int numNeighbors = 0;
+        int validNeighbors = 0;
         for (Vertex v : vertex.getAllNeighbors()) {
             if (pruned.contains(v) == false) {
-                numNeighbors++;
+                validNeighbors++;
             }
         }
-        out.writeInt(numNeighbors);
+        out.writeInt(validNeighbors);
 
         for (Vertex v : vertex.getAllNeighbors()) {
             if (pruned.contains(v) == false) {
