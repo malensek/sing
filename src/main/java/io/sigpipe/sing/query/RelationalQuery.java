@@ -12,8 +12,8 @@ import io.sigpipe.sing.serialization.SerializationOutputStream;
 
 public class RelationalQuery extends Query {
 
-    private Set<Vertex> pruned;
-    private GraphMetrics metrics;
+    protected Set<Vertex> pruned;
+    protected GraphMetrics metrics;
 
     public RelationalQuery() {
 
