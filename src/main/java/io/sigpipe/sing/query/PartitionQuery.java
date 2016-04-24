@@ -55,6 +55,10 @@ public class PartitionQuery extends RelationalQuery {
             Vertex v = it.next();
             if (pruned.contains(v) == false) {
                 if (serializeAndDeleteResults(v, out) == true) {
+                    this.metrics.removeVertex();
+                    if (v.hasData()) {
+                        this.metrics.removeLeaf();
+                    }
                     it.remove();
                 } else {
                     deletable = false;
