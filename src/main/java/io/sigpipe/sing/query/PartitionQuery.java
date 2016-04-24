@@ -32,7 +32,6 @@ public class PartitionQuery extends RelationalQuery {
         out.writeBoolean(vertex.hasData());
         if (vertex.hasData() == true) {
             vertex.getData().serialize(out);
-            vertex.setData(null);
         }
 
         /* How many neighbors are still valid after the pruning process? */
