@@ -41,6 +41,15 @@ public class Path extends ArrayList<Vertex> {
     private static final long serialVersionUID = 8201748135149945940L;
 
     /**
+     * Constructs an empty list with the specified initial capacity.
+     *
+     * @param initialCapacity the initial capacity of the list
+     */
+    public Path(int initialCapacity) {
+        super(initialCapacity);
+    }
+
+    /**
      * Create a Path with a number of vertices pre-populated.
      */
     @SafeVarargs
