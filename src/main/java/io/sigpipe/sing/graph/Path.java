@@ -40,6 +40,10 @@ public class Path extends ArrayList<Vertex> {
 
     private static final long serialVersionUID = 8201748135149945940L;
 
+    public Path() {
+
+    }
+
     /**
      * Constructs an empty list with the specified initial capacity.
      *
