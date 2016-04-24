@@ -4,16 +4,23 @@ package io.sigpipe.sing.adapters;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Scanner;
+import java.util.zip.GZIPOutputStream;
 
 import io.sigpipe.sing.dataset.Metadata;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
-import io.sigpipe.sing.graph.DataContainer;
 import io.sigpipe.sing.graph.FeatureHierarchy;
 import io.sigpipe.sing.graph.Path;
 import io.sigpipe.sing.graph.Sketch;
+import io.sigpipe.sing.graph.Vertex;
+import io.sigpipe.sing.query.Expression;
+import io.sigpipe.sing.query.Operator;
+import io.sigpipe.sing.query.PartitionQuery;
+import io.sigpipe.sing.query.RelationalQuery;
 import io.sigpipe.sing.serialization.SerializationInputStream;
+import io.sigpipe.sing.serialization.SerializationOutputStream;
 import io.sigpipe.sing.serialization.Serializer;
 import io.sigpipe.sing.stat.FeatureSurvey;
 import io.sigpipe.sing.util.Geohash;
@@ -23,15 +30,7 @@ import io.sigpipe.sing.util.TestConfiguration;
 public class ReadMetaBlob {
 
     public static void main(String[] args) throws Exception {
-        File bundle = new File(args[0]);
-
-        System.out.println("Reading metadata blob...");
-        FileInputStream fIn = new FileInputStream(bundle);
-        BufferedInputStream bIn = new BufferedInputStream(fIn);
-        SerializationInputStream in = new SerializationInputStream(bIn);
-
-        int num = in.readInt();
-        System.out.println("Records: " + num);
+        Scanner scan=new Scanner(System.in);
 
         FeatureHierarchy fh = new FeatureHierarchy();
         for (String featureName : TestConfiguration.FEATURE_NAMES) {
@@ -152,39 +151,29 @@ public class ReadMetaBlob {
 
             Metadata m = Serializer.deserialize(Metadata.class, payload);
 
-
             Path p = new Path(m.getAttributes().toArray());
             String location = Geohash.encode(lat, lon, 4);
             p.add(new Feature("location", location));
             s.addPath(p);
 
-            for (Vertex v : p) {
-                if (v.getLabel().getType() != FeatureType.STRING) {
-                    fs.add(v.getLabel());
-                }
-            }
-
             if (i % 1000 == 0) {
                 System.out.print('.');
             }
         }
-        System.gc();
-
-        Scanner scan=new Scanner(System.in);
-        scan.nextInt();
-
-        System.out.println(s.getRoot().numLeaves());
-        System.out.println(s.getRoot().numDescendants());
-        System.out.println(s.getRoot().numDescendantEdges());
-
-        scan.nextInt();
-
-        //fs.printAll();
-        PerformanceTimer serpt = new PerformanceTimer("serialize");
-        serpt.start();
-        Serializer.persistCompressed(s.getRoot(), "testvertex.bin");
-        serpt.stopAndPrint();
+        System.out.println();
+        addAllPaths.stopAndPrint();
 
         in.close();
+    }
+
+    private static double estimateMemoryUsage(
+            Sketch sketch, long vertices, long leaves) {
+        int bytesPerVertex = 16;
+
+        int numFeatures = sketch.getFeatureHierarchy().size();
+        int bytesPerLeaf = 8 + (8 * numFeatures * 4)
+            + (8 * ((numFeatures * (numFeatures - 1)) / 2));
+
+        return (bytesPerVertex * vertices) + (bytesPerLeaf * leaves) * 1.7;
     }
 }
