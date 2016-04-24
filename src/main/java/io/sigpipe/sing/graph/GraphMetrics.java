@@ -62,6 +62,13 @@ public class GraphMetrics implements Cloneable {
         this.leaves += leaves;
     }
 
+    public void removeVertex() {
+        this.vertices--;
+    }
+
+    public void removeVertices(long vertices) {
+        this.vertices -= vertices;
+    }
     public long getVertexCount() {
         return this.vertices;
     }
