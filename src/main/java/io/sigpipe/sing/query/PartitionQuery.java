@@ -19,7 +19,11 @@ public class PartitionQuery extends RelationalQuery {
     throws IOException {
         serializeAndDeleteResults(vertex, out);
     }
- 
+
+    /**
+     * @return true if the Vertex this method was called on can be deleted;
+     * Vertices are deletable if the query matched it, AND all of its children.
+     */
     private boolean serializeAndDeleteResults(
             Vertex vertex, SerializationOutputStream out)
     throws IOException {
