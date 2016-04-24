@@ -95,6 +95,12 @@ public class GeoTrie {
     }
 
     public void remove(String geohash) {
+        if (geohash.equals("")) {
+            /* Removing a blank string selects all vertices for removal */
+            root.disconnectAll();
+            return;
+        }
+
         remove(this.root, hashToPath(geohash).iterator());
     }
 
