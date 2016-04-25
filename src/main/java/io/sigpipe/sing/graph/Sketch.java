@@ -301,6 +301,7 @@ public class Sketch {
     }
 
     public void merge(Vertex vertex, SerializationInputStream in)
+    private void merge(Vertex vertex, SerializationInputStream in)
     throws IOException, SerializationException {
         Feature label = new Feature(in);
         boolean hasData = in.readBoolean();
