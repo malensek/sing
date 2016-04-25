@@ -300,7 +300,18 @@ public class Sketch {
         return this.metrics;
     }
 
-    public void merge(Vertex vertex, SerializationInputStream in)
+    public void merge(SerializationInputStream in)
+    throws IOException, SerializationException {
+        /* Since the incoming Sketch includes a root Vertex, we need to skip
+         * over it to avoid having two roots! */
+        new Feature(in);
+        in.readBoolean();
+        int numNeighbors = in.readInt();
+        for (int i = 0; i < numNeighbors; ++i) {
+            merge(this.root, in);
+        }
+    }
+
     private void merge(Vertex vertex, SerializationInputStream in)
     throws IOException, SerializationException {
         Feature label = new Feature(in);
