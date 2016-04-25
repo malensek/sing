@@ -57,7 +57,7 @@ public abstract class Query implements ByteSerializable {
     }
 
     public abstract void execute(Vertex root)
-    throws IOException, QueryException;
+    throws QueryException;
 
     public void addExpression(Expression e) {
         String name = e.getOperand().getName();
