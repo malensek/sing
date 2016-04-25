@@ -3,15 +3,10 @@ package io.sigpipe.sing.query;
 import java.io.IOException;
 import java.util.Iterator;
 
-import io.sigpipe.sing.graph.GraphMetrics;
 import io.sigpipe.sing.graph.Vertex;
 import io.sigpipe.sing.serialization.SerializationOutputStream;
 
 public class PartitionQuery extends RelationalQuery {
-
-    public PartitionQuery(GraphMetrics metrics) {
-        super(metrics);
-    }
 
     @Override
     public void serializeResults(
