@@ -6,21 +6,15 @@ import java.util.List;
 import java.util.Set;
 
 import io.sigpipe.sing.dataset.feature.FeatureType;
-import io.sigpipe.sing.graph.GraphMetrics;
 import io.sigpipe.sing.graph.Vertex;
 import io.sigpipe.sing.serialization.SerializationOutputStream;
 
 public class RelationalQuery extends Query {
 
     protected Set<Vertex> pruned;
-    protected GraphMetrics metrics;
 
     public RelationalQuery() {
 
-    }
-
-    public RelationalQuery(GraphMetrics metrics) {
-        this.metrics = metrics;
     }
 
     public int numPruned() {
