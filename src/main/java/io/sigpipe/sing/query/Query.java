@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 
 import io.sigpipe.sing.dataset.feature.Feature;
+import io.sigpipe.sing.graph.GraphMetrics;
 import io.sigpipe.sing.graph.Vertex;
 import io.sigpipe.sing.serialization.ByteSerializable;
 import io.sigpipe.sing.serialization.SerializationException;
@@ -49,6 +50,7 @@ import io.sigpipe.sing.serialization.SerializationOutputStream;
 public abstract class Query implements ByteSerializable {
 
     protected Map<String, List<Expression>> expressions = new HashMap<>();
+    protected GraphMetrics metrics;
 
     public Query() {
 
@@ -190,6 +192,10 @@ public abstract class Query implements ByteSerializable {
         }
 
         return matches;
+    }
+
+    public void setGraphMetrics(GraphMetrics metrics) {
+        this.metrics = metrics;
     }
 
     @Deserialize
