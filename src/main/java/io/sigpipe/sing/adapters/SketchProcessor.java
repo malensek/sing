@@ -6,13 +6,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
@@ -24,7 +21,6 @@ import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.graph.CountContainer;
 import io.sigpipe.sing.graph.FeatureHierarchy;
-import io.sigpipe.sing.graph.FeatureTypeMismatchException;
 import io.sigpipe.sing.graph.GraphException;
 import io.sigpipe.sing.graph.GraphMetrics;
 import io.sigpipe.sing.graph.Path;
@@ -35,7 +31,6 @@ import io.sigpipe.sing.query.PartitionQuery;
 import io.sigpipe.sing.serialization.SerializationInputStream;
 import io.sigpipe.sing.serialization.SerializationOutputStream;
 import io.sigpipe.sing.serialization.Serializer;
-import io.sigpipe.sing.util.Geohash;
 import io.sigpipe.sing.util.TestConfiguration;
 
 //import neptune.geospatial.graph.messages.GeoHashIndexedRecord;
@@ -171,7 +166,6 @@ public class SketchProcessor /*extends AbstractGeoSpatialStreamProcessor*/ {
     }
 
     public byte[] getSketchDiff() {
-        byte[] diffBytes = null;
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
         try {
             SerializationOutputStream out
