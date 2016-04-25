@@ -23,7 +23,7 @@ public class RelationalQuery extends Query {
 
     @Override
     public void execute(Vertex root)
-    throws IOException, QueryException {
+    throws QueryException {
         if (this.metrics != null) {
             /* To make sure we don't spend time resizing the pruned HashSet, set
              * it to the number of vertices in the graph divided by the default
