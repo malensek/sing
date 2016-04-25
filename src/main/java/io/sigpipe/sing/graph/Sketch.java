@@ -16,6 +16,8 @@ import java.util.Set;
 import io.sigpipe.sing.dataset.Pair;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
+import io.sigpipe.sing.query.Query;
+import io.sigpipe.sing.query.QueryException;
 import io.sigpipe.sing.serialization.SerializationException;
 import io.sigpipe.sing.serialization.SerializationInputStream;
 import io.sigpipe.sing.stat.RunningStatisticsND;
@@ -328,6 +330,12 @@ public class Sketch {
         for (int i = 0; i < numNeighbors; ++i) {
             merge(connection, in);
         }
+    }
+
+    public void query(Query query)
+    throws QueryException {
+        query.setGraphMetrics(this.metrics);
+        query.execute(this.root);
     }
 
     @Override
