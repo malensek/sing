@@ -1,6 +1,5 @@
 package io.sigpipe.sing.query;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -22,12 +21,12 @@ public class MetaQuery extends Query {
 
     @Override
     public void execute(Vertex root)
-    throws IOException, QueryException {
+    throws QueryException {
         this.query(root);
     }
 
     private void query(Vertex vertex)
-    throws IOException, QueryException {
+    throws QueryException {
         DataContainer container = vertex.getData();
         if (container != null) {
             this.aggregateData.merge(container);
