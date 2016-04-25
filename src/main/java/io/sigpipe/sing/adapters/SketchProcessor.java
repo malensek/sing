@@ -111,7 +111,7 @@ public class SketchProcessor /*extends AbstractGeoSpatialStreamProcessor*/ {
             SerializationOutputStream out
                 = new SerializationOutputStream(new GZIPOutputStream(byteOut));
 
-            PartitionQuery pq = new PartitionQuery(this.sketch.getMetrics());
+            PartitionQuery pq = new PartitionQuery();
             pq.addExpression(
                     new Expression(
                         Operator.STR_PREFIX, new Feature("location", prefix)));
