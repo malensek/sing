@@ -144,8 +144,6 @@ public class AutoQuantizer {
             double err = Double.MAX_VALUE;
             while (err > 0.025) {
                 q = AutoQuantizer.fromList(features, ticks);
-                //System.out.println(q);
-
                 List<Feature> quantized = new ArrayList<>();
                 for (Feature f : features) {
                     /* Find the midpoint */
@@ -159,8 +157,6 @@ public class AutoQuantizer {
                     Feature prediction = initial.add(midpoint);
 
                     quantized.add(prediction);
-
-                    //System.out.println(f.getFloat() + "    " + predicted.getFloat());
                 }
 
                 SquaredError se = new SquaredError(features, quantized);
