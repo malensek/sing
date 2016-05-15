@@ -34,7 +34,7 @@ public class MergeSketch {
 
         System.out.println("Splitting...");
         pt.start();
-        byte[] region = sp.split("djk");
+        byte[] region = sp.split("z");
         pt.stopAndPrint();
         System.out.println(sp.getGraphMetrics());
 
@@ -57,6 +57,25 @@ public class MergeSketch {
         sp.merge(null, big);
         System.out.println(sp.getGraphMetrics());
 
+        sp.split("9");
+        sp.split("d");
+        sp.split("c");
+        sp.split("f");
+        sp.split("b");
+        sp.split("8");
+
+        System.out.println(sp.getGraphMetrics());
+        Runtime runtime = Runtime.getRuntime();
+        System.gc();
+        System.gc();
+        System.out.println();
+        System.out.println("max=" + runtime.maxMemory());
+        System.out.println("total=" + runtime.totalMemory());
+        System.out.println("free=" + runtime.freeMemory());
+        System.out.println("used=" + (runtime.totalMemory() - runtime.freeMemory()));
+
+        sp.split("");
+        System.out.println(sp.getGraphMetrics());
     }
 
     public static List<GeoHashIndexedRecord> createRecords(String fileName)
