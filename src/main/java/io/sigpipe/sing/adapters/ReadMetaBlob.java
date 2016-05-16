@@ -29,7 +29,7 @@ import io.sigpipe.sing.util.TestConfiguration;
 
 public class ReadMetaBlob {
 
-    private static Set<String> activeFeatures = new HashSet<>();
+    public static Set<String> activeFeatures = new HashSet<>();
 
     public static void main(String[] args) throws Exception {
         for (String featureName : TestConfiguration.FEATURE_NAMES) {
