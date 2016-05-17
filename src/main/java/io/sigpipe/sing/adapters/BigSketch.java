@@ -7,6 +7,7 @@ import io.sigpipe.sing.util.TestConfiguration;
 
 public class BigSketch {
 
+    /* Adds more and more data, while printing out graph stats */
     public static void main(String[] args)
     throws Exception {
         for (String featureName : TestConfiguration.FEATURE_NAMES) {
