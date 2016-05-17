@@ -200,18 +200,21 @@ public class Quantizer {
     public static class QuantizerBuilder {
         List<Feature> ticks = new ArrayList<>();
 
-        public void addTick(Feature tick) {
+        public QuantizerBuilder addTick(Feature tick) {
             this.ticks.add(tick);
+            return this;
         }
 
-        public void addTicks(Feature... ticks) {
+        public QuantizerBuilder addTicks(Feature... ticks) {
             for (Feature tick : ticks) {
                 addTick(tick);
             }
+            return this;
         }
 
-        public void removeTick(Feature tick) {
+        public QuantizerBuilder removeTick(Feature tick) {
             this.ticks.remove(tick);
+            return this;
         }
 
         public List<Feature> getTicks() {
