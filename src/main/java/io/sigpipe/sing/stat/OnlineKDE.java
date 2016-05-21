@@ -102,11 +102,13 @@ public class OnlineKDE implements UnivariateFunction {
         }
     }
 
-    public void updateDistribution(Double... samples) {
+    public void updateDistribution(Double... samples)
+    throws OnlineKDEException {
         updateDistribution(Arrays.asList(samples));
     }
 
-    public void updateDistribution(Iterable<Double> samples) {
+    public void updateDistribution(Iterable<Double> samples)
+    throws OnlineKDEException {
         for (double d : samples) {
             updateDistribution(d);
         }
