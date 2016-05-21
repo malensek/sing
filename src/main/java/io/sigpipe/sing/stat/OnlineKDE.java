@@ -67,7 +67,8 @@ public class OnlineKDE implements UnivariateFunction {
         initializeDistribution(initialSamples);
     }
 
-    private void initializeDistribution(List<Double> samples) {
+    private void initializeDistribution(List<Double> samples)
+    throws OnlineKDEException {
         SimpleMatrix[] sampleMatrices = new SimpleMatrix[samples.size()];
         SimpleMatrix[] covarianceMatrices = new SimpleMatrix[samples.size()];
         double[] weights = new double[samples.size()];
@@ -83,20 +84,21 @@ public class OnlineKDE implements UnivariateFunction {
             this.model.updateDistribution(
                     sampleMatrices, covarianceMatrices, weights);
         } catch (Exception e) {
-            //TODO generic online kde exception
-            e.printStackTrace();
+            throw new OnlineKDEException(
+                    "Failed to update the distribution", e);
         }
     }
 
-    public void updateDistribution(double sample) {
+    public void updateDistribution(double sample)
+    throws OnlineKDEException {
         stats.put(sample);
         SimpleMatrix mat = new SimpleMatrix(new double[][] { { sample } });
         SimpleMatrix cov = new SimpleMatrix(1, 1);
         try {
             this.model.updateDistribution(mat, cov, 1.0d);
         } catch (Exception e) {
-            //TODO generic online kde exception
-            e.printStackTrace();
+            throw new OnlineKDEException(
+                    "Failed to update the distribution", e);
         }
     }
 
