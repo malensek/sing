@@ -33,6 +33,14 @@ import org.ejml.simple.SimpleMatrix;
 
 import de.tuhh.luethke.okde.model.SampleModel;
 
+/**
+ * Wraps a {@link de.tuhh.luethke.okde.model.SampleModel} instance and
+ * implements the Commons Math
+ * {@link org.apache.commons.math3.analysis.UnivariateFunction} interface to
+ * provide a user-friendly way to interact with oKDE models.
+ *
+ * @author malensek
+ */
 public class OnlineKDE implements UnivariateFunction {
 
     private RunningStatistics stats = new RunningStatistics();
