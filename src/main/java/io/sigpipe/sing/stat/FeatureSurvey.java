@@ -30,6 +30,12 @@ import java.util.Map;
 
 import io.sigpipe.sing.dataset.feature.Feature;
 
+/**
+ * 'Surveys' a set of features by maintaing a unique {@link RunningStatistics}
+ * instance for each named feature.
+ *
+ * @author malensek
+ */
 public class FeatureSurvey {
 
     private Map<String, RunningStatistics> stats = new HashMap<>();
