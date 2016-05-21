@@ -57,12 +57,14 @@ public class OnlineKDE implements UnivariateFunction {
         this.model = new SampleModel(forgettingFactor, compressionThreshold);
     }
 
-    public OnlineKDE(List<Double> initialSamples) {
+    public OnlineKDE(List<Double> initialSamples)
+    throws OnlineKDEException {
         this(initialSamples, DEFAULT_FORGET, DEFAULT_COMPRESSION);
     }
 
     public OnlineKDE(List<Double> initialSamples, double forgettingFactor,
-            double compressionThreshold) {
+            double compressionThreshold)
+    throws OnlineKDEException {
         this(forgettingFactor, compressionThreshold);
         initializeDistribution(initialSamples);
     }
