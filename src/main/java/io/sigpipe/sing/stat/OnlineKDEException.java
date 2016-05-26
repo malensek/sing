@@ -27,7 +27,12 @@ package io.sigpipe.sing.stat;
 
 public class OnlineKDEException extends Exception {
 
-    public OnlineKDEException() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 178752774455877532L;
+
+	public OnlineKDEException() {
         super();
     }
 
