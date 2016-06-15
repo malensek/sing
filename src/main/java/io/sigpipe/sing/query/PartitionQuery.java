@@ -6,6 +6,13 @@ import java.util.Iterator;
 import io.sigpipe.sing.graph.Vertex;
 import io.sigpipe.sing.serialization.SerializationOutputStream;
 
+/**
+ * Based on a {@RelationalQuery}, this query selects portions of the graph for
+ * removal and transfer to another node or graph instance. This query physically
+ * removes vertices (if possible).
+ *
+ * @author malensek
+ */
 public class PartitionQuery extends RelationalQuery {
 
     @Override
