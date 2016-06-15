@@ -25,40 +25,23 @@ software, even if advised of the possibility of such damage.
 
 package io.sigpipe.sing.stat;
 
-import java.util.HashMap;
-import java.util.Map;
+public class OnlineKDEException extends Exception {
 
-import io.sigpipe.sing.dataset.feature.Feature;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 178752774455877532L;
 
-/**
- * 'Surveys' a set of features by maintaing a unique {@link RunningStatistics}
- * instance for each named feature.
- *
- * @author malensek
- */
-public class FeatureSurvey {
-
-    private Map<String, RunningStatistics> stats = new HashMap<>();
-
-    public FeatureSurvey() {
-
+	public OnlineKDEException() {
+        super();
     }
 
-    public void add(Feature feature) {
-        RunningStatistics rs = stats.get(feature.getName());
-        if (rs == null) {
-            rs = new RunningStatistics();
-            stats.put(feature.getName(), rs);
-        }
-        rs.put(feature.getDouble());
+    public OnlineKDEException(String s) {
+        super(s);
     }
 
-    public void printAll() {
-        for (String featureName : stats.keySet()) {
-            System.out.println("--- " + featureName + " ---");
-            RunningStatistics rs = stats.get(featureName);
-            System.out.println(rs);
-            System.out.println();
-        }
+    public OnlineKDEException(String s, Throwable t) {
+        super(s, t);
     }
+
 }

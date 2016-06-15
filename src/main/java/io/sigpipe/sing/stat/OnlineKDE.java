@@ -33,6 +33,14 @@ import org.ejml.simple.SimpleMatrix;
 
 import de.tuhh.luethke.okde.model.SampleModel;
 
+/**
+ * Wraps a {@link de.tuhh.luethke.okde.model.SampleModel} instance and
+ * implements the Commons Math
+ * {@link org.apache.commons.math3.analysis.UnivariateFunction} interface to
+ * provide a user-friendly way to interact with oKDE models.
+ *
+ * @author malensek
+ */
 public class OnlineKDE implements UnivariateFunction {
 
     private RunningStatistics stats = new RunningStatistics();
@@ -49,17 +57,20 @@ public class OnlineKDE implements UnivariateFunction {
         this.model = new SampleModel(forgettingFactor, compressionThreshold);
     }
 
-    public OnlineKDE(List<Double> initialSamples) {
+    public OnlineKDE(List<Double> initialSamples)
+    throws OnlineKDEException {
         this(initialSamples, DEFAULT_FORGET, DEFAULT_COMPRESSION);
     }
 
     public OnlineKDE(List<Double> initialSamples, double forgettingFactor,
-            double compressionThreshold) {
+            double compressionThreshold)
+    throws OnlineKDEException {
         this(forgettingFactor, compressionThreshold);
         initializeDistribution(initialSamples);
     }
 
-    private void initializeDistribution(List<Double> samples) {
+    private void initializeDistribution(List<Double> samples)
+    throws OnlineKDEException {
         SimpleMatrix[] sampleMatrices = new SimpleMatrix[samples.size()];
         SimpleMatrix[] covarianceMatrices = new SimpleMatrix[samples.size()];
         double[] weights = new double[samples.size()];
@@ -75,28 +86,31 @@ public class OnlineKDE implements UnivariateFunction {
             this.model.updateDistribution(
                     sampleMatrices, covarianceMatrices, weights);
         } catch (Exception e) {
-            //TODO generic online kde exception
-            e.printStackTrace();
+            throw new OnlineKDEException(
+                    "Failed to update the distribution", e);
         }
     }
 
-    public void updateDistribution(double sample) {
+    public void updateDistribution(double sample)
+    throws OnlineKDEException {
         stats.put(sample);
         SimpleMatrix mat = new SimpleMatrix(new double[][] { { sample } });
         SimpleMatrix cov = new SimpleMatrix(1, 1);
         try {
             this.model.updateDistribution(mat, cov, 1.0d);
         } catch (Exception e) {
-            //TODO generic online kde exception
-            e.printStackTrace();
+            throw new OnlineKDEException(
+                    "Failed to update the distribution", e);
         }
     }
 
-    public void updateDistribution(Double... samples) {
+    public void updateDistribution(Double... samples)
+    throws OnlineKDEException {
         updateDistribution(Arrays.asList(samples));
     }
 
-    public void updateDistribution(Iterable<Double> samples) {
+    public void updateDistribution(Iterable<Double> samples)
+    throws OnlineKDEException {
         for (double d : samples) {
             updateDistribution(d);
         }

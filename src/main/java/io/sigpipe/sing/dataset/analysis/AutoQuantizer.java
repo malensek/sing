@@ -37,6 +37,7 @@ import io.sigpipe.sing.dataset.analysis.Quantizer;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.stat.OnlineKDE;
+import io.sigpipe.sing.stat.OnlineKDEException;
 import io.sigpipe.sing.stat.SquaredError;
 import io.sigpipe.sing.stat.SummaryStatistics;
 import io.sigpipe.sing.util.TestConfiguration;
@@ -101,12 +102,14 @@ public class AutoQuantizer {
         return new Quantizer(tickList);
     }
 
-    public static Quantizer fromList(List<Feature> features, int ticks) {
+    public static Quantizer fromList(List<Feature> features, int ticks)
+    throws OnlineKDEException {
         return fromList(features, ticks, true);
     }
 
     public static Quantizer fromList(
-            List<Feature> features, int ticks, boolean expandRange) {
+            List<Feature> features, int ticks, boolean expandRange)
+    throws OnlineKDEException {
         /* Seed the oKDE */
         int seedSize = 1000;
         List<Double> seedValues = new ArrayList<>();
