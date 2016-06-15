@@ -3,7 +3,7 @@ package io.sigpipe.sing.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.sigpipe.sing.dataset.Quantizer;
+import io.sigpipe.sing.dataset.analysis.Quantizer;
 import io.sigpipe.sing.dataset.feature.Feature;
 
 public class TestConfiguration {
