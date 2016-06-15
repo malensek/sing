@@ -32,6 +32,14 @@ import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.graph.DataContainer;
 import io.sigpipe.sing.graph.Vertex;
 
+/**
+ * Retrieves metadata records stored in {@link DataContainer} instances and
+ * merges them into a final result. For example, this could retrieve all the
+ * features matching a particular set of values and then merge their summary
+ * statistics into a single record.
+ *
+ * @author malensek
+ */
 public class MetaQuery extends Query {
 
     private DataContainer aggregateData = new DataContainer();
