@@ -1,4 +1,3 @@
-//package neptune.geospatial.core.computations;
 package io.sigpipe.sing.adapters;
 
 import java.io.BufferedInputStream;
@@ -32,8 +31,6 @@ import io.sigpipe.sing.serialization.SerializationInputStream;
 import io.sigpipe.sing.serialization.SerializationOutputStream;
 import io.sigpipe.sing.serialization.Serializer;
 import io.sigpipe.sing.util.TestConfiguration;
-
-//import neptune.geospatial.graph.messages.GeoHashIndexedRecord;
 
 public class SketchProcessor /*extends AbstractGeoSpatialStreamProcessor*/ {
 
