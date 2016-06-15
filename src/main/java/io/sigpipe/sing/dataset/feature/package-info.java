@@ -24,8 +24,9 @@ software, even if advised of the possibility of such damage.
 */
 
 /**
- * These classes define the Galileo 'primitives' supported by the system.  The
- * data types herein can be serialized, converted, and managed by Galileo, and
- * form the basis of the multidimensional storage format.
+ * These classes define the 'primitives' supported by the graph query system.
+ * The data types herein can be serialized, converted, and managed by the
+ * various hierarchical graph implementations, and form the basis of our
+ * multidimensional storage format.
  */
 package io.sigpipe.sing.dataset.feature;
