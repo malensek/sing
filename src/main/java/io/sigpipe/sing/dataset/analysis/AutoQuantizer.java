@@ -33,7 +33,7 @@ import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 
 import io.sigpipe.sing.adapters.ReadMetadata;
 import io.sigpipe.sing.dataset.Metadata;
-import io.sigpipe.sing.dataset.Quantizer;
+import io.sigpipe.sing.dataset.analysis.Quantizer;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.stat.OnlineKDE;

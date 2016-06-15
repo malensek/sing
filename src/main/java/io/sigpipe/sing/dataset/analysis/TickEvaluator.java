@@ -1,21 +1,17 @@
 package io.sigpipe.sing.dataset.analysis;
 
-import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import io.sigpipe.sing.adapters.ReadMetadata;
-import io.sigpipe.sing.dataset.Quantizer.QuantizerBuilder;
+import io.sigpipe.sing.dataset.analysis.Quantizer.QuantizerBuilder;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.stat.RunningStatistics;
 import io.sigpipe.sing.stat.SquaredError;
-import io.sigpipe.sing.util.TestConfiguration;
 
 public class TickEvaluator {
 
