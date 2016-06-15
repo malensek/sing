@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.sigpipe.sing.dataset.AutoQuantizer;
-import io.sigpipe.sing.dataset.Quantizer;
+import io.sigpipe.sing.dataset.analysis.AutoQuantizer;
+import io.sigpipe.sing.dataset.analysis.Quantizer;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.stat.SquaredError;
