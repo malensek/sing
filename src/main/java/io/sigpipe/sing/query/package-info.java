@@ -24,7 +24,7 @@ software, even if advised of the possibility of such damage.
 */
 
 /**
- * Provides an implementation-neutral model of the queries Galileo supports.
+ * Provides an implementation-neutral query model for hierarchical graphs.
  */
 
 package io.sigpipe.sing.query;
