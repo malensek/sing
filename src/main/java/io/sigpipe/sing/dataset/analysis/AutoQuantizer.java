@@ -23,7 +23,7 @@ any theory of liability, whether in contract, strict liability, or tort
 software, even if advised of the possibility of such damage.
 */
 
-package io.sigpipe.sing.dataset;
+package io.sigpipe.sing.dataset.analysis;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -32,6 +32,8 @@ import java.util.List;
 import org.apache.commons.math3.analysis.integration.SimpsonIntegrator;
 
 import io.sigpipe.sing.adapters.ReadMetadata;
+import io.sigpipe.sing.dataset.Metadata;
+import io.sigpipe.sing.dataset.Quantizer;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.stat.OnlineKDE;
