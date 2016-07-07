@@ -47,4 +47,22 @@ public class ReservoirSampler {
         return this.keys;
     }
 
+    public static void main(String[] args) {
+        ReservoirSampler rs = new ReservoirSampler(20);
+
+        Random r = new Random();
+        r.doubles(1000).filter(val -> val < 0.5).forEach(rs::put);
+
+        RunningStatistics stats = new RunningStatistics();
+        for (double d : rs.samples()) {
+            System.out.println(d);
+            stats.put(d);
+        }
+        System.out.println(stats);
+
+        for (double d : rs.keys()) {
+            System.out.println(d);
+        }
+
+    }
 }
