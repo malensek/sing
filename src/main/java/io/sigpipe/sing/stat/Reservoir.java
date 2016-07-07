@@ -2,14 +2,14 @@ package io.sigpipe.sing.stat;
 
 import java.util.Random;
 
-public class ReservoirSampler {
+public class Reservoir {
 
     private int count;
     private double[] reservoir;
     private double[] keys;
     private Random random = new Random();
 
-    public ReservoirSampler(int size) {
+    public Reservoir(int size) {
         reservoir = new double[size];
         keys = new double[size];
     }
@@ -35,7 +35,7 @@ public class ReservoirSampler {
         count++;
     }
 
-    public void merge(ReservoirSampler res, int size) {
+    public void merge(Reservoir res, int size) {
 
     }
 
@@ -52,7 +52,7 @@ public class ReservoirSampler {
     }
 
     public static void main(String[] args) {
-        ReservoirSampler rs = new ReservoirSampler(20);
+        Reservoir rs = new Reservoir(20);
 
         Random r = new Random();
         r.doubles(1000).filter(val -> val < 0.5).forEach(rs::put);
