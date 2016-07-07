@@ -13,11 +13,38 @@ public class ReservoirSampler {
         reservoir = new double[size];
         keys = new double[size];
     }
+
+    public void put(double... items) {
+        for (double item : items) {
+            put(item);
+        }
     }
+
+    public void put(double item) {
+        if (count < this.size()) {
+            reservoir[count] = item;
+        } else {
+            double r = random.nextDouble();
+            if (r < ((double) this.size() / (count + 1))) {
+                int i = random.nextInt(this.size());
+                reservoir[i] = item;
+                keys[i] = r;
+            }
+        }
+
+        count++;
+    }
+
     public int size() {
         return reservoir.length;
     }
+
     public double[] samples() {
         return this.reservoir;
     }
+
+    private double[] keys() {
+        return this.keys;
+    }
+
 }
