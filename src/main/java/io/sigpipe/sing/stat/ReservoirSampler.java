@@ -35,6 +35,10 @@ public class ReservoirSampler {
         count++;
     }
 
+    public void merge(ReservoirSampler res, int size) {
+
+    }
+
     public int size() {
         return reservoir.length;
     }
