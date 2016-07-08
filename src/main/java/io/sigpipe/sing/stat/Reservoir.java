@@ -1,6 +1,7 @@
 package io.sigpipe.sing.stat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -11,6 +12,27 @@ public class Reservoir<T extends Comparable<T>> {
     private List<T> reservoir;
     private double[] keys;
     private Random random = new Random();
+
+    private class Entry implements Comparable<Entry> {
+        public double key;
+        public T value;
+        public int id;
+
+        public Entry(double key, T value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        @Override
+        public int compareTo(Entry that) {
+            return Double.compare(this.key, that.key);
+        }
+
+        @Override
+        public String toString() {
+            return id + " [" + key + "] -> " + value;
+        }
+    }
 
     public Reservoir(int size) {
         this.size = size;
