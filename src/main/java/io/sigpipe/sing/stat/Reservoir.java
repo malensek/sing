@@ -106,12 +106,18 @@ public class Reservoir<T> {
         }
     }
 
+    /**
+     * Considers multiple items for placement into the Reservoir.
+     */
     public void put(Iterable<T> items) {
         for (T item : items) {
             put(item);
         }
     }
 
+    /**
+     * Considers an item for placement into the Reservoir.
+     */
     public void put(T item) {
         double key = random.nextDouble();
         Entry e = new Entry(key, item);
