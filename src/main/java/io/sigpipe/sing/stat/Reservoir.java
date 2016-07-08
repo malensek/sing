@@ -110,7 +110,7 @@ public class Reservoir<T> {
         return new ArrayList<>(this.reservoir);
     }
 
-    public List<T> samples() {
+    public List<T> sample() {
         List<T> l = new ArrayList<>(this.size());
         for (Entry e : this.reservoir) {
             l.add(e.value);
