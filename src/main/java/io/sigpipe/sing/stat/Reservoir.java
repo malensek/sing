@@ -77,6 +77,11 @@ public class Reservoir<T> {
      * @param size the sample size of the new Reservoir
      */
     public Reservoir(Iterable<Reservoir<T>> reservoirs, int size) {
+        if (size < 0) {
+            throw new IllegalArgumentException(
+                    "Reservoir size must be greater than 0");
+        }
+
         List<Entry> combinedEntries = new ArrayList<>();
         long combinedCount = 0;
         int largestSize = 0;
