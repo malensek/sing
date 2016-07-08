@@ -1,6 +1,7 @@
 package io.sigpipe.sing.stat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -44,6 +45,35 @@ public class Reservoir<T> {
         reservoir = new ArrayList<>(size);
     }
 
+    public Reservoir(Iterable<Reservoir<T>> reservoirs) {
+        this(reservoirs, 0);
+    }
+
+    public Reservoir(Iterable<Reservoir<T>> reservoirs, int size) {
+        List<Entry> combinedEntries = new ArrayList<>();
+        long combinedCount = 0;
+        int largestSize = 0;
+        for (Reservoir<T> r : reservoirs) {
+            combinedEntries.addAll(r.reservoir);
+            combinedCount += r.count;
+            if (r.size() > largestSize) {
+                largestSize = r.size();
+            }
+        }
+        Collections.sort(combinedEntries);
+
+        if (size <= 0) {
+            size = largestSize;
+        }
+
+        this.count = combinedCount;
+        this.size = size;
+        this.reservoir = new ArrayList<>(size);
+        for (int i = 0; i < size; ++i) {
+            this.reservoir.add(combinedEntries.get(i));
+        }
+    }
+
     public void put(Iterable<T> items) {
         for (T item : items) {
             put(item);
@@ -70,15 +100,11 @@ public class Reservoir<T> {
     }
 
     public void merge(Reservoir<T> that, int size) {
-        List<Entry> combinedEntries = new ArrayList<>(size);
-        combinedEntries.addAll(this.reservoir);
-        combinedEntries.addAll(that.reservoir);
-        Collections.sort(combinedEntries);
-
-        this.reservoir = new ArrayList<>(size);
-        for (int i = 0; i < size; ++i) {
-            this.reservoir.add(combinedEntries.get(i));
-        }
+        List<Reservoir<T>> reservoirs = Arrays.asList(this, that);
+        Reservoir<T> merged = new Reservoir<T>(reservoirs, size);
+        this.count = merged.count;
+        this.size = size;
+        this.reservoir = merged.reservoir;
     }
 
     public void merge(Reservoir<T> that) {
