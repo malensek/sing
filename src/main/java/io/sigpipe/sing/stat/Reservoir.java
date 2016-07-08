@@ -54,10 +54,28 @@ public class Reservoir<T> {
         reservoir = new ArrayList<>(size);
     }
 
+    /**
+     * Creates a new Reservoir by merging a collection of existing reservoirs.
+     * The size of the resulting reservoir is detected automatically based on
+     * the input reservoirs. Note that this constructor will merge all the
+     * reservoirs in memory at the same time; if memory constraints prohibit
+     * such an action, see the merge() method.
+     *
+     * @param reservoirs an iterable collection of reservoirs to merge
+     */
     public Reservoir(Iterable<Reservoir<T>> reservoirs) {
         this(reservoirs, 0);
     }
 
+    /**
+     * Creates a new Reservoir with a given sample size by merging a collection
+     * of existing reservoirs.  Note that this constructor will merge all the
+     * reservoirs in memory at the same time; if memory constraints prohibit
+     * such an action, see the merge() method.
+     *
+     * @param reservoirs an iterable collection of reservoirs to merge
+     * @param size the sample size of the new Reservoir
+     */
     public Reservoir(Iterable<Reservoir<T>> reservoirs, int size) {
         List<Entry> combinedEntries = new ArrayList<>();
         long combinedCount = 0;
