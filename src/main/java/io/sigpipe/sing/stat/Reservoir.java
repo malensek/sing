@@ -9,8 +9,7 @@ public class Reservoir<T extends Comparable<T>> {
 
     private int count;
     private int size;
-    private List<T> reservoir;
-    private double[] keys;
+    private List<Entry> reservoir;
     private Random random = new Random();
 
     private class Entry implements Comparable<Entry> {
@@ -37,7 +36,6 @@ public class Reservoir<T extends Comparable<T>> {
     public Reservoir(int size) {
         this.size = size;
         reservoir = new ArrayList<>(size);
-        keys = new double[size];
     }
 
     public void put(Iterable<T> items) {
@@ -47,14 +45,15 @@ public class Reservoir<T extends Comparable<T>> {
     }
 
     public void put(T item) {
+        double key = random.nextDouble();
+        Entry e = new Entry(key, item);
+        e.id = count;
         if (count < this.size()) {
-            reservoir.add(count, item);
+            reservoir.add(count, e);
         } else {
-            double key = random.nextDouble();
             if (key < ((double) this.size() / (count + 1))) {
                 int position = random.nextInt(this.size());
-                reservoir.set(position, item);
-                keys[position] = key;
+                reservoir.set(position, e);
             }
         }
 
