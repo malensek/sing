@@ -95,6 +95,13 @@ public class Reservoir<T> {
     public long count() {
         return this.count;
     }
+
+    /**
+     * Retrieves the size of the reservoir, which is the number of items
+     * contained in the sample.
+     *
+     * @return reservoir sample size.
+     */
     public int size() {
         return this.size;
     }
