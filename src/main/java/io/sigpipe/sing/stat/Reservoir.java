@@ -74,11 +74,19 @@ public class Reservoir<T extends Comparable<T>> {
     }
 
     public List<T> samples() {
-        return new ArrayList<>(reservoir);
+        List<T> l = new ArrayList<>(this.size());
+        for (Entry e : this.reservoir) {
+            l.add(e.value);
+        }
+        return l;
     }
 
-    private double[] keys() {
-        return this.keys;
+    public double[] keys() {
+        double[] k = new double[this.size()];
+        for (int i = 0; i < this.size(); ++i) {
+            k[i] = this.reservoir.get(i).key;
+        }
+        return k;
     }
 
     public static void main(String[] args) {
