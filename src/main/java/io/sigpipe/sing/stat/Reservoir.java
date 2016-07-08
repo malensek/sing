@@ -5,6 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Implements Reservoir Sampling, which maintains a representative, random
+ * sample of a given size as data points are streamed in. Reservoirs are useful
+ * when the number of data points is not known ahead of time or the entire
+ * dataset cannot fit into memory.
+ */
 public class Reservoir<T> {
 
     private int count;
@@ -15,7 +21,6 @@ public class Reservoir<T> {
     private class Entry implements Comparable<Entry> {
         public double key;
         public T value;
-        public int id;
 
         public Entry(double key, T value) {
             this.key = key;
@@ -29,7 +34,7 @@ public class Reservoir<T> {
 
         @Override
         public String toString() {
-            return id + " [" + key + "] -> " + value;
+            return "[" + key + "] -> " + value;
         }
     }
 
@@ -47,7 +52,6 @@ public class Reservoir<T> {
     public void put(T item) {
         double key = random.nextDouble();
         Entry e = new Entry(key, item);
-        e.id = count;
 
         if (count < this.size()) {
             reservoir.add(count, e);
@@ -106,8 +110,8 @@ public class Reservoir<T> {
         Reservoir<Double> r2 = new Reservoir<>(20);
 
         Random r = new Random();
-        r.doubles(1000).filter(val -> val < 0.5).forEach(rs::put);
-        r.doubles(10000).filter(val -> val < 0.75).forEach(r2::put);
+        r.doubles(10000).filter(val -> val < 0.5).forEach(rs::put);
+        r.doubles(10000).filter(val -> val < 0.10).forEach(r2::put);
 
         RunningStatistics stats = new RunningStatistics();
         for (Reservoir<Double>.Entry e : rs.entries()) {
@@ -123,6 +127,5 @@ public class Reservoir<T> {
             stats.put(e.value);
         }
         System.out.println(stats);
-
     }
 }
