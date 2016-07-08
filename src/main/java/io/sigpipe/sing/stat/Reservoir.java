@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Reservoir<T extends Comparable<T>> {
+public class Reservoir<T> {
 
     private int count;
     private int size;
@@ -48,6 +48,7 @@ public class Reservoir<T extends Comparable<T>> {
         double key = random.nextDouble();
         Entry e = new Entry(key, item);
         e.id = count;
+
         if (count < this.size()) {
             reservoir.add(count, e);
         } else {
@@ -60,10 +61,21 @@ public class Reservoir<T extends Comparable<T>> {
         count++;
     }
 
-//    public void merge(Reservoir<T> res, int size) {
-//
-//    }
-//
+    public void merge(Reservoir<T> that, int size) {
+        List<Entry> combinedEntries = new ArrayList<>(size);
+        combinedEntries.addAll(this.reservoir);
+        combinedEntries.addAll(that.reservoir);
+        Collections.sort(combinedEntries);
+
+        this.reservoir = new ArrayList<>(size);
+        for (int i = 0; i < size; ++i) {
+            this.reservoir.add(combinedEntries.get(i));
+        }
+    }
+
+    public void merge(Reservoir<T> that) {
+        merge(that, this.size());
+    }
 
     public int size() {
         return this.size;
