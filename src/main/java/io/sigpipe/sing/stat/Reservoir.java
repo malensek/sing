@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public class Reservoir<T> {
 
-    private int count;
+    private long count;
     private int size;
     private List<Entry> reservoir;
     private Random random = new Random();
@@ -55,7 +55,10 @@ public class Reservoir<T> {
         Entry e = new Entry(key, item);
 
         if (count < this.size()) {
-            reservoir.add(count, e);
+            /* The reservoir has not been filled yet; add the item immediately.
+             * Note: we can cast the count to an integer here because the size
+             * of the reservoir is limited to the capacity of a single int. */
+            reservoir.add((int) count, e);
         } else {
             if (key < ((double) this.size() / (count + 1))) {
                 int position = random.nextInt(this.size());
