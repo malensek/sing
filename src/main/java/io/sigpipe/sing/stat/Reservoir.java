@@ -1,50 +1,55 @@
 package io.sigpipe.sing.stat;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-public class Reservoir {
+public class Reservoir<T extends Comparable<T>> {
 
     private int count;
-    private double[] reservoir;
+    private int size;
+    private List<T> reservoir;
     private double[] keys;
     private Random random = new Random();
 
     public Reservoir(int size) {
-        reservoir = new double[size];
+        this.size = size;
+        reservoir = new ArrayList<>(size);
         keys = new double[size];
     }
 
-    public void put(double... items) {
-        for (double item : items) {
+    public void put(Iterable<T> items) {
+        for (T item : items) {
             put(item);
         }
     }
 
-    public void put(double item) {
+    public void put(T item) {
         if (count < this.size()) {
-            reservoir[count] = item;
+            reservoir.add(count, item);
         } else {
-            double r = random.nextDouble();
-            if (r < ((double) this.size() / (count + 1))) {
-                int i = random.nextInt(this.size());
-                reservoir[i] = item;
-                keys[i] = r;
+            double key = random.nextDouble();
+            if (key < ((double) this.size() / (count + 1))) {
+                int position = random.nextInt(this.size());
+                reservoir.set(position, item);
+                keys[position] = key;
             }
         }
 
         count++;
     }
 
-    public void merge(Reservoir res, int size) {
-
-    }
+//    public void merge(Reservoir<T> res, int size) {
+//
+//    }
+//
 
     public int size() {
-        return reservoir.length;
+        return this.size;
     }
 
-    public double[] samples() {
-        return this.reservoir;
+    public List<T> samples() {
+        return new ArrayList<>(reservoir);
     }
 
     private double[] keys() {
@@ -52,7 +57,7 @@ public class Reservoir {
     }
 
     public static void main(String[] args) {
-        Reservoir rs = new Reservoir(20);
+        Reservoir<Double> rs = new Reservoir<>(20);
 
         Random r = new Random();
         r.doubles(1000).filter(val -> val < 0.5).forEach(rs::put);
