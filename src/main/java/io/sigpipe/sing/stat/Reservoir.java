@@ -9,7 +9,8 @@ import java.util.Random;
  * Implements Reservoir Sampling, which maintains a representative, random
  * sample of a given size as data points are streamed in. Reservoirs are useful
  * when the number of data points is not known ahead of time or the entire
- * dataset cannot fit into memory.
+ * dataset cannot fit into memory. See
+ * https://en.wikipedia.org/wiki/Reservoir_sampling for more information.
  */
 public class Reservoir<T> {
 
