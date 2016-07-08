@@ -85,6 +85,16 @@ public class Reservoir<T> {
         merge(that, this.size());
     }
 
+    /**
+     * Retrieves the total number of items observed by the reservoir. Note that
+     * this is different from the size of the reservoir, which represents the
+     * number of items in the sample.
+     *
+     * @return the total number of items observed by this reservoir instance.
+     */
+    public long count() {
+        return this.count;
+    }
     public int size() {
         return this.size;
     }
