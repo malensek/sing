@@ -20,6 +20,10 @@ public class Reservoir<T> {
     private List<Entry> reservoir;
     private Random random = new Random();
 
+    /**
+     * Contains reservoir sample entries, which consist of a double-precision
+     * floating point key and a value object of any type.
+     */
     private class Entry implements Comparable<Entry> {
         public double key;
         public T value;
@@ -40,6 +44,11 @@ public class Reservoir<T> {
         }
     }
 
+    /**
+     * Creates a new Reservoir with the specified sample size.
+     *
+     * @param size the number of sample entries that should be maintained
+     */
     public Reservoir(int size) {
         this.size = size;
         reservoir = new ArrayList<>(size);
