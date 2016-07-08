@@ -69,6 +69,10 @@ public class Reservoir<T extends Comparable<T>> {
         return this.size;
     }
 
+    public List<Entry> entries() {
+        return new ArrayList<>(this.reservoir);
+    }
+
     public List<T> samples() {
         return new ArrayList<>(reservoir);
     }
