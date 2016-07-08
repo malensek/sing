@@ -118,12 +118,14 @@ public class Reservoir<T> {
         return l;
     }
 
-    public double[] keys() {
-        double[] k = new double[this.size()];
-        for (int i = 0; i < this.size(); ++i) {
-            k[i] = this.reservoir.get(i).key;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Entry e : this.reservoir) {
+            sb.append(e.value);
+            sb.append(System.lineSeparator());
         }
-        return k;
+        return sb.toString();
     }
 
     public static void main(String[] args) {
