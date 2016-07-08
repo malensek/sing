@@ -103,20 +103,26 @@ public class Reservoir<T> {
 
     public static void main(String[] args) {
         Reservoir<Double> rs = new Reservoir<>(20);
+        Reservoir<Double> r2 = new Reservoir<>(20);
 
         Random r = new Random();
         r.doubles(1000).filter(val -> val < 0.5).forEach(rs::put);
+        r.doubles(10000).filter(val -> val < 0.75).forEach(r2::put);
 
         RunningStatistics stats = new RunningStatistics();
-        for (double d : rs.samples()) {
-            System.out.println(d);
-            stats.put(d);
+        for (Reservoir<Double>.Entry e : rs.entries()) {
+            System.out.println(e);
+            stats.put(e.value);
         }
         System.out.println(stats);
 
-        for (double d : rs.keys()) {
-            System.out.println(d);
+        rs.merge(r2);
+        stats = new RunningStatistics();
+        for (Reservoir<Double>.Entry e : rs.entries()) {
+            System.out.println(e);
+            stats.put(e.value);
         }
+        System.out.println(stats);
 
     }
 }
