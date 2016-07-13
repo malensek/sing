@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.zip.GZIPOutputStream;
 
 import io.sigpipe.sing.dataset.Metadata;
-import io.sigpipe.sing.dataset.Quantizer;
+import io.sigpipe.sing.dataset.analysis.Quantizer;
 import io.sigpipe.sing.dataset.feature.Feature;
 import io.sigpipe.sing.dataset.feature.FeatureType;
 import io.sigpipe.sing.graph.FeatureHierarchy;
